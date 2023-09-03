@@ -14,7 +14,7 @@ const TabsList = React.forwardRef<
   <TabsPrimitive.List
     ref={ref}
     className={cn(
-      'flex h-[60px] items-center justify-center px-3 card-gradient gap-4 rounded-lg',
+      'card-gradient flex h-[60px] items-center justify-center gap-4 rounded-lg px-3',
       className,
     )}
     {...props}
@@ -29,7 +29,7 @@ const TabsTrigger = React.forwardRef<
   <TabsPrimitive.Trigger
     ref={ref}
     className={cn(
-      'data-[state=inactive]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-sm',
+      'data-[state=active]:text-foreground data-[state=inactive]:bg-transparent data-[state=active]:shadow-sm',
       buttonVariants(),
       className,
     )}
@@ -45,7 +45,7 @@ const TabsContent = React.forwardRef<
   <TabsPrimitive.Content
     ref={ref}
     className={cn(
-      'mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+      'ring-offset-background focus-visible:ring-ring mt-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
       className,
     )}
     {...props}

@@ -4,11 +4,12 @@ import { AssetName, AssetTabs, BackButton } from '../../../containers';
 export default function Page() {
   return (
     <FadeTransition>
-      <div className='flex flex-col mt-10 md:mt-5'>
+      <div className='mt-10 flex flex-col md:mt-5'>
         <BackButton />
-        <div className='mt-6 md:mt-4 mb-9 md:mb-12'>
+        <div className='mb-9 mt-6 md:mb-12 md:mt-4'>
           <AssetName />
-        </div><AssetTabs />
+        </div>
+        <AssetTabs />
       </div>
     </FadeTransition>
   );

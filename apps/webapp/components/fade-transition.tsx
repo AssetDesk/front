@@ -14,7 +14,7 @@ export const FadeTransition = ({
 }) => {
   return (
     <motion.div
-      className={cn('flex flex-1 w-[100%] flex-col items-center justify-center', className)}
+      className={cn('flex w-[100%] flex-1 flex-col items-center justify-center', className)}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1, transition: { duration: 0.3, ease: 'easeOut' } }}
       exit={{ opacity: 0 }}

@@ -7,9 +7,9 @@ import { routes } from '../../utils';
 
 export const Header = () => {
   return (
-    <header className='sticky top-0 z-40 w-full bg-background'>
-      <div className='flex h-14 md:h-[5.625rem] items-center justify-between py-[1.25rem]'>
-        <Link href='/' className='h-[25px] md:h-[42px] w-[38px] md:w-[70px] relative'>
+    <header className='bg-background sticky top-0 z-40 w-full'>
+      <div className='flex h-14 items-center justify-between py-[1.25rem] md:h-[5.625rem]'>
+        <Link href='/' className='relative h-[25px] w-[38px] md:h-[42px] md:w-[70px]'>
           <Image src='/logo.svg' alt='Picture of the author' layout='fill' objectFit='cover' />
         </Link>
 

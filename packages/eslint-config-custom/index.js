@@ -3,7 +3,6 @@ module.exports = {
     'prettier',
     'eslint:recommended',
     'turbo',
-    'plugin:tailwindcss/recommended',
     'plugin:@typescript-eslint/strict-type-checked',
     'plugin:@typescript-eslint/stylistic-type-checked',
     'plugin:vitest/recommended',

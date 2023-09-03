@@ -45,45 +45,53 @@
   /* response */
   h2,
   .h2 {
-    @apply font-poppins text-lg md:text-2xl font-semibold;
+    @apply font-poppins text-lg font-semibold md:text-2xl;
   }
 
   /* response */
   .title {
-    @apply font-poppins text-[1.875rem] leading-10 md:text-4xl font-semibold;
+    @apply font-poppins text-[1.875rem] font-semibold leading-10 md:text-4xl;
   }
 
   /* response */
   .subtitle1 {
-    @apply font-inter text-base md:text-xl font-medium;
+    @apply font-inter text-base font-medium md:text-xl;
   }
   /* response */
   .subtitle2 {
-    @apply font-inter text-sm md:text-base font-semibold;
+    @apply font-inter text-sm font-semibold md:text-base;
   }
 
   /* response */
   .subtitle3 {
-    @apply font-inter text-xs md:text-sm font-normal;
+    @apply font-inter text-xs font-normal md:text-sm;
   }
 
   /* response */
   button,
   .btn {
-    @apply font-inter text-sm md:text-base font-bold text-white;
+    @apply font-inter text-sm font-bold text-white md:text-base;
   }
 
   /* response */
   .number {
-    @apply font-poppins text-base md:text-xl font-bold;
+    @apply font-poppins text-base font-bold md:text-xl;
   }
 
   /* response */
   .number2 {
-    @apply font-poppins text-xs md:text-sm font-medium;
+    @apply font-poppins text-xs font-medium md:text-sm;
   }
 
   .card-gradient {
     background-image: linear-gradient(180deg, #010b22 0.28%, rgba(31, 71, 173, 0.8) 166.34%);
+  }
+
+  .card-gradient-secondary {
+    background-image: linear-gradient(
+      180deg,
+      rgba(34, 96, 255, 0.8) -19.68%,
+      rgba(13, 31, 78, 0.8) 125.53%
+    );
   }
 }

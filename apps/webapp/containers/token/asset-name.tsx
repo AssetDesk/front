@@ -5,11 +5,12 @@ export const AssetName = () => {
   return (
     <div className='flex items-center  gap-4'>
       <Image src='/usdc.svg' alt='' width={40} height={40} />
-      <div className='flex flex-col justify-between ml-2'>
+      <div className='ml-2 flex flex-col justify-between'>
         <p className='subtitle2'>USDC</p>
         <p className='subtitle1'>USD COIN</p>
       </div>
-      <div className='self-end flex items-start gap-2'>
+      <div className='flex items-start gap-2 self-end'>
+        {/* go to contract icon - replace */}
         <svg
           xmlns='http://www.w3.org/2000/svg'
           width='20'
@@ -22,7 +23,7 @@ export const AssetName = () => {
             fill='#B0A8A8'
           />
         </svg>
-
+        {/* add to wallet icon - replace */}
         <svg
           xmlns='http://www.w3.org/2000/svg'
           width='22'
