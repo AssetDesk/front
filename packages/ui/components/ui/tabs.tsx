@@ -14,7 +14,7 @@ const TabsList = React.forwardRef<
   <TabsPrimitive.List
     ref={ref}
     className={cn(
-      'card-gradient flex h-[60px] items-center justify-center gap-4 rounded-lg px-3',
+      'card-gradient flex h-[52px] md:h-[60px] items-center justify-center gap-4 rounded-lg px-3',
       className,
     )}
     {...props}

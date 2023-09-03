@@ -2,10 +2,11 @@ import React from 'react';
 import { TabsContent, TabsList, TabsTrigger, Tabs } from 'ui';
 import { AssetDashboard } from './asset-dashboard';
 import { ReserveConfiguration } from './reserve-configuration';
+import { UserInfo } from './user-info';
 
 export const AssetTabs = () => {
   return (
-    <Tabs defaultValue='Your info' className='w-full'>
+    <Tabs defaultValue='Overview' className='w-full'>
       <TabsList className='w-full md:w-[484px]'>
         <TabsTrigger value='Overview' className='flex-1'>
           Overview
@@ -20,7 +21,9 @@ export const AssetTabs = () => {
       <TabsContent value='Overview'>
         <ReserveConfiguration />
       </TabsContent>
-      <TabsContent value='Your info'>Change your password here.</TabsContent>
+      <TabsContent value='Your info'>
+        <UserInfo />
+      </TabsContent>
     </Tabs>
   );
 };
