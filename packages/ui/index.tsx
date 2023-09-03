@@ -6,4 +6,3 @@ export * from './components/ui/switch';
 export * from './components/ui/table';
 export * from './components/social';
 export * from './components/ui/tabs';
-

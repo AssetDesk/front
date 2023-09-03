@@ -15,7 +15,7 @@ export const SupplyMarketTable = () => {
           {[1, 2, 3].map(i => (
             <div
               key={i}
-              className='flex flex-col card-gradient rounded-[8px] px-[16px] pt-[16px] pb-[26px] gap-4'
+              className='flex flex-col card-gradient rounded-lg px-[16px] pt-[16px] pb-[26px] gap-4'
             >
               <div className='flex justify-between'>
                 <p className='subtitle2 text-[#E3E3E3]'>Assets</p>
@@ -43,7 +43,7 @@ export const SupplyMarketTable = () => {
           ))}
         </div>
       </div>
-      <div className='hidden md:flex flex-col card-gradient rounded-[8px] pt-4 px-5 pb-6 gap-2'>
+      <div className='hidden md:flex flex-col card-gradient rounded-lg pt-4 px-5 pb-6 gap-2'>
         <p className='h2'>Supply Markets</p>
         <Table>
           <TableHeader>

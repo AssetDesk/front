@@ -1,6 +1,6 @@
 'use client';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation';
 import React from 'react';
 import { Button, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from 'ui';
 
@@ -15,7 +15,7 @@ export const BorrowMarketTable = () => {
           {[1, 2, 3].map(i => (
             <div
               key={i}
-              className='flex flex-col card-gradient rounded-[8px] px-[16px] pt-[16px] pb-[26px] gap-4'
+              className='flex flex-col card-gradient rounded-lg px-[16px] pt-[16px] pb-[26px] gap-4'
             >
               <div className='flex justify-between'>
                 <p className='subtitle2 text-[#E3E3E3]'>Assets</p>
@@ -36,12 +36,14 @@ export const BorrowMarketTable = () => {
                 <p className='subtitle2 text-[#E3E3E3]'>Liquidity</p>
                 <p className='subtitle3 text-[#E3E3E3]'>$ 7.17M</p>
               </div>
-              <Button className='w-full mt-6' onClick={navigateToAsset}>More</Button>
+              <Button className='w-full mt-6' onClick={navigateToAsset}>
+                More
+              </Button>
             </div>
           ))}
         </div>
       </div>
-      <div className='hidden md:flex flex-col card-gradient rounded-[8px] pt-4 px-5 pb-6 gap-2'>
+      <div className='hidden md:flex flex-col card-gradient rounded-lg pt-4 px-5 pb-6 gap-2'>
         <p className='h2'>Borrow Markets</p>
         <Table>
           <TableHeader>

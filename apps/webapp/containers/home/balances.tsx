@@ -5,7 +5,7 @@ import { Progress } from 'ui';
 // background: linear-gradient(180deg, #010B22 0.28%, rgba(31, 71, 173, 0.20) 166.34%);
 export const Balances = () => {
   return (
-    <div className='flex flex-col card-gradient rounded-[8px] pt-[40px] md:pt-[16px] pb-[48px] md:pb-[16px] px-[16px] md:px-[20px] '>
+    <div className='flex flex-col card-gradient rounded-lg pt-[40px] md:pt-[16px] pb-[48px] md:pb-[16px] px-[16px] md:px-[20px] '>
       <div className='flex flex-col md:flex-row md:items-center md:justify-around mb-7 md:mb-4'>
         <div className='w-[186px] h-[186px] rounded-full border-4 border-[#0344E9] flex flex-col items-center justify-center gap-y-[0.25rem] md:gap-y-2 self-center order-1 md:order-2 mb-7 md:mb-4'>
           <p className='h2'>TVL</p>

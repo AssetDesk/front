@@ -45,41 +45,42 @@
   /* response */
   h2,
   .h2 {
-    @apply font-poppins text-lg lg:text-2xl font-semibold;
+    @apply font-poppins text-lg md:text-2xl font-semibold;
   }
 
   /* response */
   .title {
-    @apply font-poppins text-[1.875rem] leading-10 lg:text-4xl font-semibold;
+    @apply font-poppins text-[1.875rem] leading-10 md:text-4xl font-semibold;
   }
 
   /* response */
   .subtitle1 {
-    @apply font-inter text-base lg:text-xl font-medium;
+    @apply font-inter text-base md:text-xl font-medium;
   }
   /* response */
   .subtitle2 {
-    @apply font-inter text-sm lg:text-base font-semibold;
+    @apply font-inter text-sm md:text-base font-semibold;
   }
 
   /* response */
   .subtitle3 {
-    @apply font-inter text-xs lg:text-sm font-normal;
+    @apply font-inter text-xs md:text-sm font-normal;
   }
 
   /* response */
   button,
   .btn {
-    @apply font-inter text-sm lg:text-base font-bold text-white;
+    @apply font-inter text-sm md:text-base font-bold text-white;
   }
 
+  /* response */
   .number {
-    @apply font-poppins text-xl font-bold;
+    @apply font-poppins text-base md:text-xl font-bold;
   }
 
   /* response */
   .number2 {
-    @apply font-poppins text-xs lg:text-sm font-medium;
+    @apply font-poppins text-xs md:text-sm font-medium;
   }
 
   .card-gradient {
