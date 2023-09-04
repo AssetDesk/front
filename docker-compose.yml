@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  front_asset_desk:
+    container_name: front_asset_desk
+    image: assetdesk:latest
+    build:
+      context: .
+      dockerfile: ./apps/webapp/Dockerfile
+    restart: always
+    ports:
+      - 9016:3000
+    networks:
+      - network1
+
+# Define a network, which allows containers to communicate
+# with each other, by using their container name as a hostname
+networks:
+  network1:
+    external: true
