@@ -32,6 +32,9 @@ importers:
 
   apps/webapp:
     dependencies:
+      '@stellar/freighter-api':
+        specifier: ^1.6.0
+        version: registry.npmmirror.com/@stellar/freighter-api@1.6.0
       framer-motion:
         specifier: ^10.16.1
         version: registry.npmmirror.com/framer-motion@10.16.1(react-dom@18.2.0)(react@18.2.0)
@@ -1295,6 +1298,12 @@ packages:
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@sinclair/typebox/-/typebox-0.27.8.tgz}
     name: '@sinclair/typebox'
     version: 0.27.8
+    dev: false
+
+  registry.npmmirror.com/@stellar/freighter-api@1.6.0:
+    resolution: {integrity: sha512-Z6CRY+3+whzMspda6PiHEc4Rs9tdQkHLin9FopdnHhij/FEEAK+IiuF8Ki2ROcQweXdazb8N237aSim10s+Zgw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@stellar/freighter-api/-/freighter-api-1.6.0.tgz}
+    name: '@stellar/freighter-api'
+    version: 1.6.0
     dev: false
 
   registry.npmmirror.com/@swc/helpers@0.5.1:
