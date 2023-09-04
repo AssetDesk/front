@@ -94,4 +94,8 @@
       rgba(13, 31, 78, 0.8) 125.53%
     );
   }
+
+  .border-gradient {
+    border-image: linear-gradient(to bottom, #0344e9, #0344e900) 1 100%;
+  }
 }

@@ -1,19 +1,13 @@
 import { FadeTransition } from '../components';
-import { Balances, BorrowMarketTable, SupplyMarketTable } from '../containers';
+import { Hero, LandingTable, TotalValues } from '../containers';
 
 export default function Page() {
   return (
-    <FadeTransition>
-      <div className='mt-10 flex flex-col gap-10 md:mt-[74px] md:gap-6'>
-        <Balances />
-        <div className='flex flex-col gap-6 md:flex-row md:gap-4'>
-          <div className='flex-1'>
-            <SupplyMarketTable />
-          </div>
-          <div className='flex-1'>
-            <BorrowMarketTable />
-          </div>
-        </div>
+    <FadeTransition className='bg-[url("/sm-bg.svg")] bg-right-top bg-no-repeat md:bg-[url("/lg-bg.svg")] md:bg-top'>
+      <div className='mt-28 flex flex-col md:mt-72'>
+        <Hero />
+        <TotalValues />
+        <LandingTable />
       </div>
     </FadeTransition>
   );

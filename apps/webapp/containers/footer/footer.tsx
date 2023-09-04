@@ -1,7 +1,6 @@
-import React from 'react';
-import { routes } from '../../utils';
 import Link from 'next/link';
 import { Social, buttonVariants } from 'ui';
+import { routes } from '../../utils';
 
 export const Footer = () => {
   return (
