@@ -6,7 +6,7 @@ import { Button } from 'ui';
 export const BackButton = () => {
   const router = useRouter();
   return (
-    <Button variant='outline' className='w-24 md:w-[88px]' onClick={() => router.push('/')}>
+    <Button variant='outline' className='w-24 md:w-[88px]' onClick={() => router.push('/asset')}>
       <div className='flex items-center gap-2 md:gap-1'>
         <svg
           xmlns='http://www.w3.org/2000/svg'
