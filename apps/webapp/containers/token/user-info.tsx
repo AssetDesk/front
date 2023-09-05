@@ -3,9 +3,11 @@ import { SupplyModal } from './supply-modal';
 import { BorrowModal } from './borrow-modal';
 import { WithdrawModal } from './withdraw-modal';
 import { RepayModal } from './repay-modal';
+import { FadeTransition } from '../../components'
 
 export const UserInfo = () => {
   return (
+    <FadeTransition>
     <div className='flex flex-col gap-[18px]'>
       <p className='h2'>Your info</p>
       <div className='card-gradient flex flex-col rounded-lg px-4 pb-10 pt-4  md:px-[30px] md:pb-14 md:pt-5'>
@@ -124,5 +126,6 @@ export const UserInfo = () => {
         </div>
       </div>
     </div>
+    </FadeTransition>
   );
 };
