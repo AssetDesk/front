@@ -9,7 +9,7 @@ services:
       dockerfile: ./apps/webapp/Dockerfile
     restart: always
     ports:
-      - 9016:3000
+      - 9017:3000
     networks:
       - network1
 
