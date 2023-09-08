@@ -37,7 +37,7 @@ export const WithdrawModal = () => {
               <div className='flex flex-col'>
                 <div className='flex justify-between border-b-[1px] border-[#0344E9] p-[10px]'>
                   <div className='flex gap-2'>
-                     {/* TODO is nedeed? */}
+                    {/* TODO is nedeed? */}
                     <Image src={token?.icon ?? ''} alt='' width={20} height={20} />
                     <p className='subtitle3'>Supply APY</p>
                   </div>
