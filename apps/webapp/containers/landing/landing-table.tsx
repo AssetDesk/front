@@ -3,24 +3,25 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import { Button, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from 'ui';
+import { tokens } from '../../utils';
 
 export const LandingTable = () => {
   const router = useRouter();
-  const navigateToAsset = () => router.push('/asset/usdc');
+  const navigateToAsset = (asset: string) => () => router.push(`/asset/${asset.toLowerCase()}`);
   return (
     <>
       <div className='flex flex-col gap-6 md:hidden'>
         <div className='flex flex-col gap-4'>
-          {[1, 2, 3].map(i => (
+          {tokens.map(i => (
             <div
-              key={i}
+              key={i.token}
               className='card-gradient flex flex-col gap-4 rounded-lg px-[16px] pb-[26px] pt-[16px]'
             >
               <div className='flex justify-between'>
                 <p className='subtitle2 text-[#E3E3E3]'>Assets</p>
                 <div className='flex gap-2'>
-                  <Image src='/usdc.svg' alt='' width={20} height={20} />
-                  <p className='subtitle3 text-[#E3E3E3]'>USDС</p>
+                  <Image src={i.icon} alt='' width={20} height={20} />
+                  <p className='subtitle3 text-[#E3E3E3]'>{i.token}</p>
                 </div>
               </div>
               <div className='flex justify-between'>
@@ -39,7 +40,7 @@ export const LandingTable = () => {
                 <p className='subtitle2 text-[#E3E3E3]'>Borrow APY</p>
                 <p className='subtitle3 text-[#E3E3E3]'>-0.47%</p>
               </div>
-              <Button className='mt-6 w-full' onClick={navigateToAsset}>
+              <Button className='mt-6 w-full' onClick={navigateToAsset(i.token)}>
                 More
               </Button>
             </div>
@@ -58,12 +59,12 @@ export const LandingTable = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {[1, 2, 3].map(i => (
-              <TableRow key={i} className='cursor-pointer' onClick={navigateToAsset}>
+            {tokens.map(i => (
+              <TableRow key={i.token} className='cursor-pointer' onClick={navigateToAsset(i.token)}>
                 <TableCell className='flex items-center justify-center'>
                   <div className='flex items-center gap-2'>
-                    <Image src='/usdc.svg' alt='' width={20} height={20} />
-                    <p>USDС</p>
+                    <Image src={i.icon} alt='' width={20} height={20} />
+                    <p>{i.token}</p>
                   </div>
                 </TableCell>
                 <TableCell className='text-center'>$35.86M</TableCell>

@@ -1,11 +1,19 @@
-import React from 'react';
+'use client';
+import React, { useMemo } from 'react';
 import { SupplyModal } from './supply-modal';
 import { BorrowModal } from './borrow-modal';
 import { WithdrawModal } from './withdraw-modal';
 import { RepayModal } from './repay-modal';
 import { FadeTransition } from '../../components';
+import { useParams } from 'next/navigation';
+import { tokens } from '../../utils';
 
 export const UserInfo = () => {
+  const { slug } = useParams() as { slug: string };
+
+  const token = useMemo(() => {
+    return tokens.find(i => i.id === slug);
+  }, [slug]);
   return (
     <FadeTransition>
       <div className='flex flex-col gap-[18px]'>
@@ -26,7 +34,7 @@ export const UserInfo = () => {
             </svg>
             <div className='flex flex-col gap-2'>
               <p className='subtitle1'>Wallet balance</p>
-              <p className='number2'>0 USDС</p>
+              <p className='number2'>0 {token?.token}</p>
             </div>
           </div>
           {/* // user detail */}
@@ -49,7 +57,7 @@ export const UserInfo = () => {
                     />
                   </svg>
                 </div>
-                <p className='number mt-1'>760.00 USDС</p>
+                <p className='number mt-1'>760.00 {token?.token}</p>
                 <p className='number2'>$760.00</p>
               </div>
               <SupplyModal />
@@ -72,7 +80,7 @@ export const UserInfo = () => {
                     />
                   </svg>
                 </div>
-                <p className='number mt-1'>760.00 USDС</p>
+                <p className='number mt-1'>760.00 {token?.token}</p>
                 <p className='number2'>$760.00</p>
               </div>
               <BorrowModal />
@@ -95,7 +103,7 @@ export const UserInfo = () => {
                     />
                   </svg>
                 </div>
-                <p className='number mt-1'>760.00 USDС</p>
+                <p className='number mt-1'>760.00 {token?.token}</p>
                 <p className='number2'>$760.00</p>
               </div>
               <WithdrawModal />
@@ -118,7 +126,7 @@ export const UserInfo = () => {
                     />
                   </svg>
                 </div>
-                <p className='number mt-1'>760.00 USDС</p>
+                <p className='number mt-1'>760.00 {token?.token}</p>
                 <p className='number2'>$760.00</p>
               </div>
               <RepayModal />
