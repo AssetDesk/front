@@ -1,5 +1,11 @@
+import { Metadata } from 'next';
 import { FadeTransition } from '../../components';
 import { Balances, BorrowMarketTable, SupplyMarketTable } from '../../containers';
+
+export const metadata: Metadata = {
+  title: 'AssetDesk | Assets',
+  description: 'Earn interest, borrow assets, and build applications.',
+};
 
 export default function Page() {
   return (
