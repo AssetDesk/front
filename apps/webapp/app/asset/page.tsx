@@ -5,6 +5,9 @@ import { Balances, BorrowMarketTable, SupplyMarketTable } from '../../containers
 export const metadata: Metadata = {
   title: 'AssetDesk | Assets',
   description: 'Earn interest, borrow assets, and build applications.',
+  icons: {
+    icon: '/favicon.svg',
+  },
 };
 
 export default function Page() {

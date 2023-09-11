@@ -12,6 +12,9 @@ export function generateMetadata({ params }: Props): Metadata {
   return {
     title: 'AssetDesk | Assets | ' + slug.toUpperCase(),
     description: 'Earn interest, borrow assets, and build applications.',
+    icons: {
+      icon: '/favicon.svg',
+    },
   };
 }
 

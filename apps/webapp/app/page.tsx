@@ -5,6 +5,9 @@ import { Hero, LandingTable, TotalValues } from '../containers';
 export const metadata: Metadata = {
   title: 'AssetDesk | Landing',
   description: 'Earn interest, borrow assets, and build applications.',
+  icons: {
+    icon: '/favicon.svg',
+  },
 };
 
 export default function Page() {
