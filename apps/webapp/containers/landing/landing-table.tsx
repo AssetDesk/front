@@ -70,7 +70,7 @@ export const LandingTable = () => {
                 <TableCell className='text-center'>$35.86M</TableCell>
                 <TableCell className='text-center'>2.36%</TableCell>
                 <TableCell className='text-center'>$ 121.6M</TableCell>
-                <TableCell className='text-center'>Borrow APY</TableCell>
+                <TableCell className='text-center'>-0.47%</TableCell>
               </TableRow>
             ))}
           </TableBody>

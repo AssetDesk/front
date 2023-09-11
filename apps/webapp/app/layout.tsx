@@ -4,8 +4,6 @@ import React from 'react';
 import { Footer, Header } from '../containers';
 import { useIsMounted } from '../hooks';
 
-
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const mounted = useIsMounted();
 
