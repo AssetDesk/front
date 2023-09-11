@@ -16,8 +16,9 @@ export const routes = [
     title: 'Developers',
   },
   {
-    href: '/blog',
+    href: 'https://medium.com/@assetdesk',
     title: 'Blog',
+    isLink: true,
   },
   {
     href: '/faq',

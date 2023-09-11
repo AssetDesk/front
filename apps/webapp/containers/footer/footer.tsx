@@ -11,6 +11,8 @@ export const Footer = () => {
             key={i.href}
             href={i.href}
             className={buttonVariants({ variant: 'ghost', size: 'sm' })}
+            target={i.isLink ? '_blank' : undefined}
+            rel={i.isLink ? 'noreferrer noopener' : undefined}
           >
             {i.title}
           </Link>

@@ -21,15 +21,19 @@ export const Header = () => {
         </Link>
         <div className='hidden md:flex md:items-center md:justify-end md:space-x-4'>
           <nav className='flex items-center space-x-1'>
-            {routes.map(i => (
-              <Link
-                key={i.href}
-                href={i.href}
-                className={buttonVariants({ variant: 'ghost', size: 'sm' })}
-              >
-                {i.title}
-              </Link>
-            ))}
+            {routes.map(i => {
+              return (
+                <Link
+                  key={i.href}
+                  href={i.href}
+                  className={buttonVariants({ variant: 'ghost', size: 'sm' })}
+                  target={i.isLink ? '_blank' : undefined}
+                  rel={i.isLink ? 'noreferrer noopener' : undefined}
+                >
+                  {i.title}
+                </Link>
+              );
+            })}
           </nav>
         </div>
         {pathname === '/' ? (
