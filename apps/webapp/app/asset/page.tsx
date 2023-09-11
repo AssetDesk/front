@@ -1,13 +1,11 @@
 import { Metadata } from 'next';
 import { FadeTransition } from '../../components';
 import { Balances, BorrowMarketTable, SupplyMarketTable } from '../../containers';
+import { generalMetadata } from '../../utils';
 
 export const metadata: Metadata = {
   title: 'AssetDesk | Assets',
-  description: 'Earn interest, borrow assets, and build applications.',
-  icons: {
-    icon: '/favicon.svg',
-  },
+  ...generalMetadata,
 };
 
 export default function Page() {

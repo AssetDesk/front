@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { FadeTransition } from '../../../components';
 import { AssetName, AssetTabs, BackButton } from '../../../containers';
+import { generalMetadata } from '../../../utils';
 
 interface Props {
   params: { slug: string };
@@ -11,10 +12,7 @@ export function generateMetadata({ params }: Props): Metadata {
 
   return {
     title: 'AssetDesk | Assets | ' + slug.toUpperCase(),
-    description: 'Earn interest, borrow assets, and build applications.',
-    icons: {
-      icon: '/favicon.svg',
-    },
+    ...generalMetadata,
   };
 }
 

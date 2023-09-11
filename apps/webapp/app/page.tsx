@@ -1,13 +1,11 @@
 import { Metadata } from 'next';
 import { FadeTransition } from '../components';
 import { Hero, LandingTable, TotalValues } from '../containers';
+import { generalMetadata } from '../utils';
 
 export const metadata: Metadata = {
   title: 'AssetDesk | Landing',
-  description: 'Earn interest, borrow assets, and build applications.',
-  icons: {
-    icon: '/favicon.svg',
-  },
+  ...generalMetadata,
 };
 
 export default function Page() {
