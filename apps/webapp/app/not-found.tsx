@@ -1,12 +1,11 @@
-'use client';
 import Link from 'next/link';
 import { buttonVariants } from 'ui';
+import { FadeTransition } from '../components';
 import { Metadata } from 'next';
 import { generalMetadata } from '../utils';
-import { FadeTransition } from '../components';
 
 export const metadata: Metadata = {
-  title: 'AssetDesk | 404',
+  title: 'AssetDesk',
   ...generalMetadata,
 };
 

@@ -64,7 +64,7 @@ export const LinearChart = ({ value1, value2, period = true }: LinearChartProps)
           </div>
         )}
       </div>
-      <div className='w-full h-28 md:h-36'>
+      <div className='h-28 w-full md:h-36'>
         <ResponsiveContainer>
           <LineChart data={data} margin={{ top: 0, left: 0, right: 0, bottom: 0 }}>
             <CartesianGrid strokeDasharray='4 4' vertical={false} stroke='#082E8F' />
