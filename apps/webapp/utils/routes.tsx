@@ -12,8 +12,9 @@ export const routes = [
     title: 'Governance',
   },
   {
-    href: '/developers',
+    href: 'https://assetdesk.gitbook.io/untitled/',
     title: 'Developers',
+    isLink: true,
   },
   {
     href: 'https://medium.com/@assetdesk',
