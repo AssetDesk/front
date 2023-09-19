@@ -1,18 +1,18 @@
 export const routes = [
   {
+    href: '/',
+    title: 'Landing',
+  },
+  {
     href: '/asset',
-    title: 'Dashboard',
+    title: 'Markets',
   },
+  // {
+  //   href: '/governance',
+  //   title: 'Governance',
+  // },
   {
-    href: '/community',
-    title: 'Community',
-  },
-  {
-    href: '/governance',
-    title: 'Governance',
-  },
-  {
-    href: 'https://assetdesk.gitbook.io/untitled/',
+    href: 'https://assetdesk.gitbook.io',
     title: 'Developers',
     isLink: true,
   },
@@ -22,7 +22,8 @@ export const routes = [
     isLink: true,
   },
   {
-    href: '/faq',
+    href: 'https://assetdesk.gitbook.io/faq',
     title: 'FAQ',
+    isLink: true,
   },
 ];
