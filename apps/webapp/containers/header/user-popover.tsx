@@ -10,7 +10,7 @@ export const UserPopover = () => {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button>
+        <Button className='w-[152px] md:w-[192px]'>
           {address.slice(0, 4)}...{address.slice(-4)}
         </Button>
       </PopoverTrigger>

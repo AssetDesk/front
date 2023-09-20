@@ -105,7 +105,7 @@ export const ConnectorsModal = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>Connect</Button>
+        <Button className='w-[152px] md:w-[192px]'>Connect</Button>
       </DialogTrigger>
       <DialogContent className='flex w-[296px] flex-col'>
         <DialogHeader>

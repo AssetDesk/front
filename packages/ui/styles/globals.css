@@ -70,7 +70,7 @@
   /* response */
   button,
   .btn {
-    @apply font-inter text-base font-bold text-white md:text-base;
+    @apply font-inter text-sm font-bold text-white md:text-base;
   }
 
   /* response */
