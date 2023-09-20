@@ -20,7 +20,7 @@ export const SupplyModal = () => {
   const token = useMemo(() => {
     return tokens.find(i => i.id === slug);
   }, [slug]);
-  
+
   return (
     <Dialog>
       <DialogTrigger asChild>
