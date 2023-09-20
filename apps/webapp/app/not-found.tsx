@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function NotFound() {
   return (
-    <div className='mt-10 flex flex-col items-center justify-center gap-2 h-[calc(100vh-600px)]'>
+    <div className='mt-10 flex h-[calc(100vh-600px)] flex-col items-center justify-center gap-2'>
       <h2 className='h1'>Not Found</h2>
       <p className='h2'>Could not find requested resource</p>
       <Link href='/' className={buttonVariants()}>

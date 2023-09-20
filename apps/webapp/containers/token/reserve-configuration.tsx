@@ -1,8 +1,7 @@
-import React from 'react';
-import { SupplyInfo } from './supply-info';
+import { FadeTransition } from '../../components';
 import { BorrowInfo } from './borrow-info';
 import { InterestRateModel } from './interest-rate-model';
-import { FadeTransition } from '../../components';
+import { SupplyInfo } from './supply-info';
 
 export const ReserveConfiguration = () => {
   return (

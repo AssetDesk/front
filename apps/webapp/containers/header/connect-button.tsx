@@ -1,13 +1,10 @@
-import { Button } from 'ui';
-import { useAccount } from '../../hooks';
-import { MouseEventHandler } from 'react';
+'use client';
+import { useSorobanReact } from '@soroban-react/core';
+import { UserPopover } from './user-popover';
+import { ConnectorsModal } from './connectors-modal';
 
 export const ConnectButton = () => {
-  const { user, loading, login } = useAccount();
+  const { address } = useSorobanReact();
 
-  return (
-    <Button onClick={login as MouseEventHandler<HTMLButtonElement>} disabled={loading}>
-      {loading ? '' : !user ? 'Connect' : user.displayName}
-    </Button>
-  );
+  return <>{!address ? <ConnectorsModal /> : <UserPopover />}</>;
 };

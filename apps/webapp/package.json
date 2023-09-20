@@ -9,6 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@soroban-react/chains": "^6.4.1",
+    "@soroban-react/core": "^6.4.1",
+    "@soroban-react/freighter": "^6.4.0",
+    "@soroban-react/types": "^6.1.1",
     "@stellar/freighter-api": "^1.6.0",
     "framer-motion": "^10.16.1",
     "next": "^13.4.19",

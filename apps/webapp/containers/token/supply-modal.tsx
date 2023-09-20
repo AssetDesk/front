@@ -20,6 +20,7 @@ export const SupplyModal = () => {
   const token = useMemo(() => {
     return tokens.find(i => i.id === slug);
   }, [slug]);
+  
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -52,7 +53,7 @@ export const SupplyModal = () => {
             </div>
           </div>
         </div>
-        <DialogFooter className='mt-4 '>
+        <DialogFooter className='mt-4'>
           <Button type='submit' className='w-full md:w-full'>
             Confirm
           </Button>
