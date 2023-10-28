@@ -1,15 +1,10 @@
 'use client';
 import Image from 'next/image';
-import { useParams } from 'next/navigation';
-import React, { useMemo } from 'react';
-import { tokens } from '../../utils';
+import { useAssetBySlug } from '../../hooks/asset-by-slug';
 
 export const AssetDashboard = () => {
-  const { slug } = useParams() as { slug: string };
+  const asset = useAssetBySlug();
 
-  const token = useMemo(() => {
-    return tokens.find(i => i.id === slug);
-  }, [slug]);
   return (
     <div className='card-gradient grid grid-cols-2 gap-4 rounded-lg px-4 pb-5 pt-4 md:grid-cols-6 md:gap-6 md:p-[30px]'>
       <div className='grid-row-2 grid gap-1 md:text-center'>
@@ -65,7 +60,7 @@ export const AssetDashboard = () => {
       >
         <p className='subtitle2 color-[#E3E3E3]'>Earn APR</p>
         <div className='flex items-center gap-2 md:justify-center'>
-          <Image src={token?.icon ?? ''} alt='' width={20} height={20} />
+          <Image src={asset?.icon ?? ''} alt='' width={20} height={20} />
           <p className='number'>0.07%</p>
         </div>
       </div>
@@ -75,7 +70,7 @@ export const AssetDashboard = () => {
       >
         <p className='subtitle2 color-[#E3E3E3]'>Borrow APR</p>
         <div className='flex items-center gap-2 md:justify-center'>
-          <Image src={token?.icon ?? ''} alt='' width={20} height={20} />
+          <Image src={asset?.icon ?? ''} alt='' width={20} height={20} />
           <p className='number'>2.67%</p>
         </div>
       </div>

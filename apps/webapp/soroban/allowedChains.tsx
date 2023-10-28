@@ -1,3 +1,3 @@
-import { testnet } from '@soroban-react/chains';
+import { futurenet } from '@soroban-react/chains';
 
-export const allowedChains = [testnet];
+export const allowedChains = [futurenet];

@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { TabsContent, TabsList, TabsTrigger, Tabs } from 'ui';
 import { AssetDashboard } from './asset-dashboard';

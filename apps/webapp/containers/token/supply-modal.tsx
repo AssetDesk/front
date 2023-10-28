@@ -1,5 +1,5 @@
 'use client';
-import React, { useMemo } from 'react';
+import Image from 'next/image';
 import {
   Button,
   Dialog,
@@ -10,16 +10,10 @@ import {
   DialogTrigger,
 } from 'ui';
 import { BalanceInput } from '../../components';
-import Image from 'next/image';
-import { useParams } from 'next/navigation';
-import { tokens } from '../../utils';
+import { useAssetBySlug } from '../../hooks/asset-by-slug';
 
 export const SupplyModal = () => {
-  const { slug } = useParams() as { slug: string };
-
-  const token = useMemo(() => {
-    return tokens.find(i => i.id === slug);
-  }, [slug]);
+  const asset = useAssetBySlug();
 
   return (
     <Dialog>
@@ -28,7 +22,7 @@ export const SupplyModal = () => {
       </DialogTrigger>
       <DialogContent className='w-[300px] md:w-[400px]'>
         <DialogHeader>
-          <DialogTitle>Supply {token?.token}</DialogTitle>
+          <DialogTitle>Supply {asset?.address}</DialogTitle>
         </DialogHeader>
         <div className='grid gap-6 md:gap-10'>
           <BalanceInput balanceTitle='Wallet Balance' />
@@ -37,7 +31,7 @@ export const SupplyModal = () => {
             <div className='flex flex-col'>
               <div className='flex justify-between border-b-[1px] border-[#0344E9] p-[10px]'>
                 <div className='flex gap-2'>
-                  <Image src={token?.icon ?? ''} alt='' width={20} height={20} />
+                  <Image src={asset?.icon ?? ''} alt='' width={20} height={20} />
                   <p className='subtitle3'>Supply APY</p>
                 </div>
                 <p className='number2'>0.04%</p>

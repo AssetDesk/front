@@ -1,8 +1,7 @@
+'use client';
 import React from 'react';
 import { Progress } from 'ui';
 
-// border-radius: 8px;
-// background: linear-gradient(180deg, #010B22 0.28%, rgba(31, 71, 173, 0.20) 166.34%);
 export const Balances = () => {
   return (
     <div className='card-gradient flex flex-col rounded-lg px-[16px] pb-[48px] pt-[40px] md:px-[20px] md:pb-[16px] md:pt-[16px] '>

@@ -1,9 +1,10 @@
 'use client';
+
 import 'ui/styles/globals.css';
 import React from 'react';
 import { Footer, Header } from '../containers';
-import { useIsMounted } from '../hooks';
 import SorobanProvider from '../soroban/provider';
+import { useIsMounted } from '../hooks/mount';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const mounted = useIsMounted();

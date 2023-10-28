@@ -33,7 +33,9 @@ export const Header = () => {
           </nav>
         </div>
         {pathname === '/' ? (
-          <Button onClick={() => router.push('/asset')} className='w-[152px] md:w-[192px]'>Launch App</Button>
+          <Button onClick={() => router.push('/asset')} className='w-[152px] md:w-[192px]'>
+            Launch App
+          </Button>
         ) : (
           <ConnectButton />
         )}

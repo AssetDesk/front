@@ -1,5 +1,5 @@
 'use client';
-import React, { useMemo } from 'react';
+import Image from 'next/image';
 import {
   Button,
   Dialog,
@@ -10,16 +10,11 @@ import {
   DialogTrigger,
 } from 'ui';
 import { BalanceInput } from '../../components';
-import Image from 'next/image';
-import { useParams } from 'next/navigation';
-import { tokens } from '../../utils';
+import { useAssetBySlug } from '../../hooks/asset-by-slug';
 
 export const BorrowModal = () => {
-  const { slug } = useParams() as { slug: string };
+  const asset = useAssetBySlug();
 
-  const token = useMemo(() => {
-    return tokens.find(i => i.id === slug);
-  }, [slug]);
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -27,7 +22,7 @@ export const BorrowModal = () => {
       </DialogTrigger>
       <DialogContent className='w-[300px] md:w-[400px]'>
         <DialogHeader>
-          <DialogTitle>Borrow {token?.token}</DialogTitle>
+          <DialogTitle>Borrow {asset?.symbol}</DialogTitle>
         </DialogHeader>
         <div className='grid gap-6 md:gap-10'>
           <BalanceInput balanceTitle='Currently Borrowing' />
@@ -37,7 +32,7 @@ export const BorrowModal = () => {
               <div className='flex flex-col'>
                 <div className='flex justify-between border-b-[1px] border-[#0344E9] p-[10px]'>
                   <div className='flex gap-2'>
-                    <Image src={token?.icon ?? ''} alt='' width={20} height={20} />
+                    <Image src={asset?.icon ?? ''} alt='' width={20} height={20} />
                     <p className='subtitle3'>Borrow APY</p>
                   </div>
                   <p className='number2'>3.04%</p>

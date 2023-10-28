@@ -1,22 +1,16 @@
 'use client';
 import Image from 'next/image';
-import React, { useMemo } from 'react';
-import { tokens } from '../../utils';
-import { useParams } from 'next/navigation';
+import { useAssetBySlug } from '../../hooks/asset-by-slug';
 
 export const AssetName = () => {
-  const { slug } = useParams() as { slug: string };
-
-  const token = useMemo(() => {
-    return tokens.find(i => i.id === slug);
-  }, [slug]);
+  const asset = useAssetBySlug();
 
   return (
     <div className='flex items-center  gap-4'>
-      <Image src={token?.icon ?? ''} alt='' width={40} height={40} />
+      <Image src={asset?.icon ?? ''} alt='' width={40} height={40} />
       <div className='ml-2 flex flex-col justify-between'>
-        <p className='subtitle2'>{token?.token}</p>
-        <p className='subtitle1'>{token?.name}</p>
+        <p className='subtitle2'>{asset?.symbol}</p>
+        <p className='subtitle1'>{asset?.name}</p>
       </div>
       <div className='flex items-start gap-2 self-end'>
         {/* go to contract icon - replace */}

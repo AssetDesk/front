@@ -1,9 +1,8 @@
 'use client';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import React from 'react';
 import { Button, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from 'ui';
-import { tokens } from '../../utils';
+import { assets } from '../../utils';
 
 export const BorrowMarketTable = () => {
   const router = useRouter();
@@ -13,16 +12,16 @@ export const BorrowMarketTable = () => {
       <div className='flex flex-col gap-6 md:hidden'>
         <p className='h2'>Borrow Markets</p>
         <div className='flex flex-col gap-4'>
-          {tokens.map(i => (
+          {assets.map(i => (
             <div
-              key={i.token}
+              key={i.address}
               className='card-gradient flex flex-col gap-4 rounded-lg px-[16px] pb-[26px] pt-[16px]'
             >
               <div className='flex justify-between'>
                 <p className='subtitle2 text-[#E3E3E3]'>Assets</p>
                 <div className='flex gap-2'>
                   <Image src={i.icon} alt='' width={20} height={20} />
-                  <p className='subtitle3 text-[#E3E3E3]'>{i.token}</p>
+                  <p className='subtitle3 text-[#E3E3E3]'>{i.symbol}</p>
                 </div>
               </div>
               <div className='flex justify-between'>
@@ -31,13 +30,13 @@ export const BorrowMarketTable = () => {
               </div>
               <div className='flex justify-between'>
                 <p className='subtitle2 text-[#E3E3E3]'>Wallet</p>
-                <p className='subtitle3 text-[#E3E3E3]'>0 {i.token}</p>
+                <p className='subtitle3 text-[#E3E3E3]'>0 {i.symbol}</p>
               </div>
               <div className='flex justify-between'>
                 <p className='subtitle2 text-[#E3E3E3]'>Liquidity</p>
                 <p className='subtitle3 text-[#E3E3E3]'>$ 7.17M</p>
               </div>
-              <Button className='mt-6 w-full' onClick={navigateToAsset(i.token)}>
+              <Button className='mt-6 w-full' onClick={navigateToAsset(i.address)}>
                 More
               </Button>
             </div>
@@ -56,16 +55,20 @@ export const BorrowMarketTable = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {tokens.map(i => (
-              <TableRow key={i.token} className='cursor-pointer' onClick={navigateToAsset(i.token)}>
+            {assets.map(i => (
+              <TableRow
+                key={i.address}
+                className='cursor-pointer'
+                onClick={navigateToAsset(i.address)}
+              >
                 <TableCell>
                   <div className='flex items-center gap-2'>
                     <Image src={i.icon} alt='' width={20} height={20} />
-                    <p>{i.token}</p>
+                    <p>{i.symbol}</p>
                   </div>
                 </TableCell>
                 <TableCell className='text-right'>2.36%</TableCell>
-                <TableCell className='text-center'>0 {i.token}</TableCell>
+                <TableCell className='text-center'>0 {i.symbol}</TableCell>
                 <TableCell className='text-center'>$ 7.17M</TableCell>
               </TableRow>
             ))}

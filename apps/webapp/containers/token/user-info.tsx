@@ -1,19 +1,28 @@
 'use client';
-import React, { useMemo } from 'react';
-import { SupplyModal } from './supply-modal';
-import { BorrowModal } from './borrow-modal';
-import { WithdrawModal } from './withdraw-modal';
-import { RepayModal } from './repay-modal';
-import { FadeTransition } from '../../components';
+import { useSorobanReact } from '@soroban-react/core';
 import { useParams } from 'next/navigation';
-import { tokens } from '../../utils';
+import { useMemo } from 'react';
+import { Address } from 'soroban-client';
+import { FadeTransition } from '../../components';
+import { useReadContract } from '../../hooks/read-contract';
+import { BorrowModal } from './borrow-modal';
+import { RepayModal } from './repay-modal';
+import { SupplyModal } from './supply-modal';
+import { WithdrawModal } from './withdraw-modal';
+import { useAssetBySlug } from '../../hooks/asset-by-slug';
 
 export const UserInfo = () => {
   const { slug } = useParams() as { slug: string };
+  const { address } = useSorobanReact();
+  const asset = useAssetBySlug();
 
-  const token = useMemo(() => {
-    return tokens.find(i => i.id === slug);
-  }, [slug]);
+  const args = useMemo(() => {
+    if (!address) return [];
+    return [new Address(address).toScVal()];
+  }, [address]);
+
+  const { result } = useReadContract<bigint>(slug.toUpperCase(), 'balance', args);
+
   return (
     <FadeTransition>
       <div className='flex flex-col gap-[18px]'>
@@ -34,7 +43,9 @@ export const UserInfo = () => {
             </svg>
             <div className='flex flex-col gap-2'>
               <p className='subtitle1'>Wallet balance</p>
-              <p className='number2'>0 {token?.token}</p>
+              <p className='number2'>
+                {result ? result.toString() : ''} {asset?.symbol}
+              </p>
             </div>
           </div>
           {/* // user detail */}
@@ -57,7 +68,7 @@ export const UserInfo = () => {
                     />
                   </svg>
                 </div>
-                <p className='number mt-1'>760.00 {token?.token}</p>
+                <p className='number mt-1'>760.00 {asset?.symbol}</p>
                 <p className='number2'>$760.00</p>
               </div>
               <SupplyModal />
@@ -80,7 +91,7 @@ export const UserInfo = () => {
                     />
                   </svg>
                 </div>
-                <p className='number mt-1'>760.00 {token?.token}</p>
+                <p className='number mt-1'>760.00 {asset?.symbol}</p>
                 <p className='number2'>$760.00</p>
               </div>
               <BorrowModal />
@@ -103,7 +114,7 @@ export const UserInfo = () => {
                     />
                   </svg>
                 </div>
-                <p className='number mt-1'>760.00 {token?.token}</p>
+                <p className='number mt-1'>760.00 {asset?.symbol}</p>
                 <p className='number2'>$760.00</p>
               </div>
               <WithdrawModal />
@@ -126,7 +137,7 @@ export const UserInfo = () => {
                     />
                   </svg>
                 </div>
-                <p className='number mt-1'>760.00 {token?.token}</p>
+                <p className='number mt-1'>760.00 {asset?.symbol}</p>
                 <p className='number2'>$760.00</p>
               </div>
               <RepayModal />

@@ -1,19 +1,14 @@
 'use client';
-import { useParams } from 'next/navigation';
-import React, { useMemo } from 'react';
 import { Button, Input } from 'ui';
-import { tokens } from '../utils';
+import { useAssetBySlug } from '../hooks/asset-by-slug';
 
 interface BalanceInputProps {
   balanceTitle: string;
 }
 
 export const BalanceInput = ({ balanceTitle }: BalanceInputProps) => {
-  const { slug } = useParams() as { slug: string };
+  const asset = useAssetBySlug();
 
-  const token = useMemo(() => {
-    return tokens.find(i => i.id === slug);
-  }, [slug]);
   return (
     <div className='flex flex-col gap-2'>
       <div className='relative'>
@@ -30,15 +25,8 @@ export const BalanceInput = ({ balanceTitle }: BalanceInputProps) => {
       </div>
       <div className='flex justify-between'>
         <p className='subtitle3'>{balanceTitle}</p>
-        <p className='number2'>0 {token?.token}</p>
+        <p className='number2'>0 {asset?.symbol}</p>
       </div>
     </div>
   );
 };
-
-// <div className=''>
-//   <Input placeholder='0.0' />
-//   <Button variant='ghost' className=''>
-//     max
-//   </Button>
-// </div>
