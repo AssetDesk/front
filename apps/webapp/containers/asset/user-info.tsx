@@ -10,6 +10,8 @@ import { RepayModal } from './repay-modal';
 import { SupplyModal } from './supply-modal';
 import { WithdrawModal } from './withdraw-modal';
 import { useAssetBySlug } from '../../hooks/asset-by-slug';
+import { formatNumber } from '../../utils/format-number';
+import { calculateBalanceExponents } from '../../utils/calculate-balance-exponents';
 
 export const UserInfo = () => {
   const { slug } = useParams() as { slug: string };
@@ -22,6 +24,13 @@ export const UserInfo = () => {
   }, [address]);
 
   const { result } = useReadContract<bigint>(slug.toUpperCase(), 'balance', args);
+
+  const formatedBalance = useMemo(() => {
+    if (!result || !asset) return '0';
+    return formatNumber(Number(calculateBalanceExponents(result, asset.exponents)));
+  }, [result, asset]);
+
+  if (!asset) return <></>;
 
   return (
     <FadeTransition>
@@ -44,7 +53,7 @@ export const UserInfo = () => {
             <div className='flex flex-col gap-2'>
               <p className='subtitle1'>Wallet balance</p>
               <p className='number2'>
-                {result ? result.toString() : ''} {asset?.symbol}
+                {result ? formatedBalance : ''} {asset.symbol}
               </p>
             </div>
           </div>
@@ -68,7 +77,7 @@ export const UserInfo = () => {
                     />
                   </svg>
                 </div>
-                <p className='number mt-1'>760.00 {asset?.symbol}</p>
+                <p className='number mt-1'>760.00 {asset.symbol}</p>
                 <p className='number2'>$760.00</p>
               </div>
               <SupplyModal />
@@ -91,7 +100,7 @@ export const UserInfo = () => {
                     />
                   </svg>
                 </div>
-                <p className='number mt-1'>760.00 {asset?.symbol}</p>
+                <p className='number mt-1'>760.00 {asset.symbol}</p>
                 <p className='number2'>$760.00</p>
               </div>
               <BorrowModal />
@@ -114,7 +123,7 @@ export const UserInfo = () => {
                     />
                   </svg>
                 </div>
-                <p className='number mt-1'>760.00 {asset?.symbol}</p>
+                <p className='number mt-1'>760.00 {asset.symbol}</p>
                 <p className='number2'>$760.00</p>
               </div>
               <WithdrawModal />
@@ -137,7 +146,7 @@ export const UserInfo = () => {
                     />
                   </svg>
                 </div>
-                <p className='number mt-1'>760.00 {asset?.symbol}</p>
+                <p className='number mt-1'>760.00 {asset.symbol}</p>
                 <p className='number2'>$760.00</p>
               </div>
               <RepayModal />

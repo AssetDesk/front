@@ -7,7 +7,7 @@ const SorobanProvider: React.FC<{ children: React.ReactNode }> = ({ children }) 
   return (
     <SorobanReactProvider
       appName='AssetDesk'
-      // autoconnect
+      autoconnect
       chains={allowedChains}
       connectors={allowedConnectors}
     >

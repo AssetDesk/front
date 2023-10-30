@@ -1,3 +1,3 @@
 export * from './routes';
-export * from './tokens';
+export * from './assets';
 export * from './general-metadata';
