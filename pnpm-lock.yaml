@@ -50,6 +50,9 @@ importers:
       '@stellar/freighter-api':
         specifier: ^1.6.0
         version: registry.npmmirror.com/@stellar/freighter-api@1.6.0
+      '@tanstack/react-query':
+        specifier: ^5.4.3
+        version: registry.npmmirror.com/@tanstack/react-query@5.4.3(react-dom@18.2.0)(react@18.2.0)
       framer-motion:
         specifier: ^10.16.1
         version: registry.npmmirror.com/framer-motion@10.16.1(react-dom@18.2.0)(react@18.2.0)
@@ -1553,6 +1556,32 @@ packages:
     version: 0.5.1
     dependencies:
       tslib: registry.npmmirror.com/tslib@2.6.2
+    dev: false
+
+  registry.npmmirror.com/@tanstack/query-core@5.4.3:
+    resolution: {integrity: sha512-fnI9ORjcuLGm1sNrKatKIosRQUpuqcD4SV7RqRSVmj8JSicX2aoMyKryHEBpVQvf6N4PaBVgBxQomjsbsGPssQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@tanstack/query-core/-/query-core-5.4.3.tgz}
+    name: '@tanstack/query-core'
+    version: 5.4.3
+    dev: false
+
+  registry.npmmirror.com/@tanstack/react-query@5.4.3(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-4aSOrRNa6yEmf7mws5QPTVMn8Lp7L38tFoTZ0c1ZmhIvbr8GIA0WT7X5N3yz/nuK8hUtjw9cAzBr4BPDZZ+tzA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@tanstack/react-query/-/react-query-5.4.3.tgz}
+    id: registry.npmmirror.com/@tanstack/react-query/5.4.3
+    name: '@tanstack/react-query'
+    version: 5.4.3
+    peerDependencies:
+      react: ^18.0.0
+      react-dom: ^18.0.0
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+    dependencies:
+      '@tanstack/query-core': registry.npmmirror.com/@tanstack/query-core@5.4.3
+      react: registry.npmmirror.com/react@18.2.0
+      react-dom: registry.npmmirror.com/react-dom@18.2.0(react@18.2.0)
     dev: false
 
   registry.npmmirror.com/@tootallnate/quickjs-emscripten@0.23.0:

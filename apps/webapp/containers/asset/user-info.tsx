@@ -4,7 +4,6 @@ import { useParams } from 'next/navigation';
 import { useMemo } from 'react';
 import { Address } from 'soroban-client';
 import { FadeTransition } from '../../components';
-import { useReadContract } from '../../hooks/read-contract';
 import { BorrowModal } from './borrow-modal';
 import { RepayModal } from './repay-modal';
 import { SupplyModal } from './supply-modal';
@@ -12,6 +11,8 @@ import { WithdrawModal } from './withdraw-modal';
 import { useAssetBySlug } from '../../hooks/asset-by-slug';
 import { formatNumber } from '../../utils/format-number';
 import { calculateBalanceExponents } from '../../utils/calculate-balance-exponents';
+import { useReadContract } from '../../hooks/read-contract';
+import { ContractMethods } from '../../types/contract';
 
 export const UserInfo = () => {
   const { slug } = useParams() as { slug: string };
@@ -23,12 +24,12 @@ export const UserInfo = () => {
     return [new Address(address).toScVal()];
   }, [address]);
 
-  const { result } = useReadContract<bigint>(slug.toUpperCase(), 'balance', args);
-
-  const formatedBalance = useMemo(() => {
-    if (!result || !asset) return '0';
-    return formatNumber(Number(calculateBalanceExponents(result, asset.exponents)));
-  }, [result, asset]);
+  const { data } = useReadContract<bigint>(
+    slug.toUpperCase(),
+    ContractMethods.BALANCE,
+    args,
+    Boolean(address),
+  );
 
   if (!asset) return <></>;
 
@@ -53,7 +54,10 @@ export const UserInfo = () => {
             <div className='flex flex-col gap-2'>
               <p className='subtitle1'>Wallet balance</p>
               <p className='number2'>
-                {result ? formatedBalance : ''} {asset.symbol}
+                {data
+                  ? formatNumber(Number(calculateBalanceExponents(data, asset.exponents)))
+                  : '0'}{' '}
+                {asset.symbol}
               </p>
             </div>
           </div>

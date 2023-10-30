@@ -7,6 +7,5 @@ export const useAssetBySlug = () => {
   const asset = useMemo(() => {
     return assets.find(i => i.address === slug.toUpperCase());
   }, [slug]);
-
   return asset;
 };

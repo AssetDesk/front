@@ -1,9 +1,9 @@
-import React from 'react';
 import { SorobanReactProvider } from '@soroban-react/core';
-import { allowedChains } from './allowedChains';
-import { allowedConnectors } from './connectors';
+import React from 'react';
+import { allowedChains } from '../soroban/allowedChains';
+import { allowedConnectors } from '../soroban/connectors';
 
-const SorobanProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+const SorobanProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <SorobanReactProvider
       appName='AssetDesk'
