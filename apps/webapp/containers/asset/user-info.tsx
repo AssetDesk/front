@@ -12,7 +12,7 @@ import { formatNumber } from '../../utils/format-number';
 import { calculateBalanceExponents } from '../../utils/calculate-balance-exponents';
 import { useReadContract } from '../../hooks/read-contract';
 import { ContractMethods } from '../../types/contract';
-import { useAssetPrice } from '../../hooks/asset-price';
+// import { useAssetPrice } from '../../hooks/asset-price';
 import { CONTRACT_ADDRESS } from '../../utils/addresses';
 import BigNumber from 'bignumber.js';
 
@@ -28,15 +28,19 @@ export const UserInfo = () => {
   const { data: walletBalance } = useReadContract<bigint>(
     asset!.address,
     ContractMethods.BALANCE,
+    0n,
     args,
     Boolean(address),
   );
 
-  const assetPrice = useAssetPrice(asset!.symbol);
+  console.log(walletBalance);
+
+  // const assetPrice = useAssetPrice(asset!.symbol);
 
   const { data: depositBalance } = useReadContract<bigint>(
     CONTRACT_ADDRESS,
     ContractMethods.GET_DEPOSIT,
+    0n,
     [...args, xdr.ScVal.scvSymbol(asset!.symbol)],
     Boolean(address),
   );

@@ -9,7 +9,7 @@ export const useAssetPrice = (denom: string) => {
     return [xdr.ScVal.scvSymbol(denom)];
   }, [denom]);
 
-  const { data } = useReadContract<bigint>(CONTRACT_ADDRESS, ContractMethods.GET_PRICE, args);
+  const { data } = useReadContract<bigint>(CONTRACT_ADDRESS, ContractMethods.GET_PRICE, 0n, args);
 
   return data;
 };

@@ -13,6 +13,7 @@ const sorobanRPC: Record<ChainName, string> = {
 export const useReadContract = <T>(
   contractAddress: string,
   method: ContractMethods,
+  initialData: T,
   args?: xdr.ScVal[],
   // set enabled to true only when request need account address
   enabled?: boolean,
@@ -36,6 +37,7 @@ export const useReadContract = <T>(
   const query = useQuery<T>({
     queryKey: [method],
     enabled: enabled ?? true,
+    initialData,
     queryFn: async () => {
       const res = await fetchContractValue({
         server,
