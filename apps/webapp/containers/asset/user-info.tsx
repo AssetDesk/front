@@ -14,6 +14,7 @@ import { useReadContract } from '../../hooks/read-contract';
 import { ContractMethods } from '../../types/contract';
 import { useAssetPrice } from '../../hooks/asset-price';
 import { CONTRACT_ADDRESS } from '../../utils/addresses';
+import BigNumber from 'bignumber.js';
 
 export const UserInfo = () => {
   const { address } = useSorobanReact();
@@ -62,7 +63,14 @@ export const UserInfo = () => {
               <p className='subtitle1'>Wallet balance</p>
               <p className='number2'>
                 {walletBalance
-                  ? formatNumber(Number(calculateBalanceExponents(walletBalance, asset!.exponents)))
+                  ? formatNumber(
+                      Number(
+                        calculateBalanceExponents(
+                          BigNumber(walletBalance.toString()),
+                          asset!.exponents,
+                        ),
+                      ),
+                    )
                   : '0'}{' '}
                 {asset!.symbol}
               </p>
@@ -91,7 +99,12 @@ export const UserInfo = () => {
                 <p className='number mt-1'>
                   {depositBalance
                     ? formatNumber(
-                        Number(calculateBalanceExponents(depositBalance, asset!.exponents)),
+                        Number(
+                          calculateBalanceExponents(
+                            BigNumber(depositBalance.toString()),
+                            asset!.exponents,
+                          ),
+                        ),
                       )
                     : '0'}{' '}
                   {asset!.symbol}
