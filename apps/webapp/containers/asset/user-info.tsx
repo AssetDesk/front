@@ -44,13 +44,21 @@ export const UserInfo = () => {
     Boolean(address),
   );
 
-  const { deposit, depositUsdc } = useMemo(() => {
-    const deposit = calculateBalanceExponents(depositData, asset!.exponents);
-    return {
-      deposit,
-      depositUsdc: deposit.multipliedBy(assetPrice),
-    };
-  }, [assetPrice, depositData, asset]);
+  const { data: availableBorrowData } = useReadContract<BigNumber>(
+    CONTRACT_ADDRESS,
+    ContractMethods.GET_AVAILABLE_TO_BORROW,
+    BigNumber(0),
+    [...args, xdr.ScVal.scvSymbol(asset!.symbol)],
+    Boolean(address),
+  );
+
+  const { data: availableRedeemData } = useReadContract<BigNumber>(
+    CONTRACT_ADDRESS,
+    ContractMethods.GET_AVAILABLE_TO_REDEEM,
+    BigNumber(0),
+    [...args, xdr.ScVal.scvSymbol(asset!.symbol)],
+    Boolean(address),
+  );
 
   const { walletBalance, walletBalanceUsdc } = useMemo(() => {
     const walletBalance = calculateBalanceExponents(walletBalanceData, asset!.exponents);
@@ -60,6 +68,32 @@ export const UserInfo = () => {
       walletBalanceUsdc: walletBalance.multipliedBy(assetPrice),
     };
   }, [assetPrice, walletBalanceData, asset]);
+
+  const { deposit, depositUsdc } = useMemo(() => {
+    const deposit = calculateBalanceExponents(depositData, asset!.exponents);
+    return {
+      deposit,
+      depositUsdc: deposit.multipliedBy(assetPrice),
+    };
+  }, [assetPrice, depositData, asset]);
+
+  const { availableBorrow, availableBorrowUsdc } = useMemo(() => {
+    const availableBorrow = calculateBalanceExponents(availableBorrowData, asset!.exponents);
+
+    return {
+      availableBorrow,
+      availableBorrowUsdc: availableBorrow.multipliedBy(assetPrice),
+    };
+  }, [assetPrice, availableBorrowData, asset]);
+
+  const { availableRedeem, availableRedeemUsdc } = useMemo(() => {
+    const availableRedeem = calculateBalanceExponents(availableRedeemData, asset!.exponents);
+
+    return {
+      availableRedeem,
+      availableRedeemUsdc: availableRedeem.multipliedBy(assetPrice),
+    };
+  }, [assetPrice, availableRedeemData, asset]);
 
   return (
     <FadeTransition>
@@ -96,8 +130,10 @@ export const UserInfo = () => {
                   <p className='subtitle2 text-[#E3E3E3]'>Available to borrow</p>
                   <InfoIcon className='h-4 w-4 text-[#B0A8A8]' />
                 </div>
-                <p className='number mt-1'>760.00 {asset!.symbol}</p>
-                <p className='number2'>$760.00</p>
+                <p className='number mt-1'>
+                  {formatNumber(availableBorrow.toNumber())} {asset!.symbol}
+                </p>
+                <p className='number2'>${formatNumber(availableBorrowUsdc.toNumber())}</p>
               </div>
               <BorrowModal />
             </div>
@@ -122,8 +158,10 @@ export const UserInfo = () => {
                   <p className='subtitle2 text-[#E3E3E3]'>Available to repay</p>
                   <InfoIcon className='h-4 w-4 text-[#B0A8A8]' />
                 </div>
-                <p className='number mt-1'>760.00 {asset!.symbol}</p>
-                <p className='number2'>$760.00</p>
+                <p className='number mt-1'>
+                  {formatNumber(availableRedeem.toNumber())} {asset!.symbol}
+                </p>
+                <p className='number2'>${formatNumber(availableRedeemUsdc.toNumber())}</p>
               </div>
               <RepayModal />
             </div>

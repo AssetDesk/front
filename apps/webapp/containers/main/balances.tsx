@@ -59,8 +59,6 @@ export const Balances = () => {
     };
   }, [borrowData, collateral]);
 
-  
-
   return (
     <div className='card-gradient flex flex-col rounded-lg px-[16px] pb-[48px] pt-[40px] md:px-[20px] md:pb-[16px] md:pt-[16px] '>
       <div className='mb-7 flex flex-col md:mb-4 md:flex-row md:items-center md:justify-around'>
@@ -70,7 +68,9 @@ export const Balances = () => {
         </div>
         <div className='order-2 flex flex-row items-center justify-between md:order-1 md:flex-col md:gap-4'>
           <p className='h2 md:text-[#0344E9]'>Supply Balance</p>
-          <p className='title'>${formatNumber(calculateBalanceExponents(supplyData, 8).toNumber())}</p>
+          <p className='title'>
+            ${formatNumber(calculateBalanceExponents(supplyData, 8).toNumber())}
+          </p>
         </div>
         <div className='order-3 flex flex-row items-center justify-between md:flex-col md:gap-4'>
           <p className='h2 md:text-[#0344E9]'>Borrow Balance</p>

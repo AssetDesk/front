@@ -5,7 +5,7 @@ import { useState } from 'react';
 // import { CheckCircledIcon, CopyIcon } from '@radix-ui/react-icons';
 import { Button } from './ui/button';
 import { cn } from '../lib/utils';
-import { CheckCircle, CopyIcon } from 'lucide-react'
+import { CheckCircle, CopyIcon } from 'lucide-react';
 
 export interface CopyToClipboardProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   text: string;
