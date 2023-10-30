@@ -1,10 +1,10 @@
+import BigNumber from 'bignumber.js';
 import { useMemo } from 'react';
+import { xdr } from 'soroban-client';
 import { ContractMethods } from '../types/contract';
 import { CONTRACT_ADDRESS } from '../utils/addresses';
+import { formatValueToExponents } from '../utils/format-value-to-exponents';
 import { useReadContract } from './read-contract';
-import { xdr } from 'soroban-client';
-import BigNumber from 'bignumber.js';
-import { calculateBalanceExponents } from '../utils/calculate-balance-exponents';
 
 export const useAssetPrice = (denom: string): BigNumber => {
   const args = useMemo(() => {
@@ -19,7 +19,7 @@ export const useAssetPrice = (denom: string): BigNumber => {
   );
 
   const price = useMemo(() => {
-    return calculateBalanceExponents(data, 8);
+    return formatValueToExponents(data, 8);
   }, [data]);
 
   return price;

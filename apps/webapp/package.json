@@ -11,7 +11,6 @@
   },
   "dependencies": {
     "@soroban-react/chains": "^7.1.1",
-    "@soroban-react/contracts": "^7.1.1",
     "@soroban-react/core": "^7.1.1",
     "@soroban-react/freighter": "^7.1.1",
     "@soroban-react/types": "^7.1.1",

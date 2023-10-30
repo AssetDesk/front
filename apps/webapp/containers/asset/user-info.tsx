@@ -1,21 +1,21 @@
 'use client';
 import { useSorobanReact } from '@soroban-react/core';
+import BigNumber from 'bignumber.js';
+import { InfoIcon, WalletIcon } from 'lucide-react';
 import { useMemo } from 'react';
 import { Address, xdr } from 'soroban-client';
 import { FadeTransition } from '../../components';
+import { useAssetBySlug } from '../../hooks/asset-by-slug';
+import { useAssetPrice } from '../../hooks/asset-price';
+import { useReadContract } from '../../hooks/read-contract';
+import { ContractMethods } from '../../types/contract';
+import { CONTRACT_ADDRESS } from '../../utils/addresses';
+import { formatNumber } from '../../utils/format-number';
+import { formatValueToExponents } from '../../utils/format-value-to-exponents';
 import { BorrowModal } from './borrow-modal';
 import { RepayModal } from './repay-modal';
 import { SupplyModal } from './supply-modal';
 import { WithdrawModal } from './withdraw-modal';
-import { useAssetBySlug } from '../../hooks/asset-by-slug';
-import { formatNumber } from '../../utils/format-number';
-import { calculateBalanceExponents } from '../../utils/calculate-balance-exponents';
-import { useReadContract } from '../../hooks/read-contract';
-import { ContractMethods } from '../../types/contract';
-import { CONTRACT_ADDRESS } from '../../utils/addresses';
-import BigNumber from 'bignumber.js';
-import { useAssetPrice } from '../../hooks/asset-price';
-import { InfoIcon, WalletIcon } from 'lucide-react';
 
 export const UserInfo = () => {
   const { address } = useSorobanReact();
@@ -61,7 +61,7 @@ export const UserInfo = () => {
   );
 
   const { walletBalance, walletBalanceUsdc } = useMemo(() => {
-    const walletBalance = calculateBalanceExponents(walletBalanceData, asset!.exponents);
+    const walletBalance = formatValueToExponents(walletBalanceData, asset!.exponents);
 
     return {
       walletBalance,
@@ -70,7 +70,7 @@ export const UserInfo = () => {
   }, [assetPrice, walletBalanceData, asset]);
 
   const { deposit, depositUsdc } = useMemo(() => {
-    const deposit = calculateBalanceExponents(depositData, asset!.exponents);
+    const deposit = formatValueToExponents(depositData, asset!.exponents);
     return {
       deposit,
       depositUsdc: deposit.multipliedBy(assetPrice),
@@ -78,7 +78,7 @@ export const UserInfo = () => {
   }, [assetPrice, depositData, asset]);
 
   const { availableBorrow, availableBorrowUsdc } = useMemo(() => {
-    const availableBorrow = calculateBalanceExponents(availableBorrowData, asset!.exponents);
+    const availableBorrow = formatValueToExponents(availableBorrowData, asset!.exponents);
 
     return {
       availableBorrow,
@@ -87,7 +87,7 @@ export const UserInfo = () => {
   }, [assetPrice, availableBorrowData, asset]);
 
   const { availableRedeem, availableRedeemUsdc } = useMemo(() => {
-    const availableRedeem = calculateBalanceExponents(availableRedeemData, asset!.exponents);
+    const availableRedeem = formatValueToExponents(availableRedeemData, asset!.exponents);
 
     return {
       availableRedeem,

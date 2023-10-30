@@ -1,14 +1,14 @@
 'use client';
-import React, { useMemo } from 'react';
-import { Progress } from 'ui';
 import { useSorobanReact } from '@soroban-react/core';
+import BigNumber from 'bignumber.js';
+import { useMemo } from 'react';
 import { Address } from 'soroban-client';
+import { Progress } from 'ui';
 import { useReadContract } from '../../hooks/read-contract';
 import { ContractMethods } from '../../types/contract';
-import { calculateBalanceExponents } from '../../utils/calculate-balance-exponents';
-import { formatNumber } from '../../utils/format-number';
-import BigNumber from 'bignumber.js';
 import { CONTRACT_ADDRESS } from '../../utils/addresses';
+import { formatNumber } from '../../utils/format-number';
+import { formatValueToExponents } from '../../utils/format-value-to-exponents';
 
 function calculatePercentage(value: BigNumber, total: BigNumber): BigNumber {
   if (total.isZero()) return BigNumber(0);
@@ -48,8 +48,8 @@ export const Balances = () => {
   );
 
   const { borrowUscd, collateralUsdc, percent } = useMemo(() => {
-    const borrowUscd = calculateBalanceExponents(borrowData, 8);
-    const collateralUsdc = calculateBalanceExponents(collateral, 8);
+    const borrowUscd = formatValueToExponents(borrowData, 8);
+    const collateralUsdc = formatValueToExponents(collateral, 8);
     const percent = calculatePercentage(borrowUscd, collateralUsdc).toNumber();
 
     return {
@@ -68,9 +68,7 @@ export const Balances = () => {
         </div>
         <div className='order-2 flex flex-row items-center justify-between md:order-1 md:flex-col md:gap-4'>
           <p className='h2 md:text-[#0344E9]'>Supply Balance</p>
-          <p className='title'>
-            ${formatNumber(calculateBalanceExponents(supplyData, 8).toNumber())}
-          </p>
+          <p className='title'>${formatNumber(formatValueToExponents(supplyData, 8).toNumber())}</p>
         </div>
         <div className='order-3 flex flex-row items-center justify-between md:flex-col md:gap-4'>
           <p className='h2 md:text-[#0344E9]'>Borrow Balance</p>

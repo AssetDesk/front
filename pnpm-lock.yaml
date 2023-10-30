@@ -35,9 +35,6 @@ importers:
       '@soroban-react/chains':
         specifier: ^7.1.1
         version: registry.npmmirror.com/@soroban-react/chains@7.1.1
-      '@soroban-react/contracts':
-        specifier: ^7.1.1
-        version: registry.npmmirror.com/@soroban-react/contracts@7.1.1(react@18.2.0)
       '@soroban-react/core':
         specifier: ^7.1.1
         version: registry.npmmirror.com/@soroban-react/core@7.1.1(react@18.2.0)
@@ -1482,21 +1479,6 @@ packages:
     version: 7.1.1
     dependencies:
       '@soroban-react/types': registry.npmmirror.com/@soroban-react/types@7.1.1
-      soroban-client: registry.npmmirror.com/soroban-client@1.0.0-beta.2
-    transitivePeerDependencies:
-      - debug
-    dev: false
-
-  registry.npmmirror.com/@soroban-react/contracts@7.1.1(react@18.2.0):
-    resolution: {integrity: sha512-zmM96lbdH/zCALjlT+L1mqoP2mMN6jPdpNhxGOCpgEWzUFSLIoKhyIMHnNn76CxoXtN+OcnIEB4cW/P+kVjcJw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@soroban-react/contracts/-/contracts-7.1.1.tgz}
-    id: registry.npmmirror.com/@soroban-react/contracts/7.1.1
-    name: '@soroban-react/contracts'
-    version: 7.1.1
-    peerDependencies:
-      react: '>=16.8'
-    dependencies:
-      '@soroban-react/core': registry.npmmirror.com/@soroban-react/core@7.1.1(react@18.2.0)
-      react: registry.npmmirror.com/react@18.2.0
       soroban-client: registry.npmmirror.com/soroban-client@1.0.0-beta.2
     transitivePeerDependencies:
       - debug
