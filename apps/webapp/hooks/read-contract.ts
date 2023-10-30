@@ -5,6 +5,7 @@ import { useSorobanReact } from '@soroban-react/core';
 import { ContractMethods } from '../types/contract';
 import { useMemo } from 'react';
 import { ChainName } from '../types/chain';
+import BigNumber from 'bignumber.js';
 
 const sorobanRPC: Record<ChainName, string> = {
   Futurenet: 'https://rpc-futurenet.stellar.org:443',
@@ -48,9 +49,18 @@ export const useReadContract = <T>(
         source,
       });
 
-      return scValToNative(res) as T;
+      const nativeRes = scValToNative(res) as unknown;
+
+      if (typeof nativeRes === 'bigint') {
+        return BigNumber(nativeRes.toString()) as T;
+      }
+
+      return nativeRes as T;
     },
   });
 
-  return query;
+  return {
+    ...query,
+    data: query.data ?? initialData,
+  };
 };
