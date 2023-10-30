@@ -3,13 +3,24 @@ import { ContractMethods } from '../types/contract';
 import { CONTRACT_ADDRESS } from '../utils/addresses';
 import { useReadContract } from './read-contract';
 import { xdr } from 'soroban-client';
+import BigNumber from 'bignumber.js';
+import { calculateBalanceExponents } from '../utils/calculate-balance-exponents';
 
-export const useAssetPrice = (denom: string) => {
+export const useAssetPrice = (denom: string): BigNumber => {
   const args = useMemo(() => {
     return [xdr.ScVal.scvSymbol(denom)];
   }, [denom]);
 
-  const { data } = useReadContract<bigint>(CONTRACT_ADDRESS, ContractMethods.GET_PRICE, 0n, args);
+  const { data } = useReadContract<BigNumber>(
+    CONTRACT_ADDRESS,
+    ContractMethods.GET_PRICE,
+    BigNumber(0),
+    args,
+  );
 
-  return data;
+  const price = useMemo(() => {
+    return calculateBalanceExponents(data, 8);
+  }, [data]);
+
+  return price;
 };
