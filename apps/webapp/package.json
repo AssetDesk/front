@@ -17,6 +17,7 @@
     "@soroban-react/types": "^7.1.1",
     "@stellar/freighter-api": "^1.6.0",
     "@tanstack/react-query": "^5.4.3",
+    "bignumber.js": "^9.1.2",
     "framer-motion": "^10.16.1",
     "next": "^13.4.19",
     "react": "^18.2.0",

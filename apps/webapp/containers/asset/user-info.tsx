@@ -25,7 +25,7 @@ export const UserInfo = () => {
   }, [address]);
 
   const { data: walletBalance } = useReadContract<bigint>(
-    asset!.symbol,
+    asset!.address,
     ContractMethods.BALANCE,
     args,
     Boolean(address),
@@ -39,8 +39,6 @@ export const UserInfo = () => {
     [...args, xdr.ScVal.scvSymbol(asset!.symbol)],
     Boolean(address),
   );
-
-  console.log({ assetPrice, depositBalance });
 
   return (
     <FadeTransition>
