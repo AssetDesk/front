@@ -8,7 +8,7 @@ import { useReadContract } from '../../hooks/read-contract';
 import { ContractMethods } from '../../types/contract';
 import { CONTRACT_ADDRESS } from '../../utils/addresses';
 import { formatNumber } from '../../utils/format-number';
-import { formatValueToExponents } from '../../utils/format-value-to-exponents';
+import { formatValue } from '../../utils/format-value';
 
 function calculatePercentage(value: BigNumber, total: BigNumber): BigNumber {
   if (total.isZero()) return BigNumber(0);
@@ -48,8 +48,8 @@ export const Balances = () => {
   );
 
   const { borrowUscd, collateralUsdc, percent } = useMemo(() => {
-    const borrowUscd = formatValueToExponents(borrowData, 8);
-    const collateralUsdc = formatValueToExponents(collateral, 8);
+    const borrowUscd = formatValue(borrowData, 8);
+    const collateralUsdc = formatValue(collateral, 8);
     const percent = calculatePercentage(borrowUscd, collateralUsdc).toNumber();
 
     return {
@@ -68,7 +68,7 @@ export const Balances = () => {
         </div>
         <div className='order-2 flex flex-row items-center justify-between md:order-1 md:flex-col md:gap-4'>
           <p className='h2 md:text-[#0344E9]'>Supply Balance</p>
-          <p className='title'>${formatNumber(formatValueToExponents(supplyData, 8).toNumber())}</p>
+          <p className='title'>${formatNumber(formatValue(supplyData, 8).toNumber())}</p>
         </div>
         <div className='order-3 flex flex-row items-center justify-between md:flex-col md:gap-4'>
           <p className='h2 md:text-[#0344E9]'>Borrow Balance</p>

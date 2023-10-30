@@ -11,7 +11,7 @@ import { useReadContract } from '../../hooks/read-contract';
 import { ContractMethods } from '../../types/contract';
 import { CONTRACT_ADDRESS } from '../../utils/addresses';
 import { formatNumber } from '../../utils/format-number';
-import { formatValueToExponents } from '../../utils/format-value-to-exponents';
+import { formatValue } from '../../utils/format-value';
 import { BorrowModal } from './borrow-modal';
 import { RepayModal } from './repay-modal';
 import { SupplyModal } from './supply-modal';
@@ -61,37 +61,37 @@ export const UserInfo = () => {
   );
 
   const { walletBalance, walletBalanceUsdc } = useMemo(() => {
-    const walletBalance = formatValueToExponents(walletBalanceData, asset!.exponents);
+    const walletBalance = formatValue(walletBalanceData, asset!.exponents);
 
     return {
-      walletBalance,
-      walletBalanceUsdc: walletBalance.multipliedBy(assetPrice),
+      walletBalance: walletBalance.toNumber(),
+      walletBalanceUsdc: walletBalance.multipliedBy(assetPrice).toNumber(),
     };
   }, [assetPrice, walletBalanceData, asset]);
 
   const { deposit, depositUsdc } = useMemo(() => {
-    const deposit = formatValueToExponents(depositData, asset!.exponents);
+    const deposit = formatValue(depositData, asset!.exponents);
     return {
-      deposit,
-      depositUsdc: deposit.multipliedBy(assetPrice),
+      deposit: deposit.toNumber(),
+      depositUsdc: deposit.multipliedBy(assetPrice).toNumber(),
     };
   }, [assetPrice, depositData, asset]);
 
   const { availableBorrow, availableBorrowUsdc } = useMemo(() => {
-    const availableBorrow = formatValueToExponents(availableBorrowData, asset!.exponents);
+    const availableBorrow = formatValue(availableBorrowData, asset!.exponents);
 
     return {
-      availableBorrow,
-      availableBorrowUsdc: availableBorrow.multipliedBy(assetPrice),
+      availableBorrow: availableBorrow.toNumber(),
+      availableBorrowUsdc: availableBorrow.multipliedBy(assetPrice).toNumber(),
     };
   }, [assetPrice, availableBorrowData, asset]);
 
   const { availableRedeem, availableRedeemUsdc } = useMemo(() => {
-    const availableRedeem = formatValueToExponents(availableRedeemData, asset!.exponents);
+    const availableRedeem = formatValue(availableRedeemData, asset!.exponents);
 
     return {
-      availableRedeem,
-      availableRedeemUsdc: availableRedeem.multipliedBy(assetPrice),
+      availableRedeem: availableRedeem.toNumber(),
+      availableRedeemUsdc: availableRedeem.multipliedBy(assetPrice).toNumber(),
     };
   }, [assetPrice, availableRedeemData, asset]);
 
@@ -105,7 +105,7 @@ export const UserInfo = () => {
             <div className='flex flex-col gap-2'>
               <p className='subtitle1'>Wallet balance</p>
               <p className='number2'>
-                {formatNumber(walletBalance.toNumber())}
+                {formatNumber(walletBalance)}
                 {asset!.symbol}
               </p>
             </div>
@@ -118,9 +118,9 @@ export const UserInfo = () => {
                   <InfoIcon className='h-4 w-4 text-[#B0A8A8]' />
                 </div>
                 <p className='number mt-1'>
-                  {formatNumber(walletBalance.toNumber())} {asset!.symbol}
+                  {formatNumber(walletBalance)} {asset!.symbol}
                 </p>
-                <p className='number2'>${formatNumber(walletBalanceUsdc.toNumber())}</p>
+                <p className='number2'>${formatNumber(walletBalanceUsdc)}</p>
               </div>
               <SupplyModal />
             </div>
@@ -131,9 +131,9 @@ export const UserInfo = () => {
                   <InfoIcon className='h-4 w-4 text-[#B0A8A8]' />
                 </div>
                 <p className='number mt-1'>
-                  {formatNumber(availableBorrow.toNumber())} {asset!.symbol}
+                  {formatNumber(availableBorrow)} {asset!.symbol}
                 </p>
-                <p className='number2'>${formatNumber(availableBorrowUsdc.toNumber())}</p>
+                <p className='number2'>${formatNumber(availableBorrowUsdc)}</p>
               </div>
               <BorrowModal />
             </div>
@@ -144,10 +144,10 @@ export const UserInfo = () => {
                   <InfoIcon className='h-4 w-4 text-[#B0A8A8]' />
                 </div>
                 <p className='number mt-1'>
-                  {formatNumber(deposit.toNumber())} {asset!.symbol}
+                  {formatNumber(deposit)} {asset!.symbol}
                 </p>
                 <p className='number2'>
-                  $ {formatNumber(depositUsdc.toNumber())} {asset!.symbol}
+                  $ {formatNumber(depositUsdc)} {asset!.symbol}
                 </p>
               </div>
               <WithdrawModal />
@@ -159,9 +159,9 @@ export const UserInfo = () => {
                   <InfoIcon className='h-4 w-4 text-[#B0A8A8]' />
                 </div>
                 <p className='number mt-1'>
-                  {formatNumber(availableRedeem.toNumber())} {asset!.symbol}
+                  {formatNumber(availableRedeem)} {asset!.symbol}
                 </p>
-                <p className='number2'>${formatNumber(availableRedeemUsdc.toNumber())}</p>
+                <p className='number2'>${formatNumber(availableRedeemUsdc)}</p>
               </div>
               <RepayModal />
             </div>

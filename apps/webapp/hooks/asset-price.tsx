@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import { xdr } from 'soroban-client';
 import { ContractMethods } from '../types/contract';
 import { CONTRACT_ADDRESS } from '../utils/addresses';
-import { formatValueToExponents } from '../utils/format-value-to-exponents';
+import { formatValue } from '../utils/format-value';
 import { useReadContract } from './read-contract';
 
 export const useAssetPrice = (denom: string): BigNumber => {
@@ -19,7 +19,7 @@ export const useAssetPrice = (denom: string): BigNumber => {
   );
 
   const price = useMemo(() => {
-    return formatValueToExponents(data, 8);
+    return formatValue(data, 8);
   }, [data]);
 
   return price;
