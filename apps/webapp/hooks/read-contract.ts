@@ -34,7 +34,7 @@ export const useReadContract = <T>(
   }, [address, enabled]);
 
   const query = useQuery<T>({
-    queryKey: ['balance'],
+    queryKey: [method],
     enabled: enabled ?? true,
     queryFn: async () => {
       const res = await fetchContractValue({

@@ -22,7 +22,7 @@ export const SupplyModal = () => {
       </DialogTrigger>
       <DialogContent className='w-[300px] md:w-[400px]'>
         <DialogHeader>
-          <DialogTitle>Supply {asset?.address}</DialogTitle>
+          <DialogTitle>Supply {asset?.symbol}</DialogTitle>
         </DialogHeader>
         <div className='grid gap-6 md:gap-10'>
           <BalanceInput balanceTitle='Wallet Balance' />

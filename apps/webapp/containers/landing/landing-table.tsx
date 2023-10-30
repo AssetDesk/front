@@ -39,7 +39,7 @@ export const LandingTable = () => {
                 <p className='subtitle2 text-[#E3E3E3]'>Borrow APY</p>
                 <p className='subtitle3 text-[#E3E3E3]'>-0.47%</p>
               </div>
-              <Button className='mt-6 w-full' onClick={navigateToAsset(i.address)}>
+              <Button className='mt-6 w-full' onClick={navigateToAsset(i.symbol)}>
                 More
               </Button>
             </div>
@@ -62,7 +62,7 @@ export const LandingTable = () => {
               <TableRow
                 key={i.address}
                 className='cursor-pointer'
-                onClick={navigateToAsset(i.address)}
+                onClick={navigateToAsset(i.symbol)}
               >
                 <TableCell className='flex items-center justify-center'>
                   <div className='flex items-center gap-2'>

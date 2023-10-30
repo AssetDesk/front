@@ -36,7 +36,7 @@ export const BorrowMarketTable = () => {
                 <p className='subtitle2 text-[#E3E3E3]'>Liquidity</p>
                 <p className='subtitle3 text-[#E3E3E3]'>$ 7.17M</p>
               </div>
-              <Button className='mt-6 w-full' onClick={navigateToAsset(i.address)}>
+              <Button className='mt-6 w-full' onClick={navigateToAsset(i.symbol)}>
                 More
               </Button>
             </div>
@@ -59,7 +59,7 @@ export const BorrowMarketTable = () => {
               <TableRow
                 key={i.address}
                 className='cursor-pointer'
-                onClick={navigateToAsset(i.address)}
+                onClick={navigateToAsset(i.symbol)}
               >
                 <TableCell>
                   <div className='flex items-center gap-2'>

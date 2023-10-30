@@ -1,8 +1,7 @@
 'use client';
 import { useSorobanReact } from '@soroban-react/core';
-import { useParams } from 'next/navigation';
 import { useMemo } from 'react';
-import { Address } from 'soroban-client';
+import { Address, xdr } from 'soroban-client';
 import { FadeTransition } from '../../components';
 import { BorrowModal } from './borrow-modal';
 import { RepayModal } from './repay-modal';
@@ -13,9 +12,10 @@ import { formatNumber } from '../../utils/format-number';
 import { calculateBalanceExponents } from '../../utils/calculate-balance-exponents';
 import { useReadContract } from '../../hooks/read-contract';
 import { ContractMethods } from '../../types/contract';
+import { useAssetPrice } from '../../hooks/asset-price';
+import { CONTRACT_ADDRESS } from '../../utils/addresses';
 
 export const UserInfo = () => {
-  const { slug } = useParams() as { slug: string };
   const { address } = useSorobanReact();
   const asset = useAssetBySlug();
 
@@ -24,14 +24,23 @@ export const UserInfo = () => {
     return [new Address(address).toScVal()];
   }, [address]);
 
-  const { data } = useReadContract<bigint>(
-    slug.toUpperCase(),
+  const { data: walletBalance } = useReadContract<bigint>(
+    asset!.symbol,
     ContractMethods.BALANCE,
     args,
     Boolean(address),
   );
 
-  if (!asset) return <></>;
+  const assetPrice = useAssetPrice(asset!.symbol);
+
+  const { data: depositBalance } = useReadContract<bigint>(
+    CONTRACT_ADDRESS,
+    ContractMethods.GET_DEPOSIT,
+    [...args, xdr.ScVal.scvSymbol(asset!.symbol)],
+    Boolean(address),
+  );
+
+  console.log({ assetPrice, depositBalance });
 
   return (
     <FadeTransition>
@@ -39,7 +48,7 @@ export const UserInfo = () => {
         <p className='h2'>Your info</p>
         <div className='card-gradient flex flex-col rounded-lg px-4 pb-10 pt-4  md:px-[30px] md:pb-14 md:pt-5'>
           <div className='flex items-center gap-4 border-b-[1px] border-[rgba(8,46,143,0.50)] pb-4 md:pb-6 '>
-            {/* TODO: replace wallet icon */}
+            {/* TODO: replace walletBalance icon */}
             <svg
               xmlns='http://www.w3.org/2000/svg'
               className='h-[30px] w-[30px] md:h-10 md:w-10'
@@ -54,10 +63,10 @@ export const UserInfo = () => {
             <div className='flex flex-col gap-2'>
               <p className='subtitle1'>Wallet balance</p>
               <p className='number2'>
-                {data
-                  ? formatNumber(Number(calculateBalanceExponents(data, asset.exponents)))
+                {walletBalance
+                  ? formatNumber(Number(calculateBalanceExponents(walletBalance, asset!.exponents)))
                   : '0'}{' '}
-                {asset.symbol}
+                {asset!.symbol}
               </p>
             </div>
           </div>
@@ -81,7 +90,14 @@ export const UserInfo = () => {
                     />
                   </svg>
                 </div>
-                <p className='number mt-1'>760.00 {asset.symbol}</p>
+                <p className='number mt-1'>
+                  {depositBalance
+                    ? formatNumber(
+                        Number(calculateBalanceExponents(depositBalance, asset!.exponents)),
+                      )
+                    : '0'}{' '}
+                  {asset!.symbol}
+                </p>
                 <p className='number2'>$760.00</p>
               </div>
               <SupplyModal />
@@ -104,7 +120,7 @@ export const UserInfo = () => {
                     />
                   </svg>
                 </div>
-                <p className='number mt-1'>760.00 {asset.symbol}</p>
+                <p className='number mt-1'>760.00 {asset!.symbol}</p>
                 <p className='number2'>$760.00</p>
               </div>
               <BorrowModal />
@@ -127,7 +143,7 @@ export const UserInfo = () => {
                     />
                   </svg>
                 </div>
-                <p className='number mt-1'>760.00 {asset.symbol}</p>
+                <p className='number mt-1'>760.00 {asset!.symbol}</p>
                 <p className='number2'>$760.00</p>
               </div>
               <WithdrawModal />
@@ -150,7 +166,7 @@ export const UserInfo = () => {
                     />
                   </svg>
                 </div>
-                <p className='number mt-1'>760.00 {asset.symbol}</p>
+                <p className='number mt-1'>760.00 {asset!.symbol}</p>
                 <p className='number2'>$760.00</p>
               </div>
               <RepayModal />
