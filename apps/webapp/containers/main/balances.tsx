@@ -1,17 +1,18 @@
 'use client';
-import React, {useMemo} from 'react';
+import React, { useMemo } from 'react';
 import { Progress } from 'ui';
-import {useSorobanReact} from "@soroban-react/core";
-import {Address} from "soroban-client";
-import {useReadContract} from "../../hooks/read-contract";
-import {ContractMethods} from "../../types/contract";
-import {calculateBalanceExponents} from "../../utils/calculate-balance-exponents";
-import {formatNumber} from "../../utils/format-number";
-import BigNumber from "bignumber.js";
+import { useSorobanReact } from '@soroban-react/core';
+import { Address } from 'soroban-client';
+import { useReadContract } from '../../hooks/read-contract';
+import { ContractMethods } from '../../types/contract';
+import { calculateBalanceExponents } from '../../utils/calculate-balance-exponents';
+import { formatNumber } from '../../utils/format-number';
+import BigNumber from 'bignumber.js';
+import { CONTRACT_ADDRESS } from '../../utils/addresses';
 
-function calculatePercentage(value: bigint, total: bigint): BigNumber {
-  if(total === 0n) return BigNumber(0)
-  return BigNumber(value.toString()).div(BigNumber(total.toString())).multipliedBy(BigNumber(100))
+function calculatePercentage(value: BigNumber, total: BigNumber): BigNumber {
+  if (total.isZero()) return BigNumber(0);
+  return BigNumber(value.toString()).div(BigNumber(total.toString())).multipliedBy(BigNumber(100));
 }
 
 export const Balances = () => {
@@ -22,34 +23,43 @@ export const Balances = () => {
     return [new Address(address).toScVal()];
   }, [address]);
 
-  const { data: supply } = useReadContract<bigint>(
-    'CCNH3C5OIG2XMIQDCBXSDCFL3IZTRBNVCFKNKX4KEA6E4UDNHJD3NLKG',
+  const { data: supplyData } = useReadContract<BigNumber>(
+    CONTRACT_ADDRESS,
     ContractMethods.GET_USER_DEPOSITED_USD,
-    0n,
+    BigNumber(0),
     args,
     Boolean(address),
   );
 
-  const { data: borrow } = useReadContract<bigint>(
-    'CCNH3C5OIG2XMIQDCBXSDCFL3IZTRBNVCFKNKX4KEA6E4UDNHJD3NLKG',
+  const { data: borrowData } = useReadContract<BigNumber>(
+    CONTRACT_ADDRESS,
     ContractMethods.GET_USER_BORROWED_USD,
-    0n,
+    BigNumber(0),
     args,
     Boolean(address),
   );
 
-  const { data: collateral } = useReadContract<bigint>(
-    'CCNH3C5OIG2XMIQDCBXSDCFL3IZTRBNVCFKNKX4KEA6E4UDNHJD3NLKG',
+  const { data: collateral } = useReadContract<BigNumber>(
+    CONTRACT_ADDRESS,
     ContractMethods.GET_USER_COLLATERAL_USD,
-    0n,
+    BigNumber(0),
     args,
     Boolean(address),
   );
 
-  const calcSupplyData = useMemo(() => formatNumber(calculateBalanceExponents(BigNumber(supply.toString()) , 8).toNumber()), [supply]);
-  const calcBorrowData = useMemo(() => formatNumber(calculateBalanceExponents(BigNumber(borrow.toString()), 8).toNumber()), [borrow]);
-  const maxBorrow =  useMemo(() => formatNumber(calculateBalanceExponents(BigNumber(collateral.toString()), 8).toNumber()) , [collateral]);
-  const percent = useMemo(() => calculateBalanceExponents(calculatePercentage( borrow, collateral), 8).toNumber(), [borrow, collateral]);
+  const { borrowUscd, collateralUsdc, percent } = useMemo(() => {
+    const borrowUscd = calculateBalanceExponents(borrowData, 8);
+    const collateralUsdc = calculateBalanceExponents(collateral, 8);
+    const percent = calculatePercentage(borrowUscd, collateralUsdc).toNumber();
+
+    return {
+      borrowUscd: borrowUscd.toNumber(),
+      collateralUsdc: collateralUsdc.toNumber(),
+      percent,
+    };
+  }, [borrowData, collateral]);
+
+  
 
   return (
     <div className='card-gradient flex flex-col rounded-lg px-[16px] pb-[48px] pt-[40px] md:px-[20px] md:pb-[16px] md:pt-[16px] '>
@@ -60,19 +70,19 @@ export const Balances = () => {
         </div>
         <div className='order-2 flex flex-row items-center justify-between md:order-1 md:flex-col md:gap-4'>
           <p className='h2 md:text-[#0344E9]'>Supply Balance</p>
-          <p className='title'>${calcSupplyData}</p>
+          <p className='title'>${formatNumber(calculateBalanceExponents(supplyData, 8).toNumber())}</p>
         </div>
         <div className='order-3 flex flex-row items-center justify-between md:flex-col md:gap-4'>
           <p className='h2 md:text-[#0344E9]'>Borrow Balance</p>
-          <p className='title'>${calcBorrowData}</p>
+          <p className='title'>${formatNumber(borrowUscd)}</p>
         </div>
       </div>
       <div className='flex flex-col justify-between gap-4 md:flex-row md:items-center'>
         <p className='subtitle2 text-[#0344E9] md:text-[#FFFFFF]'>Borrow limit</p>
         <div className='flex flex-1 items-center gap-3 md:gap-4'>
-          <p className='number2 text-[#E3E3E3]'>{calcBorrowData}$</p>
+          <p className='number2 text-[#E3E3E3]'>{formatNumber(borrowUscd)}$</p>
           <Progress value={percent} />
-          <p className='number2 text-[#E3E3E3]'>{maxBorrow}$</p>
+          <p className='number2 text-[#E3E3E3]'>{formatNumber(collateralUsdc)}$</p>
         </div>
       </div>
     </div>

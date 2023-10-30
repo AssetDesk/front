@@ -44,20 +44,20 @@ export const UserInfo = () => {
     Boolean(address),
   );
 
-  const { deposit, depositInUsdc } = useMemo(() => {
+  const { deposit, depositUsdc } = useMemo(() => {
     const deposit = calculateBalanceExponents(depositData, asset!.exponents);
     return {
       deposit,
-      depositInUsdc: deposit.multipliedBy(assetPrice),
+      depositUsdc: deposit.multipliedBy(assetPrice),
     };
   }, [assetPrice, depositData, asset]);
 
-  const { walletBalance, walletBalanceInUsdc } = useMemo(() => {
+  const { walletBalance, walletBalanceUsdc } = useMemo(() => {
     const walletBalance = calculateBalanceExponents(walletBalanceData, asset!.exponents);
 
     return {
       walletBalance,
-      walletBalanceInUsdc: walletBalance.multipliedBy(assetPrice),
+      walletBalanceUsdc: walletBalance.multipliedBy(assetPrice),
     };
   }, [assetPrice, walletBalanceData, asset]);
 
@@ -86,7 +86,7 @@ export const UserInfo = () => {
                 <p className='number mt-1'>
                   {formatNumber(walletBalance.toNumber())} {asset!.symbol}
                 </p>
-                <p className='number2'>${formatNumber(walletBalanceInUsdc.toNumber())}</p>
+                <p className='number2'>${formatNumber(walletBalanceUsdc.toNumber())}</p>
               </div>
               <SupplyModal />
             </div>
@@ -111,7 +111,7 @@ export const UserInfo = () => {
                   {formatNumber(deposit.toNumber())} {asset!.symbol}
                 </p>
                 <p className='number2'>
-                  $ {formatNumber(depositInUsdc.toNumber())} {asset!.symbol}
+                  $ {formatNumber(depositUsdc.toNumber())} {asset!.symbol}
                 </p>
               </div>
               <WithdrawModal />
