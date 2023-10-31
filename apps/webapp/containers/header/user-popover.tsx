@@ -23,8 +23,6 @@ export const UserPopover = () => {
             size='sm'
             className='text-primary'
             onClick={() => {
-              console.log('there');
-              
               void (async () => await disconnect())();
             }}
           >

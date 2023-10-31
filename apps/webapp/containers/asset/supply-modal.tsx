@@ -39,7 +39,7 @@ export const SupplyModal = ({
     return [
       new Address(address).toScVal(),
       xdr.ScVal.scvSymbol(asset.symbol),
-      new ScInt(formatValueToBigNumber(value, asset.exponents).toNumber()).toU128(),
+      new ScInt(formatValueToBigNumber(value, asset.exponents).toString()).toU128(),
     ];
   }, [address, asset, value]);
 

@@ -9,7 +9,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from 'ui';
-import { BalanceInput } from '../../components';
 import { useAssetBySlug } from '../../hooks/asset-by-slug';
 
 export const RepayModal = () => {
@@ -25,7 +24,7 @@ export const RepayModal = () => {
           <DialogTitle>Repay {asset?.symbol}</DialogTitle>
         </DialogHeader>
         <div className='grid gap-6 md:gap-10'>
-          <BalanceInput balanceTitle='Wallet Balance' />
+          {/* <BalanceInput balanceTitle='Wallet Balance' /> */}
           <div className='flex flex-col gap-2 md:gap-4'>
             <p className='subtitle2'>Borrow Rates</p>
             <div className='flex flex-col'>

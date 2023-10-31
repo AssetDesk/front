@@ -139,7 +139,14 @@ export const UserInfo = () => {
                 </p>
                 <p className='number2'>${formatNumber(availableRedeemUsdc)}</p>
               </div>
-              <WithdrawModal />
+              <WithdrawModal
+                balance={availableRedeem}
+                asset={asset!}
+                refetch={async () => {
+                  await refetchWalletBalance();
+                  await refetchRedeem();
+                }}
+              />
             </div>
             <div className='flex flex-col gap-6 md:flex-row md:items-center md:justify-between'>
               <div className='flex flex-col gap-1 border-l-[1px] border-[#0344E9] pl-4'>

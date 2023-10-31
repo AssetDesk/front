@@ -45,8 +45,8 @@ importers:
         specifier: ^7.1.1
         version: registry.npmmirror.com/@soroban-react/types@7.1.1
       '@stellar/freighter-api':
-        specifier: ^1.6.0
-        version: registry.npmmirror.com/@stellar/freighter-api@1.6.0
+        specifier: ^1.7.1
+        version: registry.npmmirror.com/@stellar/freighter-api@1.7.1
       '@tanstack/react-query':
         specifier: ^5.4.3
         version: registry.npmmirror.com/@tanstack/react-query@5.4.3(react-dom@18.2.0)(react@18.2.0)
@@ -1519,12 +1519,6 @@ packages:
     resolution: {integrity: sha512-jctPg3Z/Wi2okkdaF9ceaIKjTahGyczzSSnsFJJLYoNdgu3hpKwPIUzI83YauwreM10acDs2bPJmYQ6NqUerUA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@soroban-react/types/-/types-7.1.1.tgz}
     name: '@soroban-react/types'
     version: 7.1.1
-    dev: false
-
-  registry.npmmirror.com/@stellar/freighter-api@1.6.0:
-    resolution: {integrity: sha512-Z6CRY+3+whzMspda6PiHEc4Rs9tdQkHLin9FopdnHhij/FEEAK+IiuF8Ki2ROcQweXdazb8N237aSim10s+Zgw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@stellar/freighter-api/-/freighter-api-1.6.0.tgz}
-    name: '@stellar/freighter-api'
-    version: 1.6.0
     dev: false
 
   registry.npmmirror.com/@stellar/freighter-api@1.7.1:

@@ -17,9 +17,10 @@ import { SendTxStatus } from '../types/transaction';
 import { ContractMethods } from '../types/contract';
 import { fetchContractValue, getTxBuilder } from '../utils/fetch-contract-value';
 import { useCallback, useState } from 'react';
+import BigNumber from 'bignumber.js';
 
 const getTxBuildResult = (
-  source: Account,
+  account: Account,
   contractAddress: string,
   funcName: string,
   args: xdr.ScVal[],
@@ -27,6 +28,11 @@ const getTxBuildResult = (
   activeChain: WalletChain,
 ) => {
   const contract = new Contract(contractAddress);
+  const source = new Account(
+    account.accountId(),
+    // https://github.com/stellar/js-stellar-base/blob/master/docs/reference/building-transactions.md#sequence-numbers
+    BigNumber(account.sequenceNumber()).minus(BigNumber(1)).toString(),
+  );
 
   const txBuilder = getTxBuilder(source, fee, activeChain.networkPassphrase);
 
@@ -76,14 +82,16 @@ export const useWriteContract = (
   args: xdr.ScVal[],
 ) => {
   const { activeChain, address } = useSorobanReact();
-  const [isError, setError] = useState(false);
+  const [isError, setIsError] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const [isSuccess, setSuccess] = useState(false);
+  const [error, setError] = useState<null | string>(null);
 
   const write = useCallback(async () => {
     setLoading(true);
-    setError(false);
+    setIsError(false);
     setSuccess(false);
+    setError(null);
     try {
       if (!activeChain || !address) return;
 
@@ -91,7 +99,9 @@ export const useWriteContract = (
         allowHttp: true,
       });
 
-      const source = await server.getAccount(address);
+      const account = await server.getAccount(address);
+
+      const source = new Account(address, account.sequenceNumber());
 
       const simulateResult = await fetchContractValue({
         server,
@@ -120,15 +130,14 @@ export const useWriteContract = (
         accountToSign: address,
       });
 
-      console.log(signedXDR);
-
       await submitTx(signedXDR, activeChain.networkPassphrase, server);
       setSuccess(true);
       setLoading(false);
     } catch (error) {
-      console.log(error);
+      const err = error as Error;
+      setError(JSON.stringify(err.message));
 
-      setError(true);
+      setIsError(true);
       setLoading(false);
     }
   }, [address, activeChain, contractAddress, method, args]);
@@ -137,6 +146,7 @@ export const useWriteContract = (
     isError,
     isLoading,
     isSuccess,
+    error,
     write,
   };
 };

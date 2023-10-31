@@ -25,18 +25,19 @@ export const useReadContract = <T>(
     });
   }, [activeChain]);
 
-  const source = useMemo(() => {
-    if (address && enabled !== false) return new Account(address, '0');
-
-    // use default address if user doesn`t coonnect
-    return new Account('GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWHF', '0');
-  }, [address, enabled]);
-
   const query = useQuery<T>({
     queryKey: [method],
     enabled: enabled ?? true,
     initialData,
     queryFn: async () => {
+      let source;
+      if (address && enabled !== false) {
+        const account = await server.getAccount(address);
+
+        source = new Account(address, account.sequenceNumber());
+      } else {
+        source = new Account('GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWHF', '0');
+      }
       const res = await fetchContractValue({
         server,
         networkPassphrase: activeChain?.networkPassphrase ?? '',

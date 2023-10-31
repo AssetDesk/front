@@ -9,7 +9,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from 'ui';
-import { BalanceInput } from '../../components';
 import { useAssetBySlug } from '../../hooks/asset-by-slug';
 
 export const BorrowModal = () => {
@@ -25,7 +24,7 @@ export const BorrowModal = () => {
           <DialogTitle>Borrow {asset?.symbol}</DialogTitle>
         </DialogHeader>
         <div className='grid gap-6 md:gap-10'>
-          <BalanceInput balanceTitle='Currently Borrowing' />
+          {/* <BalanceInput balanceTitle='Currently Borrowing' /> */}
           <div className='flex flex-col gap-6'>
             <div className='flex flex-col gap-2 md:gap-4'>
               <p className='subtitle2'>Borrow Rates</p>
