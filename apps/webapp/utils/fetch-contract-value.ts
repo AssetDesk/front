@@ -41,6 +41,7 @@ export function contractTransaction({
   const myParams: xdr.ScVal[] = args ?? [];
   const contract = new Contract(contractAddress);
   const txBuilder = getTxBuilder(source, fee, networkPassphrase);
+
   return txBuilder
     .addOperation(contract.call(method, ...myParams))
     .setTimeout(TimeoutInfinite)
@@ -67,6 +68,7 @@ export async function fetchContractValue({
   });
 
   const simulated: SorobanRpc.SimulateTransactionResponse = await server.simulateTransaction(txn);
+
   if (SorobanRpc.isSimulationError(simulated)) {
     throw new Error(simulated.error);
   } else if (!simulated.result) {

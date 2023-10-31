@@ -14,9 +14,9 @@ import { useSorobanReact } from '@soroban-react/core';
 import { WalletChain } from '@soroban-react/types';
 import { signTransaction } from '@stellar/freighter-api';
 import { SendTxStatus } from '../types/transaction';
-import { useQuery } from '@tanstack/react-query';
 import { ContractMethods } from '../types/contract';
 import { fetchContractValue, getTxBuilder } from '../utils/fetch-contract-value';
+import { useCallback, useState } from 'react';
 
 const getTxBuildResult = (
   source: Account,
@@ -76,11 +76,15 @@ export const useWriteContract = (
   args: xdr.ScVal[],
 ) => {
   const { activeChain, address } = useSorobanReact();
+  const [isError, setError] = useState(false);
+  const [isLoading, setLoading] = useState(false);
+  const [isSuccess, setSuccess] = useState(false);
 
-  const query = useQuery({
-    queryKey: [method],
-    enabled: false,
-    queryFn: async () => {
+  const write = useCallback(async () => {
+    setLoading(true);
+    setError(false);
+    setSuccess(false);
+    try {
       if (!activeChain || !address) return;
 
       const server = new Server(sorobanRPC[activeChain.name as ChainName], {
@@ -116,9 +120,23 @@ export const useWriteContract = (
         accountToSign: address,
       });
 
-      return await submitTx(signedXDR, activeChain.networkPassphrase, server);
-    },
-  });
+      console.log(signedXDR);
 
-  return query;
+      await submitTx(signedXDR, activeChain.networkPassphrase, server);
+      setSuccess(true);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+
+      setError(true);
+      setLoading(false);
+    }
+  }, [address, activeChain, contractAddress, method, args]);
+
+  return {
+    isError,
+    isLoading,
+    isSuccess,
+    write,
+  };
 };

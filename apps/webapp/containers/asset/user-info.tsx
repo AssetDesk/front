@@ -26,7 +26,7 @@ export const UserInfo = () => {
     return [new Address(address).toScVal()];
   }, [address]);
 
-  const { data: walletBalanceData } = useReadContract<BigNumber>(
+  const { data: walletBalanceData, refetch: refetchWalletBalance } = useReadContract<BigNumber>(
     asset!.address,
     ContractMethods.BALANCE,
     BigNumber(0),
@@ -36,14 +36,6 @@ export const UserInfo = () => {
 
   const assetPrice = useAssetPrice(asset!.symbol);
 
-  const { data: depositData } = useReadContract<BigNumber>(
-    CONTRACT_ADDRESS,
-    ContractMethods.GET_DEPOSIT,
-    BigNumber(0),
-    [...args, xdr.ScVal.scvSymbol(asset!.symbol)],
-    Boolean(address),
-  );
-
   const { data: availableBorrowData } = useReadContract<BigNumber>(
     CONTRACT_ADDRESS,
     ContractMethods.GET_AVAILABLE_TO_BORROW,
@@ -52,7 +44,7 @@ export const UserInfo = () => {
     Boolean(address),
   );
 
-  const { data: availableRedeemData } = useReadContract<BigNumber>(
+  const { data: availableRedeemData, refetch: refetchRedeem } = useReadContract<BigNumber>(
     CONTRACT_ADDRESS,
     ContractMethods.GET_AVAILABLE_TO_REDEEM,
     BigNumber(0),
@@ -68,14 +60,6 @@ export const UserInfo = () => {
       walletBalanceUsdc: walletBalance.multipliedBy(assetPrice).toNumber(),
     };
   }, [assetPrice, walletBalanceData, asset]);
-
-  const { deposit, depositUsdc } = useMemo(() => {
-    const deposit = formatValue(depositData, asset!.exponents);
-    return {
-      deposit: deposit.toNumber(),
-      depositUsdc: deposit.multipliedBy(assetPrice).toNumber(),
-    };
-  }, [assetPrice, depositData, asset]);
 
   const { availableBorrow, availableBorrowUsdc } = useMemo(() => {
     const availableBorrow = formatValue(availableBorrowData, asset!.exponents);
@@ -122,7 +106,14 @@ export const UserInfo = () => {
                 </p>
                 <p className='number2'>${formatNumber(walletBalanceUsdc)}</p>
               </div>
-              <SupplyModal />
+              <SupplyModal
+                balance={walletBalance}
+                asset={asset!}
+                refetch={async () => {
+                  await refetchWalletBalance();
+                  await refetchRedeem();
+                }}
+              />
             </div>
             <div className='flex flex-col gap-6 md:flex-row md:items-center md:justify-between'>
               <div className='flex flex-col gap-1 border-l-[1px] border-[#0344E9] pl-4'>
@@ -144,11 +135,9 @@ export const UserInfo = () => {
                   <InfoIcon className='h-4 w-4 text-[#B0A8A8]' />
                 </div>
                 <p className='number mt-1'>
-                  {formatNumber(deposit)} {asset!.symbol}
+                  {formatNumber(availableRedeem)} {asset!.symbol}
                 </p>
-                <p className='number2'>
-                  $ {formatNumber(depositUsdc)} {asset!.symbol}
-                </p>
+                <p className='number2'>${formatNumber(availableRedeemUsdc)}</p>
               </div>
               <WithdrawModal />
             </div>

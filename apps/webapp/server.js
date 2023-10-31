@@ -1,8 +1,9 @@
-import { createServer } from 'https';
-import { parse } from 'url';
-import next from 'next';
-import fs from 'fs';
+const { parse } = require('url');
+const next = require('next');
+const fs = require('fs');
+const { createServer } = require('https');
 
+// eslint-disable-next-line turbo/no-undeclared-env-vars
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
@@ -12,9 +13,9 @@ const httpsOptions = {
 };
 void app.prepare().then(() => {
   createServer(httpsOptions, (req, res) => {
-    const parsedUrl = parse(req.url!, true);
+    const parsedUrl = parse(req.url, true);
     void handle(req, res, parsedUrl);
-  }).listen(3000, (err: unknown) => {
+  }).listen(3000, err => {
     if (err) throw err;
     console.log('> Server started on https://localhost:3000');
   });

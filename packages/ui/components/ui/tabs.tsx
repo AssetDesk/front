@@ -29,7 +29,7 @@ const TabsTrigger = React.forwardRef<
   <TabsPrimitive.Trigger
     ref={ref}
     className={cn(
-      'data-[state=active]:text-foreground data-[state=inactive]:bg-transparent data-[state=active]:shadow-sm disabled:cursor-not-allowed',
+      'data-[state=active]:text-foreground disabled:cursor-not-allowed data-[state=inactive]:bg-transparent data-[state=active]:shadow-sm',
       buttonVariants(),
       className,
     )}

@@ -1,4 +1,6 @@
-export const assets = [
+import { Asset } from '../types/asset';
+
+export const assets: Asset[] = [
   {
     symbol: 'xlm',
     icon: '/xlm.png',
