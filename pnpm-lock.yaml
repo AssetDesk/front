@@ -56,6 +56,12 @@ importers:
       framer-motion:
         specifier: ^10.16.1
         version: registry.npmmirror.com/framer-motion@10.16.1(react-dom@18.2.0)(react@18.2.0)
+      fs:
+        specifier: 0.0.1-security
+        version: registry.npmmirror.com/fs@0.0.1-security
+      https:
+        specifier: ^1.0.0
+        version: registry.npmmirror.com/https@1.0.0
       lucide-react:
         specifier: ^0.290.0
         version: registry.npmmirror.com/lucide-react@0.290.0(react@18.2.0)
@@ -75,8 +81,8 @@ importers:
         specifier: ^2.8.0
         version: registry.npmmirror.com/recharts@2.8.0(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0)
       soroban-client:
-        specifier: 1.0.0-beta.2
-        version: registry.npmmirror.com/soroban-client@1.0.0-beta.2
+        specifier: 1.0.0-beta.3
+        version: registry.npmmirror.com/soroban-client@1.0.0-beta.3
       ui:
         specifier: workspace:*
         version: link:../../packages/ui
@@ -4093,6 +4099,12 @@ packages:
     name: fs.realpath
     version: 1.0.0
 
+  registry.npmmirror.com/fs@0.0.1-security:
+    resolution: {integrity: sha512-3XY9e1pP0CVEUCdj5BmfIZxRBTSDycnbqhIOGec9QYtmVH2fbLpj86CFWkrNOkt/Fvty4KZG5lTglL9j/gJ87w==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/fs/-/fs-0.0.1-security.tgz}
+    name: fs
+    version: 0.0.1-security
+    dev: false
+
   registry.npmmirror.com/fsevents@2.3.3:
     resolution: {integrity: sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/fsevents/-/fsevents-2.3.3.tgz}
     name: fsevents
@@ -4432,6 +4444,12 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  registry.npmmirror.com/https@1.0.0:
+    resolution: {integrity: sha512-4EC57ddXrkaF0x83Oj8sM6SLQHAWXw90Skqu2M4AEWENZ3F02dFJE/GARA8igO79tcgYqGrD7ae4f5L3um2lgg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/https/-/https-1.0.0.tgz}
+    name: https
+    version: 1.0.0
+    dev: false
 
   registry.npmmirror.com/human-signals@2.1.0:
     resolution: {integrity: sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/human-signals/-/human-signals-2.1.0.tgz}
@@ -6500,6 +6518,20 @@ packages:
       - debug
     dev: false
 
+  registry.npmmirror.com/soroban-client@1.0.0-beta.3:
+    resolution: {integrity: sha512-BnySnAKmSaDTMn+QV50jpJ24+sxwsUyi78Et120o4lzxyya0MXTXyx2toqVBGrTdEubjO0Fy4+bc+1jkbvGSOg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/soroban-client/-/soroban-client-1.0.0-beta.3.tgz}
+    name: soroban-client
+    version: 1.0.0-beta.3
+    dependencies:
+      axios: registry.npmmirror.com/axios@1.6.0
+      bignumber.js: registry.npmmirror.com/bignumber.js@9.1.2
+      buffer: registry.npmmirror.com/buffer@6.0.3
+      stellar-base: registry.npmmirror.com/stellar-base@10.0.0-beta.3
+      urijs: registry.npmmirror.com/urijs@1.19.11
+    transitivePeerDependencies:
+      - debug
+    dev: false
+
   registry.npmmirror.com/source-map-js@1.0.2:
     resolution: {integrity: sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/source-map-js/-/source-map-js-1.0.2.tgz}
     name: source-map-js
@@ -6527,6 +6559,21 @@ packages:
     resolution: {integrity: sha512-zXC5AsbUsLi57JruyeIMv23s3iUxq/P2ZFrSJ+FerLIZjSAjY8EDs4zwY4LCuu7swUu46Lm8GK6sqxUZCPekHw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/stellar-base/-/stellar-base-10.0.0-beta.1.tgz}
     name: stellar-base
     version: 10.0.0-beta.1
+    dependencies:
+      base32.js: registry.npmmirror.com/base32.js@0.1.0
+      bignumber.js: registry.npmmirror.com/bignumber.js@9.1.2
+      buffer: registry.npmmirror.com/buffer@6.0.3
+      js-xdr: registry.npmmirror.com/js-xdr@3.0.0
+      sha.js: registry.npmmirror.com/sha.js@2.4.11
+      tweetnacl: registry.npmmirror.com/tweetnacl@1.0.3
+    optionalDependencies:
+      sodium-native: registry.npmmirror.com/sodium-native@4.0.4
+    dev: false
+
+  registry.npmmirror.com/stellar-base@10.0.0-beta.3:
+    resolution: {integrity: sha512-+B1fOdsDWJEnYSYkKSAVHVngzaqDtD8wdDMT/FC+11MrohP3uGY1OmrEeVn34jiBmUlpYZVudDnpDMSXD4RqDA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/stellar-base/-/stellar-base-10.0.0-beta.3.tgz}
+    name: stellar-base
+    version: 10.0.0-beta.3
     dependencies:
       base32.js: registry.npmmirror.com/base32.js@0.1.0
       bignumber.js: registry.npmmirror.com/bignumber.js@9.1.2

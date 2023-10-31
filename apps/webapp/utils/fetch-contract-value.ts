@@ -1,5 +1,6 @@
 import {
   Account,
+  BASE_FEE,
   Contract,
   Server,
   SorobanRpc,
@@ -15,7 +16,19 @@ interface ContractTransaction {
   contractAddress: string;
   method: string;
   args: xdr.ScVal[] | undefined;
+  fee: string;
 }
+
+export const getTxBuilder = (
+  source: Account,
+  fee: string,
+  networkPassphrase: string,
+): TransactionBuilder => {
+  return new TransactionBuilder(source, {
+    fee,
+    networkPassphrase,
+  });
+};
 
 export function contractTransaction({
   networkPassphrase,
@@ -23,13 +36,12 @@ export function contractTransaction({
   contractAddress,
   method,
   args,
+  fee,
 }: ContractTransaction): Transaction {
   const myParams: xdr.ScVal[] = args ?? [];
   const contract = new Contract(contractAddress);
-  return new TransactionBuilder(source, {
-    fee: '100',
-    networkPassphrase,
-  })
+  const txBuilder = getTxBuilder(source, fee, networkPassphrase);
+  return txBuilder
     .addOperation(contract.call(method, ...myParams))
     .setTimeout(TimeoutInfinite)
     .build();
@@ -42,13 +54,16 @@ export async function fetchContractValue({
   method,
   args,
   source,
-}: ContractTransaction & { server: Server }): Promise<xdr.ScVal> {
+}: ContractTransaction & {
+  server: Server;
+}): Promise<SorobanRpc.SimulateTransactionSuccessResponse> {
   const txn = contractTransaction({
     source,
     networkPassphrase,
     contractAddress,
     method,
     args,
+    fee: BASE_FEE,
   });
 
   const simulated: SorobanRpc.SimulateTransactionResponse = await server.simulateTransaction(txn);
@@ -58,5 +73,5 @@ export async function fetchContractValue({
     throw new Error(`invalid simulation: no result in ${JSON.stringify(simulated)}`);
   }
 
-  return simulated.result.retval;
+  return simulated;
 }

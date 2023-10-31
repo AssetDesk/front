@@ -1,4 +1,4 @@
-import { Account, Server, scValToNative, xdr } from 'soroban-client';
+import { Account, BASE_FEE, Server, scValToNative, xdr } from 'soroban-client';
 import { useQuery } from '@tanstack/react-query';
 import { fetchContractValue } from '../utils/fetch-contract-value';
 import { useSorobanReact } from '@soroban-react/core';
@@ -6,10 +6,7 @@ import { ContractMethods } from '../types/contract';
 import { useMemo } from 'react';
 import { ChainName } from '../types/chain';
 import BigNumber from 'bignumber.js';
-
-const sorobanRPC: Record<ChainName, string> = {
-  Futurenet: 'https://rpc-futurenet.stellar.org:443',
-};
+import { sorobanRPC } from '../utils/rpc';
 
 export const useReadContract = <T>(
   contractAddress: string,
@@ -47,9 +44,10 @@ export const useReadContract = <T>(
         method,
         args,
         source,
+        fee: BASE_FEE,
       });
 
-      const nativeRes = scValToNative(res) as unknown;
+      const nativeRes = scValToNative(res.result!.retval) as unknown;
 
       if (typeof nativeRes === 'bigint') {
         return BigNumber(nativeRes.toString()) as T;

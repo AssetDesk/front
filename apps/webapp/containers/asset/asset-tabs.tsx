@@ -7,9 +7,9 @@ import { UserInfo } from './user-info';
 
 export const AssetTabs = () => {
   return (
-    <Tabs defaultValue='Overview' className='w-full'>
+    <Tabs defaultValue='Your info' className='w-full'>
       <TabsList className='w-full md:w-[484px]'>
-        <TabsTrigger value='Overview' className='flex-1'>
+        <TabsTrigger value='Overview' disabled className='flex-1'>
           Overview
         </TabsTrigger>
         <TabsTrigger value='Your info' className='flex-1'>
