@@ -12,13 +12,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
   return (
     <html lang='en'>
+      <head>
+        <title>AssetDesk</title>
+        <link rel='icon' href='/favicon.svg' sizes='any' type='image/svg' />
+      </head>
       <body className='min-h-screen'>
         {mounted && (
           <QueryProvider>
             <SorobanProvider>
               <div className='container relative flex min-h-screen flex-col'>
                 <Header />
-                <main className='flex-1'>{children}</main>
+                <div className='flex-1'>{children}</div>
                 <Footer />
               </div>
             </SorobanProvider>
