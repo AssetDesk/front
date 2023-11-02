@@ -12,4 +12,5 @@ export enum ContractMethods {
   BORROW = 'Borrow',
   GET_USER_BORROW_AMOUNT_WITH_INTEREST = 'GetUserBorrowAmountWithInterest',
   GET_LIQUIDITY_RATE = 'GetLiquidityRate',
+  GET_INTEREST_RATE = 'GetInterestRate',
 }

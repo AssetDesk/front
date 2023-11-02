@@ -26,7 +26,7 @@ export const useReadContractMultiAssets = <T>(
   }, [activeChain]);
 
   const query = useQuery<T>({
-    queryKey: [method],
+    queryKey: [`multi-${method}`],
     enabled: enabled ?? true,
     initialData,
     queryFn: async () => {
