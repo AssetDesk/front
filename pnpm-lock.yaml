@@ -62,6 +62,9 @@ importers:
       https:
         specifier: ^1.0.0
         version: registry.npmmirror.com/https@1.0.0
+      lodash:
+        specifier: ^4.17.21
+        version: registry.npmmirror.com/lodash@4.17.21
       lucide-react:
         specifier: ^0.290.0
         version: registry.npmmirror.com/lucide-react@0.290.0(react@18.2.0)
@@ -87,6 +90,9 @@ importers:
         specifier: workspace:*
         version: link:../../packages/ui
     devDependencies:
+      '@types/lodash':
+        specifier: ^4.14.200
+        version: registry.npmmirror.com/@types/lodash@4.14.200
       '@types/node':
         specifier: ^20.5.6
         version: registry.npmmirror.com/@types/node@20.5.6
@@ -1737,6 +1743,12 @@ packages:
     name: '@types/json5'
     version: 0.0.29
     dev: false
+
+  registry.npmmirror.com/@types/lodash@4.14.200:
+    resolution: {integrity: sha512-YI/M/4HRImtNf3pJgbF+W6FrXovqj+T+/HpENLTooK9PnkacBsDpeP3IpHab40CClUfhNmdM2WTNP2sa2dni5Q==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@types/lodash/-/lodash-4.14.200.tgz}
+    name: '@types/lodash'
+    version: 4.14.200
+    dev: true
 
   registry.npmmirror.com/@types/minimatch@5.1.2:
     resolution: {integrity: sha512-K0VQKziLUWkVKiRVrx4a40iPaxTUefQmjtkQofBkYRcoaaL/8rhwDWww9qWbrgicNOgnpIsMxyNIUM4+n6dUIA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@types/minimatch/-/minimatch-5.1.2.tgz}

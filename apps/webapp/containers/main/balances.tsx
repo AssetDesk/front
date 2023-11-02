@@ -6,7 +6,7 @@ import { Address } from 'soroban-client';
 import { Progress } from 'ui';
 import { useReadContract } from '../../hooks/read-contract';
 import { ContractMethods } from '../../types/contract';
-import { CONTRACT_ADDRESS } from '../../utils/addresses';
+import { CONTRACT_ADDRESS } from '../../utils/constants';
 import { formatNumber } from '../../utils/format-number';
 import { formatValue } from '../../utils/format-value';
 

@@ -1,5 +1,8 @@
 'use client';
+import { useSorobanReact } from '@soroban-react/core';
 import Image from 'next/image';
+import { useMemo, useState } from 'react';
+import { Address, ScInt, xdr } from 'soroban-client';
 import {
   Button,
   Dialog,
@@ -10,15 +13,12 @@ import {
   DialogTrigger,
 } from 'ui';
 import { BalanceInput } from '../../components';
-import { useSorobanReact } from '@soroban-react/core';
-import { useMemo, useState } from 'react';
-import { Address, ScInt, xdr } from 'soroban-client';
-import { formatValueToBigNumber } from '../../utils/format-value';
-import { Asset } from '../../types/asset';
-import { useWriteContract } from '../../hooks/write-contract';
-import { CONTRACT_ADDRESS } from '../../utils/addresses';
-import { ContractMethods } from '../../types/contract';
 import { useValidationResult } from '../../hooks/validation-result';
+import { useWriteContract } from '../../hooks/write-contract';
+import { Asset } from '../../types/asset';
+import { ContractMethods } from '../../types/contract';
+import { CONTRACT_ADDRESS } from '../../utils/constants';
+import { formatValueToBigNumber } from '../../utils/format-value';
 import { validateAmount, validateDigitsAfterComma } from '../../utils/validation';
 
 export const WithdrawModal = ({

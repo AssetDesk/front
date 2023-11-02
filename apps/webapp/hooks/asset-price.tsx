@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js';
 import { useMemo } from 'react';
 import { xdr } from 'soroban-client';
 import { ContractMethods } from '../types/contract';
-import { CONTRACT_ADDRESS } from '../utils/addresses';
+import { CONTRACT_ADDRESS } from '../utils/constants';
 import { formatValue } from '../utils/format-value';
 import { useReadContract } from './read-contract';
 

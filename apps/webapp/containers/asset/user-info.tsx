@@ -9,7 +9,7 @@ import { useAssetBySlug } from '../../hooks/asset-by-slug';
 import { useAssetPrice } from '../../hooks/asset-price';
 import { useReadContract } from '../../hooks/read-contract';
 import { ContractMethods } from '../../types/contract';
-import { CONTRACT_ADDRESS } from '../../utils/addresses';
+import { CONTRACT_ADDRESS } from '../../utils/constants';
 import { formatNumber } from '../../utils/format-number';
 import { formatValue } from '../../utils/format-value';
 import { BorrowModal } from './borrow-modal';
