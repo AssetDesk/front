@@ -52,6 +52,14 @@ export const UserInfo = () => {
     Boolean(address),
   );
 
+  const { data: availableRepayData } = useReadContract<BigNumber>(
+    CONTRACT_ADDRESS,
+    ContractMethods.GET_USER_BORROW_AMOUNT_WITH_INTEREST,
+    BigNumber(0),
+    [...args, xdr.ScVal.scvSymbol(asset!.symbol)],
+    Boolean(address),
+  );
+
   const { walletBalance, walletBalanceUsdc } = useMemo(() => {
     const walletBalance = formatValue(walletBalanceData, asset!.exponents);
 
@@ -79,6 +87,15 @@ export const UserInfo = () => {
     };
   }, [assetPrice, availableRedeemData, asset]);
 
+  const { availableRepay, availableRepayUsdc } = useMemo(() => {
+    const availableRepay = formatValue(availableRepayData, asset!.exponents);
+
+    return {
+      availableRepay: availableRepay.toNumber(),
+      availableRepayUsdc: availableRepay.multipliedBy(assetPrice).toNumber(),
+    };
+  }, [assetPrice, availableRepayData, asset]);
+
   return (
     <FadeTransition>
       <div className='flex flex-col gap-[18px]'>
@@ -89,8 +106,7 @@ export const UserInfo = () => {
             <div className='flex flex-col gap-2'>
               <p className='subtitle1'>Wallet balance</p>
               <p className='number2'>
-                {formatNumber(walletBalance)}
-                {asset!.symbol}
+                {formatNumber(walletBalance)} {asset!.symbol}
               </p>
             </div>
           </div>
@@ -155,9 +171,9 @@ export const UserInfo = () => {
                   <InfoIcon className='h-4 w-4 text-[#B0A8A8]' />
                 </div>
                 <p className='number mt-1'>
-                  {formatNumber(availableRedeem)} {asset!.symbol}
+                  {formatNumber(availableRepay)} {asset!.symbol}
                 </p>
-                <p className='number2'>${formatNumber(availableRedeemUsdc)}</p>
+                <p className='number2'>${formatNumber(availableRepayUsdc)}</p>
               </div>
               <RepayModal />
             </div>

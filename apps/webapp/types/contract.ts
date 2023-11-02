@@ -9,4 +9,6 @@ export enum ContractMethods {
   GET_AVAILABLE_TO_REDEEM = 'GetAvailableToRedeem',
   DEPOSIT = 'Deposit',
   REDEEM = 'Redeem',
+  BORROW = 'Borrow',
+  GET_USER_BORROW_AMOUNT_WITH_INTEREST = 'GetUserBorrowAmountWithInterest',
 }
