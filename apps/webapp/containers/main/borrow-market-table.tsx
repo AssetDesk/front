@@ -47,6 +47,16 @@ export const BorrowMarketTable = () => {
     Boolean(address),
   );
 
+  const { data: availableLiquiduty } = useReadContractMultiAssets<
+    Record<string, BigNumber | undefined>
+  >(CONTRACT_ADDRESS, ContractMethods.GET_AVAILABLE_LIQUIDITY_BY_TOKEN, initialValue, {
+    xlm: [xdr.ScVal.scvSymbol('xlm')],
+    atk: [xdr.ScVal.scvSymbol('atk')],
+    btk: [xdr.ScVal.scvSymbol('btk')],
+  });
+
+  console.log(availableLiquiduty);
+
   const navigateToAsset = (asset: string) => () => router.push(`/asset/${asset.toLowerCase()}`);
 
   return (
@@ -89,7 +99,15 @@ export const BorrowMarketTable = () => {
               </div>
               <div className='flex justify-between'>
                 <p className='subtitle2 text-[#E3E3E3]'>Liquidity</p>
-                <p className='subtitle3 text-[#E3E3E3]'>$ 7.17M</p>
+                <p className='subtitle3 text-[#E3E3E3]'>
+                  $
+                  {formatNumber(
+                    formatValue(
+                      availableLiquiduty[asset.symbol] ?? BigNumber(0),
+                      asset.exponents,
+                    ).toNumber(),
+                  )}
+                </p>
               </div>
               <Button className='mt-6 w-full' onClick={navigateToAsset(asset.symbol)}>
                 More
@@ -137,7 +155,15 @@ export const BorrowMarketTable = () => {
                   )}{' '}
                   {asset.symbol}
                 </TableCell>
-                <TableCell className='text-center'>$ 7.17M</TableCell>
+                <TableCell className='text-center'>
+                  $
+                  {formatNumber(
+                    formatValue(
+                      availableLiquiduty[asset.symbol] ?? BigNumber(0),
+                      asset.exponents,
+                    ).toNumber(),
+                  )}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

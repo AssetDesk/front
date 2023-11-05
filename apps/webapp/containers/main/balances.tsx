@@ -6,13 +6,13 @@ import { Address } from 'soroban-client';
 import { Progress } from 'ui';
 import { useReadContract } from '../../hooks/read-contract';
 import { ContractMethods } from '../../types/contract';
-import { CONTRACT_ADDRESS } from '../../utils/constants';
+import { CONTRACT_ADDRESS, USDC_EXPONENT } from '../../utils/constants';
 import { formatNumber } from '../../utils/format-number';
 import { formatValue } from '../../utils/format-value';
 
 function calculatePercentage(value: BigNumber, total: BigNumber): BigNumber {
   if (total.isZero()) return BigNumber(0);
-  return BigNumber(value.toString()).div(BigNumber(total.toString())).multipliedBy(BigNumber(100));
+  return value.div(total).multipliedBy(BigNumber(100));
 }
 
 export const Balances = () => {
@@ -47,9 +47,16 @@ export const Balances = () => {
     Boolean(address),
   );
 
+  const { data: tvl } = useReadContract<BigNumber>(
+    CONTRACT_ADDRESS,
+    ContractMethods.GET_TVL,
+    BigNumber(0),
+    [],
+  );
+
   const { borrowUscd, collateralUsdc, percent } = useMemo(() => {
-    const borrowUscd = formatValue(borrowData, 8);
-    const collateralUsdc = formatValue(collateral, 8);
+    const borrowUscd = formatValue(borrowData, USDC_EXPONENT);
+    const collateralUsdc = formatValue(collateral, USDC_EXPONENT);
     const percent = calculatePercentage(borrowUscd, collateralUsdc).toNumber();
 
     return {
@@ -64,7 +71,7 @@ export const Balances = () => {
       <div className='mb-7 flex flex-col md:mb-4 md:flex-row md:items-center md:justify-around'>
         <div className='order-1 mb-7 flex h-[186px] w-[186px] flex-col items-center justify-center gap-y-[0.25rem] self-center rounded-full border-4 border-[#0344E9] md:order-2 md:mb-4 md:gap-y-2'>
           <p className='h2'>TVL</p>
-          <p className='title'>$0</p>
+          <p className='title'>${formatNumber(formatValue(tvl, 8).toNumber())}</p>
         </div>
         <div className='order-2 flex flex-row items-center justify-between md:order-1 md:flex-col md:gap-4'>
           <p className='h2 md:text-[#0344E9]'>Supply Balance</p>

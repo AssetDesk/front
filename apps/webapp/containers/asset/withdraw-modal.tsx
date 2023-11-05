@@ -1,7 +1,7 @@
 'use client';
 import { useSorobanReact } from '@soroban-react/core';
 import Image from 'next/image';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { Address, ScInt, xdr } from 'soroban-client';
 import {
   Button,
@@ -33,17 +33,7 @@ export const WithdrawModal = ({
   const { address } = useSorobanReact();
   const [value, setValue] = useState('');
 
-  const args = useMemo(() => {
-    if (!address || !value) return [];
-
-    return [
-      new Address(address).toScVal(),
-      xdr.ScVal.scvSymbol(asset.symbol),
-      new ScInt(formatValueToBigNumber(value, asset.exponents).toString()).toU128(),
-    ];
-  }, [address, asset, value]);
-
-  const { write } = useWriteContract(CONTRACT_ADDRESS, ContractMethods.REDEEM, args);
+  const { write } = useWriteContract();
 
   const validationResult = useValidationResult(
     [
@@ -65,8 +55,14 @@ export const WithdrawModal = ({
         <form
           onSubmit={e => {
             e.preventDefault();
+            if (!address || !value) return;
             void (async () => {
-              await write();
+              const args = [
+                new Address(address).toScVal(),
+                xdr.ScVal.scvSymbol(asset.symbol),
+                new ScInt(formatValueToBigNumber(value, asset.exponents).toFixed()).toU128(),
+              ];
+              await write(CONTRACT_ADDRESS, ContractMethods.REDEEM, args);
               await refetch();
             })();
           }}

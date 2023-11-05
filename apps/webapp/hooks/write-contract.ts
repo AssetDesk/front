@@ -16,7 +16,7 @@ import { signTransaction } from '@stellar/freighter-api';
 import { SendTxStatus } from '../types/transaction';
 import { ContractMethods } from '../types/contract';
 import { fetchContractValue, getTxBuilder } from '../utils/fetch-contract-value';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import BigNumber from 'bignumber.js';
 
 const getTxBuildResult = (
@@ -31,7 +31,7 @@ const getTxBuildResult = (
   const source = new Account(
     account.accountId(),
     // https://github.com/stellar/js-stellar-base/blob/master/docs/reference/building-transactions.md#sequence-numbers
-    BigNumber(account.sequenceNumber()).minus(BigNumber(1)).toString(),
+    BigNumber(account.sequenceNumber()).minus(BigNumber(1)).toFixed(),
   );
 
   const txBuilder = getTxBuilder(source, fee, activeChain.networkPassphrase);
@@ -76,18 +76,14 @@ export const submitTx = async (signedXDR: string, networkPassphrase: string, ser
   return null;
 };
 
-export const useWriteContract = (
-  contractAddress: string,
-  method: ContractMethods,
-  args: xdr.ScVal[],
-) => {
+export const useWriteContract = () => {
   const { activeChain, address } = useSorobanReact();
   const [isError, setIsError] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const [isSuccess, setSuccess] = useState(false);
   const [error, setError] = useState<null | string>(null);
 
-  const write = useCallback(async () => {
+  const write = async (contractAddress: string, method: ContractMethods, args: xdr.ScVal[]) => {
     setLoading(true);
     setIsError(false);
     setSuccess(false);
@@ -140,7 +136,7 @@ export const useWriteContract = (
       setIsError(true);
       setLoading(false);
     }
-  }, [address, activeChain, contractAddress, method, args]);
+  };
 
   return {
     isError,

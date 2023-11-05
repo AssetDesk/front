@@ -13,4 +13,9 @@ export enum ContractMethods {
   GET_USER_BORROW_AMOUNT_WITH_INTEREST = 'GetUserBorrowAmountWithInterest',
   GET_LIQUIDITY_RATE = 'GetLiquidityRate',
   GET_INTEREST_RATE = 'GetInterestRate',
+  GET_TOTAL_RESERVES_BY_TOKEN = 'GetTotalReservesByToken',
+  GET_TVL = 'GetTVL',
+  USER_DEPOSIT_AS_COLLATERAL = 'UserDepositAsCollateral',
+  TOGGLE_COLLATERAL_SETTING = 'ToggleCollateralSetting',
+  GET_AVAILABLE_LIQUIDITY_BY_TOKEN = 'GetAvailableLiquidityByToken',
 }

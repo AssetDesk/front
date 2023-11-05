@@ -12,6 +12,7 @@ import { assets } from '../../utils';
 import { CONTRACT_ADDRESS, EIGHTEEN_EXPONENT } from '../../utils/constants';
 import { formatNumber } from '../../utils/format-number';
 import { formatValue } from '../../utils/format-value';
+import { useWriteContract } from '../../hooks/write-contract';
 
 const initialValue = { xlm: BigNumber(0), atk: BigNumber(0), btk: BigNumber(0) };
 export const SupplyMarketTable = () => {
@@ -44,6 +45,32 @@ export const SupplyMarketTable = () => {
     },
     Boolean(address),
   );
+
+  const { data: collateral, refetch: refetchCollateral } = useReadContractMultiAssets<
+    Record<string, boolean | undefined>
+  >(
+    CONTRACT_ADDRESS,
+    ContractMethods.USER_DEPOSIT_AS_COLLATERAL,
+    { xlm: false, atk: false, btk: false },
+    {
+      xlm: [...args, xdr.ScVal.scvSymbol('xlm')],
+      atk: [...args, xdr.ScVal.scvSymbol('atk')],
+      btk: [...args, xdr.ScVal.scvSymbol('btk')],
+    },
+    Boolean(address),
+  );
+
+  const { write } = useWriteContract();
+
+  const toggleColateral = (asset: string) => async () => {
+    if (!address) return;
+    await write(CONTRACT_ADDRESS, ContractMethods.TOGGLE_COLLATERAL_SETTING, [
+      ...args,
+      xdr.ScVal.scvSymbol(asset),
+    ]);
+
+    await refetchCollateral();
+  };
 
   return (
     <>
@@ -85,7 +112,13 @@ export const SupplyMarketTable = () => {
               </div>
               <div className='flex justify-between'>
                 <p className='subtitle2 text-[#E3E3E3]'>Collateral</p>
-                <Switch />
+                <Switch
+                  onClick={e => {
+                    e.stopPropagation();
+                    void toggleColateral(asset.symbol)();
+                  }}
+                  checked={Boolean(collateral[asset.symbol])}
+                />
               </div>
               <Button className='mt-6 w-full' onClick={navigateToAsset(asset.symbol)}>
                 More
@@ -120,7 +153,10 @@ export const SupplyMarketTable = () => {
                 </TableCell>
                 <TableCell className='text-right'>
                   {formatNumber(
-                    formatValue(liquidityRates[asset.symbol] ?? BigNumber(0), EIGHTEEN_EXPONENT).toNumber(),
+                    formatValue(
+                      liquidityRates[asset.symbol] ?? BigNumber(0),
+                      EIGHTEEN_EXPONENT,
+                    ).toNumber(),
                   )}
                   %
                 </TableCell>
@@ -131,7 +167,13 @@ export const SupplyMarketTable = () => {
                   {asset.symbol}
                 </TableCell>
                 <TableCell className='text-center'>
-                  <Switch onClick={e => e.stopPropagation()} />
+                  <Switch
+                    onClick={e => {
+                      e.stopPropagation();
+                      void toggleColateral(asset.symbol)();
+                    }}
+                    checked={Boolean(collateral[asset.symbol])}
+                  />
                 </TableCell>
               </TableRow>
             ))}
