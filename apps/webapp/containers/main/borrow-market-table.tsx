@@ -55,8 +55,6 @@ export const BorrowMarketTable = () => {
     btk: [xdr.ScVal.scvSymbol('btk')],
   });
 
-  console.log(availableLiquiduty);
-
   const navigateToAsset = (asset: string) => () => router.push(`/asset/${asset.toLowerCase()}`);
 
   return (

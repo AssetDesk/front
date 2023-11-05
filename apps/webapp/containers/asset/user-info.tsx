@@ -16,8 +16,17 @@ import { BorrowModal } from './borrow-modal';
 import { RepayModal } from './repay-modal';
 import { SupplyModal } from './supply-modal';
 import { WithdrawModal } from './withdraw-modal';
+import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
+import { AssetInfo } from './asset-dashboard';
+import { useMultiCall } from '../../hooks/multi-call';
 
-export const UserInfo = () => {
+export const UserInfo = ({
+  refetchAssetInfo,
+}: {
+  refetchAssetInfo: (
+    options?: RefetchOptions | undefined,
+  ) => Promise<QueryObserverResult<AssetInfo>>;
+}) => {
   const { address } = useSorobanReact();
   const asset = useAssetBySlug();
 
@@ -32,32 +41,36 @@ export const UserInfo = () => {
     BigNumber(0),
     args,
     Boolean(address),
+    `${ContractMethods.BALANCE}-${asset?.symbol}`,
   );
 
   const assetPrice = useAssetPrice(asset!.symbol);
 
-  const { data: availableBorrowData } = useReadContract<BigNumber>(
+  const { data, refetch } = useMultiCall<{
+    borrowAvailable: BigNumber;
+    redeemAvailable: BigNumber;
+    repayAvailable: BigNumber;
+  }>(
     CONTRACT_ADDRESS,
-    ContractMethods.GET_AVAILABLE_TO_BORROW,
-    BigNumber(0),
+    [
+      { key: 'borrowAvailable', method: ContractMethods.GET_AVAILABLE_TO_BORROW },
+      {
+        key: 'redeemAvailable',
+        method: ContractMethods.GET_AVAILABLE_TO_REDEEM,
+      },
+      {
+        key: 'repayAvailable',
+        method: ContractMethods.GET_USER_BORROW_AMOUNT_WITH_INTEREST,
+      },
+    ],
+    {
+      borrowAvailable: BigNumber(0),
+      redeemAvailable: BigNumber(0),
+      repayAvailable: BigNumber(0),
+    },
     [...args, xdr.ScVal.scvSymbol(asset!.symbol)],
     Boolean(address),
-  );
-
-  const { data: availableRedeemData, refetch: refetchRedeem } = useReadContract<BigNumber>(
-    CONTRACT_ADDRESS,
-    ContractMethods.GET_AVAILABLE_TO_REDEEM,
-    BigNumber(0),
-    [...args, xdr.ScVal.scvSymbol(asset!.symbol)],
-    Boolean(address),
-  );
-
-  const { data: availableRepayData } = useReadContract<BigNumber>(
-    CONTRACT_ADDRESS,
-    ContractMethods.GET_USER_BORROW_AMOUNT_WITH_INTEREST,
-    BigNumber(0),
-    [...args, xdr.ScVal.scvSymbol(asset!.symbol)],
-    Boolean(address),
+    `userInfo-multi-${asset?.symbol}`,
   );
 
   const { walletBalance, walletBalanceUsdc } = useMemo(() => {
@@ -69,32 +82,33 @@ export const UserInfo = () => {
     };
   }, [assetPrice, walletBalanceData, asset]);
 
-  const { availableBorrow, availableBorrowUsdc } = useMemo(() => {
-    const availableBorrow = formatValue(availableBorrowData, asset!.exponents);
+  const {
+    availableBorrow,
+    availableBorrowUsdc,
+    availableRedeem,
+    availableRedeemUsdc,
+    availableRepay,
+    availableRepayUsdc,
+  } = useMemo(() => {
+    const availableBorrow = formatValue(data.borrowAvailable, asset!.exponents);
+    const availableRedeem = formatValue(data.redeemAvailable, asset!.exponents);
+    const availableRepay = formatValue(data.repayAvailable, asset!.exponents);
 
     return {
       availableBorrow: availableBorrow.toNumber(),
       availableBorrowUsdc: availableBorrow.multipliedBy(assetPrice).toNumber(),
-    };
-  }, [assetPrice, availableBorrowData, asset]);
-
-  const { availableRedeem, availableRedeemUsdc } = useMemo(() => {
-    const availableRedeem = formatValue(availableRedeemData, asset!.exponents);
-
-    return {
       availableRedeem: availableRedeem.toNumber(),
       availableRedeemUsdc: availableRedeem.multipliedBy(assetPrice).toNumber(),
-    };
-  }, [assetPrice, availableRedeemData, asset]);
-
-  const { availableRepay, availableRepayUsdc } = useMemo(() => {
-    const availableRepay = formatValue(availableRepayData, asset!.exponents);
-
-    return {
       availableRepay: availableRepay.toNumber(),
       availableRepayUsdc: availableRepay.multipliedBy(assetPrice).toNumber(),
     };
-  }, [assetPrice, availableRepayData, asset]);
+  }, [assetPrice, data, asset]);
+
+  const refectData = async () => {
+    await refetchWalletBalance();
+    await refetch();
+    await refetchAssetInfo();
+  };
 
   return (
     <FadeTransition>
@@ -122,14 +136,7 @@ export const UserInfo = () => {
                 </p>
                 <p className='number2'>${formatNumber(walletBalanceUsdc)}</p>
               </div>
-              <SupplyModal
-                balance={walletBalance}
-                asset={asset!}
-                refetch={async () => {
-                  await refetchWalletBalance();
-                  await refetchRedeem();
-                }}
-              />
+              <SupplyModal balance={walletBalance} asset={asset!} refetch={refectData} />
             </div>
             <div className='flex flex-col gap-6 md:flex-row md:items-center md:justify-between'>
               <div className='flex flex-col gap-1 border-l-[1px] border-[#0344E9] pl-4'>
@@ -142,7 +149,7 @@ export const UserInfo = () => {
                 </p>
                 <p className='number2'>${formatNumber(availableBorrowUsdc)}</p>
               </div>
-              <BorrowModal />
+              <BorrowModal balance={availableBorrow} asset={asset!} refetch={refectData} />
             </div>
             <div className='flex flex-col gap-6 md:flex-row md:items-center md:justify-between'>
               <div className='flex flex-col gap-1 border-l-[1px] border-[#0344E9] pl-4'>
@@ -155,14 +162,7 @@ export const UserInfo = () => {
                 </p>
                 <p className='number2'>${formatNumber(availableRedeemUsdc)}</p>
               </div>
-              <WithdrawModal
-                balance={availableRedeem}
-                asset={asset!}
-                refetch={async () => {
-                  await refetchWalletBalance();
-                  await refetchRedeem();
-                }}
-              />
+              <WithdrawModal balance={availableRedeem} asset={asset!} refetch={refectData} />
             </div>
             <div className='flex flex-col gap-6 md:flex-row md:items-center md:justify-between'>
               <div className='flex flex-col gap-1 border-l-[1px] border-[#0344E9] pl-4'>
@@ -175,7 +175,7 @@ export const UserInfo = () => {
                 </p>
                 <p className='number2'>${formatNumber(availableRepayUsdc)}</p>
               </div>
-              <RepayModal />
+              <RepayModal balance={availableRepay} asset={asset!} refetch={refectData} />
             </div>
           </div>
         </div>

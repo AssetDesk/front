@@ -5,7 +5,7 @@ export enum ContractMethods {
   GET_USER_DEPOSITED_USD = 'GetUserDepositedUsd',
   GET_USER_BORROWED_USD = 'GetUserBorrowedUsd',
   GET_AVAILABLE_TO_BORROW = 'GetAvailableToBorrow',
-  GET_USER_COLLATERAL_USD = 'get_user_collateral_usd',
+  GET_USER_COLLATERAL_USD = 'GetUserCollateralUsd',
   GET_AVAILABLE_TO_REDEEM = 'GetAvailableToRedeem',
   DEPOSIT = 'Deposit',
   REDEEM = 'Redeem',
@@ -18,4 +18,6 @@ export enum ContractMethods {
   USER_DEPOSIT_AS_COLLATERAL = 'UserDepositAsCollateral',
   TOGGLE_COLLATERAL_SETTING = 'ToggleCollateralSetting',
   GET_AVAILABLE_LIQUIDITY_BY_TOKEN = 'GetAvailableLiquidityByToken',
+  GET_UTILIZATION_RATE_BY_TOKEN = 'GetUtilizationRateByToken',
+  REPAY = 'Repay',
 }

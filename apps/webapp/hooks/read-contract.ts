@@ -15,6 +15,7 @@ export const useReadContract = <T>(
   args?: xdr.ScVal[],
   // set enabled to true only when request need account address
   enabled?: boolean,
+  queryKey?: string,
 ) => {
   const { address, activeChain } = useSorobanReact();
 
@@ -26,7 +27,7 @@ export const useReadContract = <T>(
   }, [activeChain]);
 
   const query = useQuery<T>({
-    queryKey: [method],
+    queryKey: [queryKey ?? method],
     enabled: enabled ?? true,
     initialData,
     queryFn: async () => {
