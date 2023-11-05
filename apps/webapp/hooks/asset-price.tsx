@@ -17,7 +17,7 @@ export const useAssetPrice = (denom: string): BigNumber => {
     BigNumber(0),
     args,
     undefined,
-    `${ContractMethods.GET_PRICE}-${denom}`
+    `${ContractMethods.GET_PRICE}-${denom}`,
   );
 
   const price = useMemo(() => {

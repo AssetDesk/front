@@ -35,7 +35,7 @@ export const AssetDashboard = ({ data }: { data: AssetInfo }) => {
       borrowAPY,
     };
   }, [data, asset]);
-  
+
   return (
     <div className='card-gradient grid grid-cols-2 gap-4 rounded-lg px-4 pb-5 pt-4 md:grid-cols-7 md:gap-6 md:p-[30px]'>
       <div className='grid-row-2 grid gap-1 md:text-center'>

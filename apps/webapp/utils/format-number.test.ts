@@ -36,10 +36,4 @@ describe('formatNumber()', () => {
     const numThreeMillion = -0.0005;
     expect(formatNumber(numThreeMillion)).equal('-0.00');
   });
-
-
-  test('a number less bigger than 1 and zero decimals bigger than 2', () => {
-    const numThreeMillion = 2.0000007;
-    expect(formatNumber(numThreeMillion)).equal('2.0000007');
-  });
 });

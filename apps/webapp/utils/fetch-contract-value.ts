@@ -77,4 +77,3 @@ export async function fetchContractValue({
 
   return simulated;
 }
-

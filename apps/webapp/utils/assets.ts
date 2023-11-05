@@ -23,4 +23,3 @@ export const assets: Asset[] = [
     symbol: 'btk',
   },
 ];
-
