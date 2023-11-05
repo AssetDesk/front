@@ -48,7 +48,7 @@ export const AssetTabs = () => {
     },
     [xdr.ScVal.scvSymbol(asset!.symbol)],
     undefined,
-    `${asset!.symbol}-multi`,
+    `asset-info-multi-${asset!.symbol}`,
   );
 
   return (

@@ -70,7 +70,7 @@ export const UserInfo = ({
     },
     [...args, xdr.ScVal.scvSymbol(asset!.symbol)],
     Boolean(address),
-    `userInfo-multi-${asset?.symbol}`,
+    `user-info-multi-${asset?.symbol}`,
   );
 
   const { walletBalance, walletBalanceUsdc } = useMemo(() => {
