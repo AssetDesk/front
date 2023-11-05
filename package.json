@@ -1,5 +1,5 @@
 {
-  "name": "penumbra-web",
+  "name": "asset-desk-web",
   "version": "1.0.0",
   "packageManager": "pnpm@8.6.11",
   "scripts": {
