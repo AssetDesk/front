@@ -6,7 +6,7 @@ import { assets } from '../../utils';
 import { useReadContractMultiAssets } from '../../hooks/read-contract-multi-assets';
 import BigNumber from 'bignumber.js';
 import { Address, xdr } from 'soroban-client';
-import { CONTRACT_ADDRESS, EIGHTEEN_EXPONENT } from '../../utils/constants';
+import { CONTRACT_ADDRESS, EIGHTEEN_EXPONENT, USDC_EXPONENT } from '../../utils/constants';
 import { ContractMethods } from '../../types/contract';
 import { formatNumber } from '../../utils/format-number';
 import { formatValue } from '../../utils/format-value';
@@ -54,6 +54,32 @@ export const BorrowMarketTable = () => {
     atk: [xdr.ScVal.scvSymbol('atk')],
     btk: [xdr.ScVal.scvSymbol('btk')],
   });
+
+  const { data: price } = useReadContractMultiAssets<Record<string, BigNumber | undefined>>(
+    CONTRACT_ADDRESS,
+    ContractMethods.GET_PRICE,
+    initialValue,
+    {
+      xlm: [xdr.ScVal.scvSymbol('xlm')],
+      atk: [xdr.ScVal.scvSymbol('atk')],
+      btk: [xdr.ScVal.scvSymbol('btk')],
+    },
+  );
+
+  const liquidity = useMemo(() => {
+    const obj: Record<string, number> = {};
+    assets.forEach(asset => {
+      const formattedLiquidity = formatValue(
+        availableLiquiduty[asset.symbol] ?? BigNumber(0),
+        asset.exponents,
+      );
+      const formattedPrice = formatValue(price[asset.symbol] ?? BigNumber(0), USDC_EXPONENT);
+
+      obj[asset.symbol] = formattedLiquidity.multipliedBy(formattedPrice).toNumber();
+    });
+
+    return obj;
+  }, [availableLiquiduty, price]);
 
   const navigateToAsset = (asset: string) => () => router.push(`/asset/${asset.toLowerCase()}`);
 
@@ -154,13 +180,7 @@ export const BorrowMarketTable = () => {
                   {asset.symbol}
                 </TableCell>
                 <TableCell className='text-center'>
-                  $
-                  {formatNumber(
-                    formatValue(
-                      availableLiquiduty[asset.symbol] ?? BigNumber(0),
-                      asset.exponents,
-                    ).toNumber(),
-                  )}
+                  ${formatNumber(liquidity[asset.symbol] ?? 0)}
                 </TableCell>
               </TableRow>
             ))}

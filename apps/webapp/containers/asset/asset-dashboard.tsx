@@ -23,7 +23,7 @@ export const AssetDashboard = ({ data }: { data: AssetInfo }) => {
     const availableLiquidity = formatValue(data.availableLiquidity, asset!.exponents).toNumber();
 
     const utilizationRate = formatValue(data.utilizationRate, 5).toNumber();
-    const depositAPY = formatValue(data.liquidityRate, EIGHTEEN_EXPONENT).toNumber();
+    const supplyAPY = formatValue(data.liquidityRate, EIGHTEEN_EXPONENT).toNumber();
     const borrowAPY = formatValue(data.interestRate, EIGHTEEN_EXPONENT).toNumber();
 
     return {
@@ -31,7 +31,7 @@ export const AssetDashboard = ({ data }: { data: AssetInfo }) => {
       availableLiquidity: availableLiquidity * price,
       utilizationRate,
       price,
-      depositAPY,
+      supplyAPY,
       borrowAPY,
     };
   }, [data, asset]);
@@ -67,8 +67,8 @@ export const AssetDashboard = ({ data }: { data: AssetInfo }) => {
         className='grid-row-2 grid gap-1 md:text-center
       '
       >
-        <p className='subtitle2 text-[#E3E3E3]'>Deposit APY</p>
-        <p className='number'>{formatNumber(formattedValue.depositAPY)}%</p>
+        <p className='subtitle2 text-[#E3E3E3]'>Supply APY</p>
+        <p className='number'>{formatNumber(formattedValue.supplyAPY)}%</p>
       </div>
       <div
         className='grid-row-2 grid gap-1 md:text-center
