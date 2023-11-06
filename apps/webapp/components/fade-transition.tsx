@@ -4,7 +4,6 @@ import { motion } from 'framer-motion';
 import React from 'react';
 import { cn } from 'ui/lib/utils';
 
-// Required to wrap in <AnimatePresence>
 export const FadeTransition = ({
   children,
   className,
