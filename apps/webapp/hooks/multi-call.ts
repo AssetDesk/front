@@ -33,31 +33,36 @@ export const useMultiCall = <T>(
     queryFn: async () => {
       const res = await Promise.all(
         methods.map(async ({ key, method }) => {
-          let source;
-          if (address && enabled !== false) {
-            const account = await server.getAccount(address);
+          try {
+            let source;
+            if (address && enabled !== false) {
+              const account = await server.getAccount(address);
 
-            source = new Account(address, account.sequenceNumber());
-          } else {
-            source = new Account('GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWHF', '0');
+              source = new Account(address, account.sequenceNumber());
+            } else {
+              source = new Account('GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWHF', '0');
+            }
+            const res = await fetchContractValue({
+              server,
+              networkPassphrase: activeChain?.networkPassphrase ?? '',
+              contractAddress,
+              method,
+              args,
+              source,
+              fee: BASE_FEE,
+            });
+
+            const nativeRes = scValToNative(res.result!.retval) as unknown;
+
+            if (typeof nativeRes === 'bigint') {
+              return { [key]: BigNumber(nativeRes.toString()) } as T;
+            }
+
+            return { [key]: nativeRes } as T;
+          } catch (error) {
+            console.log(method, error);
+            return { [key]: BigNumber(0) } as T;
           }
-          const res = await fetchContractValue({
-            server,
-            networkPassphrase: activeChain?.networkPassphrase ?? '',
-            contractAddress,
-            method,
-            args,
-            source,
-            fee: BASE_FEE,
-          });
-
-          const nativeRes = scValToNative(res.result!.retval) as unknown;
-
-          if (typeof nativeRes === 'bigint') {
-            return { [key]: BigNumber(nativeRes.toString()) } as T;
-          }
-
-          return { [key]: nativeRes } as T;
         }),
       ).then(data => {
         let obj = {} as T;
