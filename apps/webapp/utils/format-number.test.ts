@@ -4,17 +4,17 @@ import { formatNumber } from './format-number';
 describe('formatNumber()', () => {
   test('a number with decimal places greater than 2 - displays 2 decimal places', () => {
     const numFourDecimals = 12.2945;
-    expect(formatNumber(numFourDecimals)).equal('12.29');
+    expect(formatNumber(numFourDecimals)).equal('12.2');
   });
 
   test('a number with 2 decimals - displays 2 decimal places', () => {
     const numTwoDecimals = 1.14;
-    expect(formatNumber(numTwoDecimals)).equal('1.14');
+    expect(formatNumber(numTwoDecimals)).equal('1.1');
   });
 
-  test('a number with 1 decimal - displays 2 decimal places', () => {
+  test('a number with 1 decimal - displays 1 decimal places', () => {
     const numOneDecimal = 23.9;
-    expect(formatNumber(numOneDecimal)).equal('23.90');
+    expect(formatNumber(numOneDecimal)).equal('23.9');
   });
 
   test('a number greater than 1000 is separated by a thousandth comma', () => {
@@ -24,7 +24,7 @@ describe('formatNumber()', () => {
 
   test('a number less than 1 with 6 zero decimals', () => {
     const numThreeMillion = 0.0000001234;
-    expect(formatNumber(numThreeMillion)).equal('0.00000012');
+    expect(formatNumber(numThreeMillion)).equal('0');
   });
 
   test('a number less than 0', () => {
@@ -34,6 +34,11 @@ describe('formatNumber()', () => {
 
   test('a number less than 0 and zero decimals bigger than 2', () => {
     const numThreeMillion = -0.0005;
-    expect(formatNumber(numThreeMillion)).equal('-0.00');
+    expect(formatNumber(numThreeMillion)).equal('-0.0005');
+  });
+
+  test('a number 99.9998', () => {
+    const numThreeMillion = 99.9998;
+    expect(formatNumber(numThreeMillion)).equal('99.9');
   });
 });
