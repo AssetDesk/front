@@ -74,7 +74,6 @@ export const UserInfo = ({
   );
 
   console.log(error);
-  
 
   const { walletBalance, walletBalanceUsdc } = useMemo(() => {
     const walletBalance = formatValue(walletBalanceData, asset!.exponents);
