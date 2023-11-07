@@ -46,7 +46,7 @@ export const UserInfo = ({
 
   const assetPrice = useAssetPrice(asset!.symbol);
 
-  const { data, refetch } = useMultiCall<{
+  const { data, refetch, error } = useMultiCall<{
     borrowAvailable: BigNumber;
     redeemAvailable: BigNumber;
     repayAvailable: BigNumber;
@@ -72,6 +72,9 @@ export const UserInfo = ({
     Boolean(address),
     `user-info-multi-${asset?.symbol}`,
   );
+
+  console.log(error);
+  
 
   const { walletBalance, walletBalanceUsdc } = useMemo(() => {
     const walletBalance = formatValue(walletBalanceData, asset!.exponents);

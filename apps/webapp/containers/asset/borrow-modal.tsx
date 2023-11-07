@@ -71,7 +71,7 @@ export const BorrowModal = ({
           </DialogHeader>
           <div className='grid gap-6 md:gap-10'>
             <BalanceInput
-              balanceTitle='Currently Borrowing'
+              balanceTitle='Available to borrow'
               asset={asset}
               balance={balance}
               value={value}

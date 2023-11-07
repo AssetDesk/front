@@ -72,7 +72,7 @@ export const RepayModal = ({
           </DialogHeader>
           <div className='grid gap-6 md:gap-10'>
             <BalanceInput
-              balanceTitle='Wallet Balance'
+              balanceTitle='Currently Borrowing'
               asset={asset}
               balance={balance}
               value={value}
