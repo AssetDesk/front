@@ -1,7 +1,7 @@
 'use client';
 import { Button, Input, InputProps } from 'ui';
 import { Asset } from '../types/asset';
-import { formatNumber } from '../utils/format-number';
+import { displayAmount } from '../utils/amount';
 
 interface BalanceInputProps {
   balanceTitle: string;
@@ -43,7 +43,7 @@ export const BalanceInput = ({
       <div className='flex justify-between'>
         <p className='subtitle3'>{balanceTitle}</p>
         <p className='number2'>
-          {formatNumber(balance)} {asset.symbol}
+          {displayAmount(balance)} {asset.symbol}
         </p>
       </div>
     </div>

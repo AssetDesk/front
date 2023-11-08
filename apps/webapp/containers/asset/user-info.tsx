@@ -1,5 +1,6 @@
 'use client';
 import { useSorobanReact } from '@soroban-react/core';
+import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
 import { InfoIcon, WalletIcon } from 'lucide-react';
 import { useMemo } from 'react';
@@ -7,18 +8,17 @@ import { Address, xdr } from 'soroban-client';
 import { FadeTransition } from '../../components';
 import { useAssetBySlug } from '../../hooks/asset-by-slug';
 import { useAssetPrice } from '../../hooks/asset-price';
+import { useMultiCall } from '../../hooks/multi-call';
 import { useReadContract } from '../../hooks/read-contract';
 import { ContractMethods } from '../../types/contract';
+import { displayAmount, displayUsd } from '../../utils/amount';
 import { CONTRACT_ADDRESS } from '../../utils/constants';
-import { formatNumber } from '../../utils/format-number';
-import { formatValue } from '../../utils/format-value';
+import { fromBaseUnitAmount } from '../../utils/amount';
+import { AssetInfo } from './asset-dashboard';
 import { BorrowModal } from './borrow-modal';
 import { RepayModal } from './repay-modal';
 import { SupplyModal } from './supply-modal';
 import { WithdrawModal } from './withdraw-modal';
-import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
-import { AssetInfo } from './asset-dashboard';
-import { useMultiCall } from '../../hooks/multi-call';
 
 export const UserInfo = ({
   refetchAssetInfo,
@@ -76,7 +76,7 @@ export const UserInfo = ({
   console.log(error);
 
   const { walletBalance, walletBalanceUsdc } = useMemo(() => {
-    const walletBalance = formatValue(walletBalanceData, asset!.exponents);
+    const walletBalance = fromBaseUnitAmount(walletBalanceData, asset!.exponents);
 
     return {
       walletBalance: walletBalance.toNumber(),
@@ -92,9 +92,9 @@ export const UserInfo = ({
     availableRepay,
     availableRepayUsdc,
   } = useMemo(() => {
-    const availableBorrow = formatValue(data.borrowAvailable, asset!.exponents);
-    const availableRedeem = formatValue(data.redeemAvailable, asset!.exponents);
-    const availableRepay = formatValue(data.repayAvailable, asset!.exponents);
+    const availableBorrow = fromBaseUnitAmount(data.borrowAvailable, asset!.exponents);
+    const availableRedeem = fromBaseUnitAmount(data.redeemAvailable, asset!.exponents);
+    const availableRepay = fromBaseUnitAmount(data.repayAvailable, asset!.exponents);
 
     return {
       availableBorrow: availableBorrow.toNumber(),
@@ -122,7 +122,7 @@ export const UserInfo = ({
             <div className='flex flex-col gap-2'>
               <p className='subtitle1'>Wallet balance</p>
               <p className='number2'>
-                {formatNumber(walletBalance)} {asset!.symbol}
+                {displayAmount(walletBalance)} {asset!.symbol}
               </p>
             </div>
           </div>
@@ -134,9 +134,9 @@ export const UserInfo = ({
                   <InfoIcon className='h-4 w-4 text-[#B0A8A8]' />
                 </div>
                 <p className='number mt-1'>
-                  {formatNumber(walletBalance)} {asset!.symbol}
+                  {displayAmount(walletBalance)} {asset!.symbol}
                 </p>
-                <p className='number2'>${formatNumber(walletBalanceUsdc)}</p>
+                <p className='number2'>${displayUsd(walletBalanceUsdc)}</p>
               </div>
               <SupplyModal balance={walletBalance} asset={asset!} refetch={refectData} />
             </div>
@@ -147,9 +147,9 @@ export const UserInfo = ({
                   <InfoIcon className='h-4 w-4 text-[#B0A8A8]' />
                 </div>
                 <p className='number mt-1'>
-                  {formatNumber(availableBorrow)} {asset!.symbol}
+                  {displayAmount(availableBorrow)} {asset!.symbol}
                 </p>
-                <p className='number2'>${formatNumber(availableBorrowUsdc)}</p>
+                <p className='number2'>${displayAmount(availableBorrowUsdc)}</p>
               </div>
               <BorrowModal balance={availableBorrow} asset={asset!} refetch={refectData} />
             </div>
@@ -160,9 +160,9 @@ export const UserInfo = ({
                   <InfoIcon className='h-4 w-4 text-[#B0A8A8]' />
                 </div>
                 <p className='number mt-1'>
-                  {formatNumber(availableRedeem)} {asset!.symbol}
+                  {displayAmount(availableRedeem)} {asset!.symbol}
                 </p>
-                <p className='number2'>${formatNumber(availableRedeemUsdc)}</p>
+                <p className='number2'>${displayUsd(availableRedeemUsdc)}</p>
               </div>
               <WithdrawModal balance={availableRedeem} asset={asset!} refetch={refectData} />
             </div>
@@ -173,9 +173,9 @@ export const UserInfo = ({
                   <InfoIcon className='h-4 w-4 text-[#B0A8A8]' />
                 </div>
                 <p className='number mt-1'>
-                  {formatNumber(availableRepay)} {asset!.symbol}
+                  {displayAmount(availableRepay)} {asset!.symbol}
                 </p>
-                <p className='number2'>${formatNumber(availableRepayUsdc)}</p>
+                <p className='number2'>${displayUsd(availableRepayUsdc)}</p>
               </div>
               <RepayModal balance={availableRepay} asset={asset!} refetch={refectData} />
             </div>

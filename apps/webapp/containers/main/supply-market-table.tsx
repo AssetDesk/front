@@ -7,12 +7,12 @@ import { useMemo } from 'react';
 import { Address, xdr } from 'soroban-client';
 import { Button, Switch, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from 'ui';
 import { useReadContractMultiAssets } from '../../hooks/read-contract-multi-assets';
+import { useWriteContract } from '../../hooks/write-contract';
 import { ContractMethods } from '../../types/contract';
 import { assets } from '../../utils';
+import { displayAmount } from '../../utils/amount';
 import { CONTRACT_ADDRESS, EIGHTEEN_EXPONENT } from '../../utils/constants';
-import { formatNumber } from '../../utils/format-number';
-import { formatValue } from '../../utils/format-value';
-import { useWriteContract } from '../../hooks/write-contract';
+import { fromBaseUnitAmount } from '../../utils/amount';
 
 const initialValue = { xlm: BigNumber(0), atk: BigNumber(0), btk: BigNumber(0) };
 export const SupplyMarketTable = () => {
@@ -92,8 +92,8 @@ export const SupplyMarketTable = () => {
               <div className='flex justify-between'>
                 <p className='subtitle2 text-[#E3E3E3]'>APY</p>
                 <p className='subtitle3 text-[#E3E3E3]'>
-                  {formatNumber(
-                    formatValue(
+                  {displayAmount(
+                    fromBaseUnitAmount(
                       liquidityRates[asset.symbol] ?? BigNumber(0),
                       EIGHTEEN_EXPONENT,
                     ).toNumber(),
@@ -104,8 +104,11 @@ export const SupplyMarketTable = () => {
               <div className='flex justify-between'>
                 <p className='subtitle2 text-[#E3E3E3]'>Supply</p>
                 <p className='subtitle3 text-[#E3E3E3]'>
-                  {formatNumber(
-                    formatValue(deposits[asset.symbol] ?? BigNumber(0), asset.exponents).toNumber(),
+                  {displayAmount(
+                    fromBaseUnitAmount(
+                      deposits[asset.symbol] ?? BigNumber(0),
+                      asset.exponents,
+                    ).toNumber(),
                   )}{' '}
                   {asset.symbol}
                 </p>
@@ -152,8 +155,8 @@ export const SupplyMarketTable = () => {
                   </div>
                 </TableCell>
                 <TableCell className='text-right'>
-                  {formatNumber(
-                    formatValue(
+                  {displayAmount(
+                    fromBaseUnitAmount(
                       liquidityRates[asset.symbol] ?? BigNumber(0),
                       EIGHTEEN_EXPONENT,
                     ).toNumber(),
@@ -161,8 +164,11 @@ export const SupplyMarketTable = () => {
                   %
                 </TableCell>
                 <TableCell className='text-center'>
-                  {formatNumber(
-                    formatValue(deposits[asset.symbol] ?? BigNumber(0), asset.exponents).toNumber(),
+                  {displayAmount(
+                    fromBaseUnitAmount(
+                      deposits[asset.symbol] ?? BigNumber(0),
+                      asset.exponents,
+                    ).toNumber(),
                   )}{' '}
                   {asset.symbol}
                 </TableCell>

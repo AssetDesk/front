@@ -1,5 +1,8 @@
 'use client';
+import { useSorobanReact } from '@soroban-react/core';
 import Image from 'next/image';
+import { useState } from 'react';
+import { Address, ScInt, xdr } from 'soroban-client';
 import {
   Button,
   Dialog,
@@ -9,17 +12,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from 'ui';
-import { Asset } from '../../types/asset';
-import { useSorobanReact } from '@soroban-react/core';
-import { useState } from 'react';
-import { useWriteContract } from '../../hooks/write-contract';
-import { useValidationResult } from '../../hooks/validation-result';
-import { validateAmount, validateDigitsAfterComma } from '../../utils/validation';
-import { Address, ScInt, xdr } from 'soroban-client';
-import { formatValueToBigNumber } from '../../utils/format-value';
-import { CONTRACT_ADDRESS } from '../../utils/constants';
-import { ContractMethods } from '../../types/contract';
 import { BalanceInput } from '../../components';
+import { useValidationResult } from '../../hooks/validation-result';
+import { useWriteContract } from '../../hooks/write-contract';
+import { Asset } from '../../types/asset';
+import { ContractMethods } from '../../types/contract';
+import { CONTRACT_ADDRESS } from '../../utils/constants';
+import { toBaseUnitAmount } from '../../utils/amount';
+import { validateAmount, validateDigitsAfterComma } from '../../utils/validation';
 
 export const RepayModal = ({
   balance,
@@ -60,7 +60,7 @@ export const RepayModal = ({
               const args = [
                 new Address(address).toScVal(),
                 xdr.ScVal.scvSymbol(asset.symbol),
-                new ScInt(formatValueToBigNumber(value, asset.exponents).toFixed()).toU128(),
+                new ScInt(toBaseUnitAmount(value, asset.exponents).toFixed()).toU128(),
               ];
               await write(CONTRACT_ADDRESS, ContractMethods.REPAY, args);
               await refetch();

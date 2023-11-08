@@ -1,17 +1,17 @@
 'use client';
+import { useSorobanReact } from '@soroban-react/core';
+import BigNumber from 'bignumber.js';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { Button, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from 'ui';
-import { assets } from '../../utils';
-import { useReadContractMultiAssets } from '../../hooks/read-contract-multi-assets';
-import BigNumber from 'bignumber.js';
-import { Address, xdr } from 'soroban-client';
-import { CONTRACT_ADDRESS, EIGHTEEN_EXPONENT, USDC_EXPONENT } from '../../utils/constants';
-import { ContractMethods } from '../../types/contract';
-import { formatNumber } from '../../utils/format-number';
-import { formatValue } from '../../utils/format-value';
-import { useSorobanReact } from '@soroban-react/core';
 import { useMemo } from 'react';
+import { Address, xdr } from 'soroban-client';
+import { Button, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from 'ui';
+import { useReadContractMultiAssets } from '../../hooks/read-contract-multi-assets';
+import { ContractMethods } from '../../types/contract';
+import { assets } from '../../utils';
+import { displayAmount, displayUsd } from '../../utils/amount';
+import { CONTRACT_ADDRESS, EIGHTEEN_EXPONENT, USDC_EXPONENT } from '../../utils/constants';
+import { fromBaseUnitAmount } from '../../utils/amount';
 
 const initialValue = { xlm: BigNumber(0), atk: BigNumber(0), btk: BigNumber(0) };
 
@@ -69,11 +69,11 @@ export const BorrowMarketTable = () => {
   const liquidity = useMemo(() => {
     const obj: Record<string, number> = {};
     assets.forEach(asset => {
-      const formattedLiquidity = formatValue(
+      const formattedLiquidity = fromBaseUnitAmount(
         availableLiquiduty[asset.symbol] ?? BigNumber(0),
         asset.exponents,
       );
-      const formattedPrice = formatValue(price[asset.symbol] ?? BigNumber(0), USDC_EXPONENT);
+      const formattedPrice = fromBaseUnitAmount(price[asset.symbol] ?? BigNumber(0), USDC_EXPONENT);
 
       obj[asset.symbol] = formattedLiquidity.multipliedBy(formattedPrice).toNumber();
     });
@@ -103,8 +103,8 @@ export const BorrowMarketTable = () => {
               <div className='flex justify-between'>
                 <p className='subtitle2 text-[#E3E3E3]'>APY</p>
                 <p className='subtitle3 text-[#E3E3E3]'>
-                  {formatNumber(
-                    formatValue(
+                  {displayAmount(
+                    fromBaseUnitAmount(
                       interestRates[asset.symbol] ?? BigNumber(0),
                       EIGHTEEN_EXPONENT,
                     ).toNumber(),
@@ -115,8 +115,11 @@ export const BorrowMarketTable = () => {
               <div className='flex justify-between'>
                 <p className='subtitle2 text-[#E3E3E3]'>Borrow</p>
                 <p className='subtitle3 text-[#E3E3E3]'>
-                  {formatNumber(
-                    formatValue(borrows[asset.symbol] ?? BigNumber(0), asset.exponents).toNumber(),
+                  {displayAmount(
+                    fromBaseUnitAmount(
+                      borrows[asset.symbol] ?? BigNumber(0),
+                      asset.exponents,
+                    ).toNumber(),
                   )}{' '}
                   {asset.symbol}
                 </p>
@@ -125,8 +128,8 @@ export const BorrowMarketTable = () => {
                 <p className='subtitle2 text-[#E3E3E3]'>Liquidity</p>
                 <p className='subtitle3 text-[#E3E3E3]'>
                   $
-                  {formatNumber(
-                    formatValue(
+                  {displayAmount(
+                    fromBaseUnitAmount(
                       availableLiquiduty[asset.symbol] ?? BigNumber(0),
                       asset.exponents,
                     ).toNumber(),
@@ -165,8 +168,8 @@ export const BorrowMarketTable = () => {
                   </div>
                 </TableCell>
                 <TableCell className='text-right'>
-                  {formatNumber(
-                    formatValue(
+                  {displayAmount(
+                    fromBaseUnitAmount(
                       interestRates[asset.symbol] ?? BigNumber(0),
                       EIGHTEEN_EXPONENT,
                     ).toNumber(),
@@ -174,13 +177,16 @@ export const BorrowMarketTable = () => {
                   %
                 </TableCell>
                 <TableCell className='text-center'>
-                  {formatNumber(
-                    formatValue(borrows[asset.symbol] ?? BigNumber(0), asset.exponents).toNumber(),
+                  {displayAmount(
+                    fromBaseUnitAmount(
+                      borrows[asset.symbol] ?? BigNumber(0),
+                      asset.exponents,
+                    ).toNumber(),
                   )}{' '}
                   {asset.symbol}
                 </TableCell>
                 <TableCell className='text-center'>
-                  ${formatNumber(liquidity[asset.symbol] ?? 0)}
+                  ${displayUsd(liquidity[asset.symbol] ?? 0)}
                 </TableCell>
               </TableRow>
             ))}

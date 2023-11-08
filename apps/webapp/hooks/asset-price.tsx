@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import { xdr } from 'soroban-client';
 import { ContractMethods } from '../types/contract';
 import { CONTRACT_ADDRESS, USDC_EXPONENT } from '../utils/constants';
-import { formatValue } from '../utils/format-value';
+import { fromBaseUnitAmount } from '../utils/amount';
 import { useReadContract } from './read-contract';
 
 export const useAssetPrice = (denom: string): BigNumber => {
@@ -21,7 +21,7 @@ export const useAssetPrice = (denom: string): BigNumber => {
   );
 
   const price = useMemo(() => {
-    return formatValue(data, USDC_EXPONENT);
+    return fromBaseUnitAmount(data, USDC_EXPONENT);
   }, [data]);
 
   return price;

@@ -4,12 +4,12 @@ import BigNumber from 'bignumber.js';
 import { useMemo } from 'react';
 import { Address } from 'soroban-client';
 import { Progress } from 'ui';
+import { useMultiCall } from '../../hooks/multi-call';
 import { useReadContract } from '../../hooks/read-contract';
 import { ContractMethods } from '../../types/contract';
+import { displayUsd } from '../../utils/amount';
 import { CONTRACT_ADDRESS, USDC_EXPONENT } from '../../utils/constants';
-import { formatNumber } from '../../utils/format-number';
-import { formatValue } from '../../utils/format-value';
-import { useMultiCall } from '../../hooks/multi-call';
+import { fromBaseUnitAmount } from '../../utils/amount';
 
 function calculatePercentage(value: BigNumber, total: BigNumber): BigNumber {
   if (total.isZero()) return BigNumber(0);
@@ -57,9 +57,9 @@ export const Balances = () => {
   );
 
   const { borrowUscd, collateralUsdc, percent, supplyUsdc } = useMemo(() => {
-    const supplyUsdc = formatValue(data.supply, USDC_EXPONENT).toNumber();
-    const borrowUscd = formatValue(data.borrow, USDC_EXPONENT);
-    const collateralUsdc = formatValue(data.collateral, USDC_EXPONENT);
+    const supplyUsdc = fromBaseUnitAmount(data.supply, USDC_EXPONENT).toNumber();
+    const borrowUscd = fromBaseUnitAmount(data.borrow, USDC_EXPONENT);
+    const collateralUsdc = fromBaseUnitAmount(data.collateral, USDC_EXPONENT);
     const percent = calculatePercentage(borrowUscd, collateralUsdc).toNumber();
 
     return {
@@ -75,15 +75,15 @@ export const Balances = () => {
       <div className='mb-7 flex flex-col md:mb-4 md:flex-row md:items-center md:justify-around'>
         <div className='order-1 mb-7 flex h-[186px] w-[186px] flex-col items-center justify-center gap-y-[0.25rem] self-center rounded-full border-4 border-[#0344E9] md:order-2 md:mb-4 md:gap-y-2'>
           <p className='h2'>TVL</p>
-          <p className='title'>${formatNumber(formatValue(tvl, USDC_EXPONENT).toNumber())}</p>
+          <p className='title'>${displayUsd(fromBaseUnitAmount(tvl, USDC_EXPONENT).toNumber())}</p>
         </div>
         <div className='order-2 flex flex-row items-center justify-between md:order-1 md:flex-col md:gap-4'>
           <p className='h2 md:text-[#0344E9]'>Supply Balance</p>
-          <p className='title'>${formatNumber(supplyUsdc)}</p>
+          <p className='title'>${displayUsd(supplyUsdc)}</p>
         </div>
         <div className='order-3 flex flex-row items-center justify-between md:flex-col md:gap-4'>
           <p className='h2 md:text-[#0344E9]'>Borrow Balance</p>
-          <p className='title'>${formatNumber(borrowUscd)}</p>
+          <p className='title'>${displayUsd(borrowUscd)}</p>
         </div>
       </div>
       <div className='flex flex-col justify-between gap-4 md:flex-row md:items-center'>
@@ -91,7 +91,7 @@ export const Balances = () => {
         <div className='flex flex-1 items-center gap-3 md:gap-4'>
           <p className='number2 text-[#E3E3E3]'>0$</p>
           <Progress value={percent} />
-          <p className='number2 text-[#E3E3E3]'>{formatNumber(collateralUsdc)}$</p>
+          <p className='number2 text-[#E3E3E3]'>{displayUsd(collateralUsdc)}$</p>
         </div>
       </div>
     </div>

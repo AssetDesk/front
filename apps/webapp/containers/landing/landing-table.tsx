@@ -1,20 +1,20 @@
 'use client';
 
-import Image from 'next/image';
-import { Button, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from 'ui';
-import { assets } from '../../utils';
-import Link from 'next/link';
-import { useReadContractMultiAssets } from '../../hooks/read-contract-multi-assets';
-import { CONTRACT_ADDRESS, EIGHTEEN_EXPONENT, USDC_EXPONENT } from '../../utils/constants';
-import { ContractMethods } from '../../types/contract';
 import BigNumber from 'bignumber.js';
+import Image from 'next/image';
+import Link from 'next/link';
 import { xdr } from 'soroban-client';
-import { formatNumber } from '../../utils/format-number';
-import { formatValue } from '../../utils/format-value';
+import { Button, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from 'ui';
+import { useReadContractMultiAssets } from '../../hooks/read-contract-multi-assets';
+import { ContractMethods } from '../../types/contract';
+import { assets } from '../../utils';
+import { displayAmount } from '../../utils/amount';
+import { CONTRACT_ADDRESS, EIGHTEEN_EXPONENT, USDC_EXPONENT } from '../../utils/constants';
+import { fromBaseUnitAmount } from '../../utils/amount';
 
 const calculateMarketSize = (totalReserves: BigNumber, exponent: number, price: BigNumber) => {
-  const formattedTotalReserves = formatValue(totalReserves, exponent);
-  const formattedPrice = formatValue(price, USDC_EXPONENT);
+  const formattedTotalReserves = fromBaseUnitAmount(totalReserves, exponent);
+  const formattedPrice = fromBaseUnitAmount(price, USDC_EXPONENT);
   return formattedTotalReserves.multipliedBy(formattedPrice);
 };
 
@@ -82,7 +82,7 @@ export const LandingTable = () => {
                 <p className='subtitle2 text-[#E3E3E3]'>Market Size</p>
                 <p className='subtitle3 text-[#E3E3E3]'>
                   $
-                  {formatNumber(
+                  {displayAmount(
                     calculateMarketSize(
                       totalReserves[asset.symbol] ?? BigNumber(0),
                       asset.exponents,
@@ -94,8 +94,8 @@ export const LandingTable = () => {
               <div className='flex justify-between'>
                 <p className='subtitle2 text-[#E3E3E3]'>Deposit APY</p>
                 <p className='subtitle3 text-[#E3E3E3]'>
-                  {formatNumber(
-                    formatValue(
+                  {displayAmount(
+                    fromBaseUnitAmount(
                       liquidityRates[asset.symbol] ?? BigNumber(0),
                       EIGHTEEN_EXPONENT,
                     ).toNumber(),
@@ -110,8 +110,8 @@ export const LandingTable = () => {
               <div className='flex justify-between'>
                 <p className='subtitle2 text-[#E3E3E3]'>Borrow APY</p>
                 <p className='subtitle3 text-[#E3E3E3]'>
-                  {formatNumber(
-                    formatValue(
+                  {displayAmount(
+                    fromBaseUnitAmount(
                       interestRates[asset.symbol] ?? BigNumber(0),
                       EIGHTEEN_EXPONENT,
                     ).toNumber(),
@@ -148,7 +148,7 @@ export const LandingTable = () => {
                 </TableCell>
                 <TableCell className='text-center'>
                   $
-                  {formatNumber(
+                  {displayAmount(
                     calculateMarketSize(
                       totalReserves[asset.symbol] ?? BigNumber(0),
                       asset.exponents,
@@ -157,8 +157,8 @@ export const LandingTable = () => {
                   )}
                 </TableCell>
                 <TableCell className='text-center'>
-                  {formatNumber(
-                    formatValue(
+                  {displayAmount(
+                    fromBaseUnitAmount(
                       liquidityRates[asset.symbol] ?? BigNumber(0),
                       EIGHTEEN_EXPONENT,
                     ).toNumber(),
@@ -167,8 +167,8 @@ export const LandingTable = () => {
                 </TableCell>
                 <TableCell className='text-center'>$ 121.6M</TableCell>
                 <TableCell className='text-center'>
-                  {formatNumber(
-                    formatValue(
+                  {displayAmount(
+                    fromBaseUnitAmount(
                       interestRates[asset.symbol] ?? BigNumber(0),
                       EIGHTEEN_EXPONENT,
                     ).toNumber(),

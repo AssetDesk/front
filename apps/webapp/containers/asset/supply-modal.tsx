@@ -18,7 +18,7 @@ import { useWriteContract } from '../../hooks/write-contract';
 import { Asset } from '../../types/asset';
 import { ContractMethods } from '../../types/contract';
 import { CONTRACT_ADDRESS } from '../../utils/constants';
-import { formatValueToBigNumber } from '../../utils/format-value';
+import { toBaseUnitAmount } from '../../utils/amount';
 import { validateAmount, validateDigitsAfterComma } from '../../utils/validation';
 
 export const SupplyModal = ({
@@ -60,7 +60,7 @@ export const SupplyModal = ({
               const args = [
                 new Address(address).toScVal(),
                 xdr.ScVal.scvSymbol(asset.symbol),
-                new ScInt(formatValueToBigNumber(value, asset.exponents).toFixed()).toU128(),
+                new ScInt(toBaseUnitAmount(value, asset.exponents).toFixed()).toU128(),
               ];
               await write(CONTRACT_ADDRESS, ContractMethods.DEPOSIT, args);
               await refetch();

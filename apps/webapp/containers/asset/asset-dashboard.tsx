@@ -1,9 +1,9 @@
-import { useMemo } from 'react';
-import { formatNumber } from '../../utils/format-number';
-import { formatValue } from '../../utils/format-value';
-import { EIGHTEEN_EXPONENT, USDC_EXPONENT } from '../../utils/constants';
-import { useAssetBySlug } from '../../hooks/asset-by-slug';
 import BigNumber from 'bignumber.js';
+import { useMemo } from 'react';
+import { useAssetBySlug } from '../../hooks/asset-by-slug';
+import { displayAmount, displayUsd } from '../../utils/amount';
+import { EIGHTEEN_EXPONENT, USDC_EXPONENT } from '../../utils/constants';
+import { fromBaseUnitAmount } from '../../utils/amount';
 
 export interface AssetInfo {
   totalReserves: BigNumber;
@@ -18,13 +18,16 @@ export const AssetDashboard = ({ data }: { data: AssetInfo }) => {
   const asset = useAssetBySlug();
 
   const formattedValue = useMemo(() => {
-    const price = formatValue(data.price, USDC_EXPONENT).toNumber();
-    const totalReserves = formatValue(data.totalReserves, asset!.exponents).toNumber();
-    const availableLiquidity = formatValue(data.availableLiquidity, asset!.exponents).toNumber();
+    const price = fromBaseUnitAmount(data.price, USDC_EXPONENT).toNumber();
+    const totalReserves = fromBaseUnitAmount(data.totalReserves, asset!.exponents).toNumber();
+    const availableLiquidity = fromBaseUnitAmount(
+      data.availableLiquidity,
+      asset!.exponents,
+    ).toNumber();
 
-    const utilizationRate = formatValue(data.utilizationRate, 5).toNumber();
-    const supplyAPY = formatValue(data.liquidityRate, EIGHTEEN_EXPONENT).toNumber();
-    const borrowAPY = formatValue(data.interestRate, EIGHTEEN_EXPONENT).toNumber();
+    const utilizationRate = fromBaseUnitAmount(data.utilizationRate, 5).toNumber();
+    const supplyAPY = fromBaseUnitAmount(data.liquidityRate, EIGHTEEN_EXPONENT).toNumber();
+    const borrowAPY = fromBaseUnitAmount(data.interestRate, EIGHTEEN_EXPONENT).toNumber();
 
     return {
       reservesSize: totalReserves * price,
@@ -40,35 +43,35 @@ export const AssetDashboard = ({ data }: { data: AssetInfo }) => {
     <div className='card-gradient grid grid-cols-2 gap-4 rounded-lg px-4 pb-5 pt-4 md:grid-cols-7 md:gap-6 md:p-[30px]'>
       <div className='grid-row-2 grid gap-1 md:text-center'>
         <p className='subtitle2 text-[#E3E3E3]'>Reserve Size</p>
-        <p className='number'>${formatNumber(formattedValue.reservesSize)}</p>
+        <p className='number'>${displayUsd(formattedValue.reservesSize)}</p>
       </div>
       <div
         className='grid-row-2 grid gap-1
        md:text-center'
       >
         <p className='subtitle2 text-[#E3E3E3]'>Available Liquidity</p>
-        <p className='number'>${formatNumber(formattedValue.availableLiquidity)}</p>
+        <p className='number'>${displayUsd(formattedValue.availableLiquidity)}</p>
       </div>
       <div
         className='grid-row-2 grid gap-1
        md:text-center'
       >
         <p className='subtitle2 text-[#E3E3E3]'>Utilization Rate</p>
-        <p className='number'>{formatNumber(formattedValue.utilizationRate)}%</p>
+        <p className='number'>{displayAmount(formattedValue.utilizationRate)}%</p>
       </div>
       <div
         className='grid-row-2 grid gap-1 md:text-center
       '
       >
         <p className='subtitle2 text-[#E3E3E3]'>Price</p>
-        <p className='number'>${formatNumber(formattedValue.price)}</p>
+        <p className='number'>${displayUsd(formattedValue.price)}</p>
       </div>
       <div
         className='grid-row-2 grid gap-1 md:text-center
       '
       >
         <p className='subtitle2 text-[#E3E3E3]'>Supply APY</p>
-        <p className='number'>{formatNumber(formattedValue.supplyAPY)}%</p>
+        <p className='number'>{displayAmount(formattedValue.supplyAPY)}%</p>
       </div>
       <div
         className='grid-row-2 grid gap-1 md:text-center
@@ -82,7 +85,7 @@ export const AssetDashboard = ({ data }: { data: AssetInfo }) => {
       '
       >
         <p className='subtitle2 text-[#E3E3E3]'>Borrow APY</p>
-        <p className='number'>{formatNumber(formattedValue.borrowAPY)}%</p>
+        <p className='number'>{displayAmount(formattedValue.borrowAPY)}%</p>
       </div>
     </div>
   );
