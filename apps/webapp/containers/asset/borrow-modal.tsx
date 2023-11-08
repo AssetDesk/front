@@ -1,7 +1,7 @@
 'use client';
 import { useSorobanReact } from '@soroban-react/core';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Address, ScInt, xdr } from 'soroban-client';
 import {
   Button,
@@ -17,10 +17,17 @@ import { useValidationResult } from '../../hooks/validation-result';
 import { useWriteContract } from '../../hooks/write-contract';
 import { Asset } from '../../types/asset';
 import { ContractMethods } from '../../types/contract';
-import { CONTRACT_ADDRESS, EIGHTEEN_EXPONENT } from '../../utils/constants';
-import { displayAmount, fromBaseUnitAmount, toBaseUnitAmount } from '../../utils/amount';
+import { CONTRACT_ADDRESS, EIGHTEEN_EXPONENT, USDC_EXPONENT } from '../../utils/constants';
+import {
+  displayAmount,
+  displayUsd,
+  fromBaseUnitAmount,
+  toBaseUnitAmount,
+} from '../../utils/amount';
 import { validateAmount, validateDigitsAfterComma } from '../../utils/validation';
 import BigNumber from 'bignumber.js';
+import { useMultiCall } from '../../hooks/multi-call';
+import { calculatePercentage } from '../../utils/calculate-percentage';
 
 export const BorrowModal = ({
   balance,
@@ -33,10 +40,50 @@ export const BorrowModal = ({
   apy: BigNumber;
   refetch: () => Promise<void>;
 }) => {
-  const { address } = useSorobanReact();
   const [value, setValue] = useState('');
 
   const { write } = useWriteContract();
+
+  const { address } = useSorobanReact();
+
+  const args = useMemo(() => {
+    if (!address) return [];
+    return [new Address(address).toScVal()];
+  }, [address]);
+
+  const { data, refetch: refecthBorrow } = useMultiCall<{
+    borrow: BigNumber;
+    collateral: BigNumber;
+  }>(
+    CONTRACT_ADDRESS,
+    [
+      {
+        key: 'borrow',
+        method: ContractMethods.GET_USER_BORROWED_USD,
+      },
+      {
+        key: 'collateral',
+        method: ContractMethods.GET_USER_COLLATERAL_USD,
+      },
+    ],
+    {
+      borrow: BigNumber(0),
+      collateral: BigNumber(0),
+    },
+    args,
+    Boolean(address),
+  );
+
+  const { collateralUsdc, percent } = useMemo(() => {
+    const borrowUscd = fromBaseUnitAmount(data.borrow, USDC_EXPONENT);
+    const collateralUsdc = fromBaseUnitAmount(data.collateral, USDC_EXPONENT);
+    const percent = calculatePercentage(borrowUscd, collateralUsdc).toNumber();
+
+    return {
+      collateralUsdc: collateralUsdc.toNumber(),
+      percent,
+    };
+  }, [data]);
 
   const validationResult = useValidationResult(
     [
@@ -48,6 +95,7 @@ export const BorrowModal = ({
     ],
     value,
   );
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -66,6 +114,7 @@ export const BorrowModal = ({
               ];
               await write(CONTRACT_ADDRESS, ContractMethods.BORROW, args);
               await refetch();
+              await refecthBorrow();
             })();
           }}
         >
@@ -109,11 +158,11 @@ export const BorrowModal = ({
                 <div className='flex flex-col'>
                   <div className='flex justify-between border-b-[1px] border-[#0344E9] p-[10px]'>
                     <p className='subtitle3'>Borrow Limit</p>
-                    <p className='number2'>$0.00</p>
+                    <p className='number2'>${displayUsd(collateralUsdc)}</p>
                   </div>
                   <div className='flex justify-between border-b-[1px] border-[#0344E9] p-[10px]'>
                     <p className='subtitle3'>Borrow Limit Used</p>
-                    <p className='number2'>0%</p>
+                    <p className='number2'>{displayAmount(percent)}%</p>
                   </div>
                 </div>
               </div>

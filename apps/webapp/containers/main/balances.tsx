@@ -10,11 +10,7 @@ import { ContractMethods } from '../../types/contract';
 import { displayUsd } from '../../utils/amount';
 import { CONTRACT_ADDRESS, USDC_EXPONENT } from '../../utils/constants';
 import { fromBaseUnitAmount } from '../../utils/amount';
-
-function calculatePercentage(value: BigNumber, total: BigNumber): BigNumber {
-  if (total.isZero()) return BigNumber(0);
-  return value.div(total).multipliedBy(BigNumber(100));
-}
+import { calculatePercentage } from '../../utils/calculate-percentage';
 
 export const Balances = () => {
   const { address } = useSorobanReact();

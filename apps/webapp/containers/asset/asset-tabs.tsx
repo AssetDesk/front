@@ -53,10 +53,10 @@ export const AssetTabs = () => {
 
   return (
     <Tabs defaultValue='Your info' className='w-full'>
-      <TabsList className='w-full md:w-[484px]'>
-        <TabsTrigger value='Overview' disabled className='flex-1'>
+      <TabsList className='w-full md:w-[242px]'>
+        {/* <TabsTrigger value='Overview' disabled className='flex-1'>
           Overview
-        </TabsTrigger>
+        </TabsTrigger> */}
         <TabsTrigger value='Your info' className='flex-1'>
           Your info
         </TabsTrigger>

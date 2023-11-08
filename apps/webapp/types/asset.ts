@@ -4,5 +4,5 @@ export interface Asset {
   name: string;
   address: string;
   exponents: number;
-  collateral: boolean
+  collateral: boolean;
 }

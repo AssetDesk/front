@@ -32,7 +32,7 @@ export const BalanceInput = ({
         <div className='absolute bottom-0 right-0 md:-bottom-[1px] md:right-0'>
           <Button
             variant='ghost'
-            className='number2 w-10 rounded-lg pr-4 text-[#E3E3E3] md:w-10 md:rounded-lg md:pr-4'
+            className='number2 w-10 rounded-lg pr-4 text-[#E3E3E3] md:w-10 md:rounded-lg md:pr-8'
             type='button'
             onClick={handleMax}
           >

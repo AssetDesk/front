@@ -15,7 +15,7 @@ export const assets: Asset[] = [
     exponents: 7,
     name: 'TokenA',
     symbol: 'atk',
-    collateral: false
+    collateral: false,
   },
   {
     icon: '/weth.svg',
@@ -23,6 +23,6 @@ export const assets: Asset[] = [
     exponents: 7,
     name: 'TokenB',
     symbol: 'btk',
-    collateral: false
+    collateral: false,
   },
 ];
