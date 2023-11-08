@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import { FadeTransition } from '../../components';
-import { Balances, BorrowMarketTable, SupplyMarketTable } from '../../containers';
+import { Balances, BorrowMarketTable, DepostMarketTable } from '../../containers';
 import { generalMetadata } from '../../utils';
 
 export const metadata: Metadata = {
@@ -15,7 +15,7 @@ export default function Page() {
         <Balances />
         <div className='flex flex-col gap-6 md:flex-row md:gap-4'>
           <div className='flex-1'>
-            <SupplyMarketTable />
+            <DepostMarketTable />
           </div>
           <div className='flex-1'>
             <BorrowMarketTable />

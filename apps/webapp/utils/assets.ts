@@ -7,6 +7,7 @@ export const assets: Asset[] = [
     name: 'Stellar',
     address: 'CB64D3G7SM2RTH6JSGG34DDTFTQ5CFDKVDZJZSODMCX4NJ2HV2KN7OHT',
     exponents: 7,
+    collateral: true,
   },
   {
     icon: '/usdc.svg',
@@ -14,6 +15,7 @@ export const assets: Asset[] = [
     exponents: 7,
     name: 'TokenA',
     symbol: 'atk',
+    collateral: false
   },
   {
     icon: '/weth.svg',
@@ -21,5 +23,6 @@ export const assets: Asset[] = [
     exponents: 7,
     name: 'TokenB',
     symbol: 'btk',
+    collateral: false
   },
 ];

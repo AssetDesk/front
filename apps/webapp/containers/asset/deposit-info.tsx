@@ -1,15 +1,15 @@
 import { LinearChart, ProgressBar } from '../../components';
 
-export const SupplyInfo = () => {
+export const DepositInfo = () => {
   return (
     <div className='grid grid-cols-12 gap-4'>
-      <p className='subtitle1 col-span-12 md:col-span-2'>Supply info</p>
+      <p className='subtitle1 col-span-12 md:col-span-2'>Deposit info</p>
       <div className='col-span-12 flex flex-col gap-10 md:col-span-10'>
         <div className='flex flex-col gap-4 md:flex-row md:items-start md:gap-6'>
           <ProgressBar />
           <div className='flex flex-col gap-1 md:border-r-[1px] md:border-[rgba(0,71,255,0.60)] md:pr-[30px]'>
             <div className='flex items-center gap-2'>
-              <p className='subtitle2 text-[#E3E3E3]'>Total supplied</p>
+              <p className='subtitle2 text-[#E3E3E3]'>Total deposited</p>
               {/* Info Icon replace */}
               <svg
                 xmlns='http://www.w3.org/2000/svg'
@@ -32,7 +32,7 @@ export const SupplyInfo = () => {
             <p className='number'>1.20%</p>
           </div>
         </div>
-        <LinearChart value1='Supply APR' />
+        <LinearChart value1='Deposit APR' />
         <div className='flex flex-col gap-2'>
           <p className='subtitle2'>Collateral usage</p>
           <div className='grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-11'>

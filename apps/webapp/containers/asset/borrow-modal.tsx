@@ -17,17 +17,20 @@ import { useValidationResult } from '../../hooks/validation-result';
 import { useWriteContract } from '../../hooks/write-contract';
 import { Asset } from '../../types/asset';
 import { ContractMethods } from '../../types/contract';
-import { CONTRACT_ADDRESS } from '../../utils/constants';
-import { toBaseUnitAmount } from '../../utils/amount';
+import { CONTRACT_ADDRESS, EIGHTEEN_EXPONENT } from '../../utils/constants';
+import { displayAmount, fromBaseUnitAmount, toBaseUnitAmount } from '../../utils/amount';
 import { validateAmount, validateDigitsAfterComma } from '../../utils/validation';
+import BigNumber from 'bignumber.js';
 
 export const BorrowModal = ({
   balance,
   asset,
+  apy,
   refetch,
 }: {
   balance: number;
   asset: Asset;
+  apy: BigNumber;
   refetch: () => Promise<void>;
 }) => {
   const { address } = useSorobanReact();
@@ -95,15 +98,9 @@ export const BorrowModal = ({
                       <Image src={asset.icon} alt='' width={20} height={20} />
                       <p className='subtitle3'>Borrow APY</p>
                     </div>
-                    <p className='number2'>3.04%</p>
-                  </div>
-                  <div className='flex justify-between border-b-[1px] border-[#0344E9] p-[10px]'>
-                    <div className='flex gap-2'>
-                      {/* TODO is nedeed? */}
-                      {/* <Image src={token?.icon ?? ''} alt='' width={20} height={20} /> */}
-                      <p className='subtitle3'>Distribution APY</p>
-                    </div>
-                    <p className='number2'>0%</p>
+                    <p className='number2'>
+                      {displayAmount(fromBaseUnitAmount(apy, EIGHTEEN_EXPONENT).toNumber())}%
+                    </p>
                   </div>
                 </div>
               </div>

@@ -68,7 +68,10 @@ export const AssetTabs = () => {
         <ReserveConfiguration />
       </TabsContent>
       <TabsContent value='Your info'>
-        <UserInfo refetchAssetInfo={refetch} />
+        <UserInfo
+          refetchAssetInfo={refetch}
+          apy={{ depositAPY: data.liquidityRate, borrowAPY: data.interestRate }}
+        />
       </TabsContent>
     </Tabs>
   );

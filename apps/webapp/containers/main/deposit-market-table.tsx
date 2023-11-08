@@ -10,12 +10,11 @@ import { useReadContractMultiAssets } from '../../hooks/read-contract-multi-asse
 import { useWriteContract } from '../../hooks/write-contract';
 import { ContractMethods } from '../../types/contract';
 import { assets } from '../../utils';
-import { displayAmount } from '../../utils/amount';
+import { displayAmount, fromBaseUnitAmount } from '../../utils/amount';
 import { CONTRACT_ADDRESS, EIGHTEEN_EXPONENT } from '../../utils/constants';
-import { fromBaseUnitAmount } from '../../utils/amount';
 
 const initialValue = { xlm: BigNumber(0), atk: BigNumber(0), btk: BigNumber(0) };
-export const SupplyMarketTable = () => {
+export const DepostMarketTable = () => {
   const router = useRouter();
   const { address } = useSorobanReact();
 
@@ -75,7 +74,7 @@ export const SupplyMarketTable = () => {
   return (
     <>
       <div className='flex flex-col gap-6 md:hidden'>
-        <p className='h2'>Supply Markets</p>
+        <p className='h2'>Deposit Markets</p>
         <div className='flex flex-col gap-4'>
           {assets.map(asset => (
             <div
@@ -102,7 +101,7 @@ export const SupplyMarketTable = () => {
                 </p>
               </div>
               <div className='flex justify-between'>
-                <p className='subtitle2 text-[#E3E3E3]'>Supply</p>
+                <p className='subtitle2 text-[#E3E3E3]'>Deposit</p>
                 <p className='subtitle3 text-[#E3E3E3]'>
                   {displayAmount(
                     fromBaseUnitAmount(
@@ -131,13 +130,13 @@ export const SupplyMarketTable = () => {
         </div>
       </div>
       <div className='card-gradient hidden flex-col gap-2 rounded-lg px-5 pb-6 pt-4 md:flex'>
-        <p className='h2'>Supply Markets</p>
+        <p className='h2'>Deposit Markets</p>
         <Table>
           <TableHeader>
             <TableRow>
               <TableHead>Assets</TableHead>
               <TableHead className='text-right'>APY</TableHead>
-              <TableHead className='text-center'>Supply</TableHead>
+              <TableHead className='text-center'>Deposit</TableHead>
               <TableHead className='text-center'>Collateral</TableHead>
             </TableRow>
           </TableHeader>
@@ -179,6 +178,7 @@ export const SupplyMarketTable = () => {
                       void toggleColateral(asset.symbol)();
                     }}
                     checked={Boolean(collateral[asset.symbol])}
+                    disabled={!asset.collateral}
                   />
                 </TableCell>
               </TableRow>

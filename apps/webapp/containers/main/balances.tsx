@@ -25,13 +25,13 @@ export const Balances = () => {
   }, [address]);
 
   const { data } = useMultiCall<{
-    supply: BigNumber;
+    deposit: BigNumber;
     borrow: BigNumber;
     collateral: BigNumber;
   }>(
     CONTRACT_ADDRESS,
     [
-      { key: 'supply', method: ContractMethods.GET_USER_DEPOSITED_USD },
+      { key: 'deposit', method: ContractMethods.GET_USER_DEPOSITED_USD },
       {
         key: 'borrow',
         method: ContractMethods.GET_USER_BORROWED_USD,
@@ -42,7 +42,7 @@ export const Balances = () => {
       },
     ],
     {
-      supply: BigNumber(0),
+      deposit: BigNumber(0),
       borrow: BigNumber(0),
       collateral: BigNumber(0),
     },
@@ -56,8 +56,8 @@ export const Balances = () => {
     BigNumber(0),
   );
 
-  const { borrowUscd, collateralUsdc, percent, supplyUsdc } = useMemo(() => {
-    const supplyUsdc = fromBaseUnitAmount(data.supply, USDC_EXPONENT).toNumber();
+  const { borrowUscd, collateralUsdc, percent, depositUsdc } = useMemo(() => {
+    const depositUsdc = fromBaseUnitAmount(data.deposit, USDC_EXPONENT).toNumber();
     const borrowUscd = fromBaseUnitAmount(data.borrow, USDC_EXPONENT);
     const collateralUsdc = fromBaseUnitAmount(data.collateral, USDC_EXPONENT);
     const percent = calculatePercentage(borrowUscd, collateralUsdc).toNumber();
@@ -66,7 +66,7 @@ export const Balances = () => {
       borrowUscd: borrowUscd.toNumber(),
       collateralUsdc: collateralUsdc.toNumber(),
       percent,
-      supplyUsdc,
+      depositUsdc,
     };
   }, [data]);
 
@@ -78,8 +78,8 @@ export const Balances = () => {
           <p className='title'>${displayUsd(fromBaseUnitAmount(tvl, USDC_EXPONENT).toNumber())}</p>
         </div>
         <div className='order-2 flex flex-row items-center justify-between md:order-1 md:flex-col md:gap-4'>
-          <p className='h2 md:text-[#0344E9]'>Supply Balance</p>
-          <p className='title'>${displayUsd(supplyUsdc)}</p>
+          <p className='h2 md:text-[#0344E9]'>Deposit Balance</p>
+          <p className='title'>${displayUsd(depositUsdc)}</p>
         </div>
         <div className='order-3 flex flex-row items-center justify-between md:flex-col md:gap-4'>
           <p className='h2 md:text-[#0344E9]'>Borrow Balance</p>

@@ -26,7 +26,7 @@ export const AssetDashboard = ({ data }: { data: AssetInfo }) => {
     ).toNumber();
 
     const utilizationRate = fromBaseUnitAmount(data.utilizationRate, 5).toNumber();
-    const supplyAPY = fromBaseUnitAmount(data.liquidityRate, EIGHTEEN_EXPONENT).toNumber();
+    const depositAPY = fromBaseUnitAmount(data.liquidityRate, EIGHTEEN_EXPONENT).toNumber();
     const borrowAPY = fromBaseUnitAmount(data.interestRate, EIGHTEEN_EXPONENT).toNumber();
 
     return {
@@ -34,7 +34,7 @@ export const AssetDashboard = ({ data }: { data: AssetInfo }) => {
       availableLiquidity: availableLiquidity * price,
       utilizationRate,
       price,
-      supplyAPY,
+      depositAPY,
       borrowAPY,
     };
   }, [data, asset]);
@@ -70,8 +70,8 @@ export const AssetDashboard = ({ data }: { data: AssetInfo }) => {
         className='grid-row-2 grid gap-1 md:text-center
       '
       >
-        <p className='subtitle2 text-[#E3E3E3]'>Supply APY</p>
-        <p className='number'>{displayAmount(formattedValue.supplyAPY)}%</p>
+        <p className='subtitle2 text-[#E3E3E3]'>Deposit APY</p>
+        <p className='number'>{displayAmount(formattedValue.depositAPY)}%</p>
       </div>
       <div
         className='grid-row-2 grid gap-1 md:text-center

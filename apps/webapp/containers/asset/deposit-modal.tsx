@@ -1,5 +1,6 @@
 'use client';
 import { useSorobanReact } from '@soroban-react/core';
+import BigNumber from 'bignumber.js';
 import Image from 'next/image';
 import { useState } from 'react';
 import { Address, ScInt, xdr } from 'soroban-client';
@@ -17,17 +18,19 @@ import { useValidationResult } from '../../hooks/validation-result';
 import { useWriteContract } from '../../hooks/write-contract';
 import { Asset } from '../../types/asset';
 import { ContractMethods } from '../../types/contract';
-import { CONTRACT_ADDRESS } from '../../utils/constants';
-import { toBaseUnitAmount } from '../../utils/amount';
+import { displayAmount, fromBaseUnitAmount, toBaseUnitAmount } from '../../utils/amount';
+import { CONTRACT_ADDRESS, EIGHTEEN_EXPONENT } from '../../utils/constants';
 import { validateAmount, validateDigitsAfterComma } from '../../utils/validation';
 
-export const WithdrawModal = ({
+export const DepositModal = ({
   balance,
   asset,
+  apy,
   refetch,
 }: {
   balance: number;
   asset: Asset;
+  apy: BigNumber;
   refetch: () => Promise<void>;
 }) => {
   const { address } = useSorobanReact();
@@ -49,7 +52,7 @@ export const WithdrawModal = ({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className='w-full md:w-48'>Withdraw</Button>
+        <Button className='w-full md:w-48'>Supply</Button>
       </DialogTrigger>
       <DialogContent className='w-[300px] md:w-[400px]'>
         <form
@@ -62,17 +65,17 @@ export const WithdrawModal = ({
                 xdr.ScVal.scvSymbol(asset.symbol),
                 new ScInt(toBaseUnitAmount(value, asset.exponents).toFixed()).toU128(),
               ];
-              await write(CONTRACT_ADDRESS, ContractMethods.REDEEM, args);
+              await write(CONTRACT_ADDRESS, ContractMethods.DEPOSIT, args);
               await refetch();
             })();
           }}
         >
           <DialogHeader>
-            <DialogTitle>Withdraw {asset.symbol}</DialogTitle>
+            <DialogTitle>Supply {asset.symbol}</DialogTitle>
           </DialogHeader>
-          <div className='grid gap-6 md:gap-10'>
+          <div className='mt-2 grid gap-6 md:gap-10'>
             <BalanceInput
-              balanceTitle='Currently Supplying'
+              balanceTitle='Wallet Balance'
               asset={asset}
               balance={balance}
               value={value}
@@ -87,43 +90,22 @@ export const WithdrawModal = ({
                 setValue(e.target.value);
               }}
             />
-            <div className='flex flex-col gap-6'>
-              <div className='flex flex-col gap-2 md:gap-4'>
-                <p className='subtitle2'>Supply Rates</p>
-                <div className='flex flex-col'>
-                  <div className='flex justify-between border-b-[1px] border-[#0344E9] p-[10px]'>
-                    <div className='flex gap-2'>
-                      {/* TODO is nedeed? */}
-                      <Image src={asset.icon} alt='' width={20} height={20} />
-                      <p className='subtitle3'>Supply APY</p>
-                    </div>
-                    <p className='number2'>0.04%</p>
+            <div className='flex flex-col gap-2 md:gap-4'>
+              <p className='subtitle2'>Supply Rates</p>
+              <div className='flex flex-col'>
+                <div className='flex justify-between border-b-[1px] border-[#0344E9] p-[10px]'>
+                  <div className='flex gap-2'>
+                    <Image src={asset.icon} alt='' width={20} height={20} />
+                    <p className='subtitle3'>Supply APY</p>
                   </div>
-                  <div className='flex justify-between border-b-[1px] border-[#0344E9] p-[10px]'>
-                    <div className='flex gap-2'>
-                      {/* <Image src={token?.icon ?? ''} alt='' width={20} height={20} /> */}
-                      <p className='subtitle3'>Distribution APY</p>
-                    </div>
-                    <p className='number2'>0%</p>
-                  </div>
-                </div>
-              </div>
-              <div className='flex flex-col gap-2 md:gap-4'>
-                <p className='subtitle2'>Borrow Limit</p>
-                <div className='flex flex-col'>
-                  <div className='flex justify-between border-b-[1px] border-[#0344E9] p-[10px]'>
-                    <p className='subtitle3'>Borrow Limit</p>
-                    <p className='number2'>$0.00</p>
-                  </div>
-                  <div className='flex justify-between border-b-[1px] border-[#0344E9] p-[10px]'>
-                    <p className='subtitle3'>Borrow Limit Used</p>
-                    <p className='number2'>0%</p>
-                  </div>
+                  <p className='number2'>
+                    {displayAmount(fromBaseUnitAmount(apy, EIGHTEEN_EXPONENT).toNumber())}%
+                  </p>
                 </div>
               </div>
             </div>
           </div>
-          <DialogFooter className='mt-4 '>
+          <DialogFooter className='mt-4'>
             <Button
               type='submit'
               className='w-full md:w-full'
