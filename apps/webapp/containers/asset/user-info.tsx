@@ -139,7 +139,7 @@ export const UserInfo = ({
                 <p className='number2'>${displayUsd(walletBalanceUsdc)}</p>
               </div>
               <DepositModal
-                balance={walletBalance}
+                balance={asset?.symbol === 'xlm' ? walletBalance - 5 : walletBalance}
                 asset={asset!}
                 refetch={refectData}
                 apy={apy.depositAPY}
