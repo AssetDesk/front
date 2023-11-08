@@ -58,6 +58,7 @@ export const useReadContractMultiAssets = <T>(
 
             return { [arg[0]]: nativeRes } as T;
           } catch (error) {
+            console.log(method, error);
             return { [arg[0]]: undefined } as T;
           }
         }),
