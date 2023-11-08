@@ -52,7 +52,7 @@ export const DepositModal = ({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className='w-full md:w-48'>Supply</Button>
+        <Button className='w-full md:w-48'>Deposit</Button>
       </DialogTrigger>
       <DialogContent className='w-[300px] md:w-[400px]'>
         <form
@@ -71,7 +71,7 @@ export const DepositModal = ({
           }}
         >
           <DialogHeader>
-            <DialogTitle>Supply {asset.symbol}</DialogTitle>
+            <DialogTitle>Deposit {asset.symbol}</DialogTitle>
           </DialogHeader>
           <div className='mt-2 grid gap-6 md:gap-10'>
             <BalanceInput
@@ -91,12 +91,12 @@ export const DepositModal = ({
               }}
             />
             <div className='flex flex-col gap-2 md:gap-4'>
-              <p className='subtitle2'>Supply Rates</p>
+              <p className='subtitle2'>Deposit Rates</p>
               <div className='flex flex-col'>
                 <div className='flex justify-between border-b-[1px] border-[#0344E9] p-[10px]'>
                   <div className='flex gap-2'>
                     <Image src={asset.icon} alt='' width={20} height={20} />
-                    <p className='subtitle3'>Supply APY</p>
+                    <p className='subtitle3'>Deposit APY</p>
                   </div>
                   <p className='number2'>
                     {displayAmount(fromBaseUnitAmount(apy, EIGHTEEN_EXPONENT).toNumber())}%
