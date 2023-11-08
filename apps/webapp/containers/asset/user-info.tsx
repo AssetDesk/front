@@ -113,6 +113,8 @@ export const UserInfo = ({
     await refetchAssetInfo();
   };
 
+  const balanceForDeposit = asset!.symbol === 'xlm' ? walletBalance - 5 : walletBalance;
+
   return (
     <FadeTransition>
       <div className='flex flex-col gap-[18px]'>
@@ -134,12 +136,12 @@ export const UserInfo = ({
                   <p className='subtitle2 text-[#E3E3E3]'>Available to deposit</p>
                 </div>
                 <p className='number mt-1'>
-                  {displayAmount(walletBalance)} {asset!.symbol}
+                  {displayAmount(balanceForDeposit)} {asset!.symbol}
                 </p>
                 <p className='number2'>${displayUsd(walletBalanceUsdc)}</p>
               </div>
               <DepositModal
-                balance={asset?.symbol === 'xlm' ? walletBalance - 5 : walletBalance}
+                balance={balanceForDeposit}
                 asset={asset!}
                 refetch={refectData}
                 apy={apy.depositAPY}
