@@ -4,8 +4,7 @@ import { formattedNumber } from './formatNumber';
 describe('formattedNumber', () => {
   it('returns the correctly formatted number with a variable number of decimal places', () => {
     const num = 1234.5678;
-    const digits = 2;
-    expect(formattedNumber(num, digits)).toBe('1.23K');
+    expect(formattedNumber(num)).toBe('1.2K');
   });
 
   it('returns 100', () => {
@@ -27,6 +26,15 @@ describe('formattedNumber', () => {
   it('returns 6B', () => {
     const num = 6000000000;
     expect(formattedNumber(num)).toBe('6B');
+  });
+  it('returns 12T', () => {
+    const num = 12434534534534;
+    expect(formattedNumber(num)).toBe('12T');
+  });
+
+  it('returns negative 12T', () => {
+    const num = -12434534534534;
+    expect(formattedNumber(num)).toBe('-12T');
   });
 
   it('returns "0" for a zero input number', () => {

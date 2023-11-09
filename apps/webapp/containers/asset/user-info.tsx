@@ -77,7 +77,15 @@ export const UserInfo = ({
   console.log(error);
 
   const { walletBalance, walletBalanceUsdc } = useMemo(() => {
-    const walletBalance = fromBaseUnitAmount(walletBalanceData, asset!.exponents);
+    const walletBalance = fromBaseUnitAmount(walletBalanceData, asset!.exponents).minus(
+      BigNumber(
+        asset?.symbol === 'xlm'
+          ? fromBaseUnitAmount(walletBalanceData, asset!.exponents).toNumber() > 5
+            ? 5
+            : fromBaseUnitAmount(walletBalanceData, asset!.exponents)
+          : 0,
+      ),
+    );
 
     return {
       walletBalance: walletBalance.toNumber(),
@@ -113,8 +121,6 @@ export const UserInfo = ({
     await refetchAssetInfo();
   };
 
-  const balanceForDeposit = asset!.symbol === 'xlm' ? walletBalance - 5 : walletBalance;
-
   return (
     <FadeTransition>
       <div className='flex flex-col gap-[18px]'>
@@ -136,12 +142,12 @@ export const UserInfo = ({
                   <p className='subtitle2 text-[#E3E3E3]'>Available to deposit</p>
                 </div>
                 <p className='number mt-1'>
-                  {displayAmount(balanceForDeposit)} {asset!.symbol}
+                  {displayAmount(walletBalance)} {asset!.symbol}
                 </p>
                 <p className='number2'>${displayUsd(walletBalanceUsdc)}</p>
               </div>
               <DepositModal
-                balance={balanceForDeposit}
+                balance={walletBalance}
                 asset={asset!}
                 refetch={refectData}
                 apy={apy.depositAPY}

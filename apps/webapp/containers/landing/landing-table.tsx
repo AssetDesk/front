@@ -7,10 +7,9 @@ import { xdr } from 'soroban-client';
 import { Button, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from 'ui';
 import { useReadContractMultiAssets } from '../../hooks/read-contract-multi-assets';
 import { ContractMethods } from '../../types/contract';
-import { assets } from '../../utils';
-import { displayAmount } from '../../utils/amount';
+import { assets, formattedNumber } from '../../utils';
+import { displayAmount, fromBaseUnitAmount } from '../../utils/amount';
 import { CONTRACT_ADDRESS, EIGHTEEN_EXPONENT, USDC_EXPONENT } from '../../utils/constants';
-import { fromBaseUnitAmount } from '../../utils/amount';
 
 const calculateMarketSize = (totalReserves: BigNumber, exponent: number, price: BigNumber) => {
   const formattedTotalReserves = fromBaseUnitAmount(totalReserves, exponent);
@@ -82,7 +81,7 @@ export const LandingTable = () => {
                 <p className='subtitle2 text-[#E3E3E3]'>Market Size</p>
                 <p className='subtitle3 text-[#E3E3E3]'>
                   $
-                  {displayAmount(
+                  {formattedNumber(
                     calculateMarketSize(
                       totalReserves[asset.symbol] ?? BigNumber(0),
                       asset.exponents,
@@ -105,7 +104,7 @@ export const LandingTable = () => {
               </div>
               <div className='flex justify-between'>
                 <p className='subtitle2 text-[#E3E3E3]'>Total Borrowed</p>
-                <p className='subtitle3 text-[#E3E3E3]'>$ 121.6M</p>
+                <p className='subtitle3 text-[#E3E3E3]'>$ {formattedNumber(121600000)}</p>
               </div>
               <div className='flex justify-between'>
                 <p className='subtitle2 text-[#E3E3E3]'>Borrow APY</p>
@@ -148,7 +147,7 @@ export const LandingTable = () => {
                 </TableCell>
                 <TableCell className='text-center'>
                   $
-                  {displayAmount(
+                  {formattedNumber(
                     calculateMarketSize(
                       totalReserves[asset.symbol] ?? BigNumber(0),
                       asset.exponents,
@@ -165,7 +164,7 @@ export const LandingTable = () => {
                   )}
                   %
                 </TableCell>
-                <TableCell className='text-center'>$ 121.6M</TableCell>
+                <TableCell className='text-center'>$ {formattedNumber(121600000)}</TableCell>
                 <TableCell className='text-center'>
                   {displayAmount(
                     fromBaseUnitAmount(
