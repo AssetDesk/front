@@ -66,6 +66,8 @@ export const Balances = () => {
     };
   }, [data]);
 
+  console.log(fromBaseUnitAmount(tvl, USDC_EXPONENT).toNumber());
+
   return (
     <div className='card-gradient flex flex-col rounded-lg px-[16px] pb-[48px] pt-[40px] md:px-[20px] md:pb-[16px] md:pt-[16px] '>
       <div className='mb-7 flex flex-col md:mb-4 md:flex-row md:items-center md:justify-around'>

@@ -8,11 +8,9 @@ import { Address, xdr } from 'soroban-client';
 import { Button, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from 'ui';
 import { useReadContractMultiAssets } from '../../hooks/read-contract-multi-assets';
 import { ContractMethods } from '../../types/contract';
-import { assets, formattedNumber } from '../../utils';
+import { assetInitialValue, assets, assetsArguments, formattedNumber } from '../../utils';
 import { displayAmount, fromBaseUnitAmount } from '../../utils/amount';
 import { CONTRACT_ADDRESS, EIGHTEEN_EXPONENT, USDC_EXPONENT } from '../../utils/constants';
-
-const initialValue = { xlm: BigNumber(0), atk: BigNumber(0), btk: BigNumber(0) };
 
 export const BorrowMarketTable = () => {
   const router = useRouter();
@@ -26,43 +24,37 @@ export const BorrowMarketTable = () => {
   const { data: interestRates } = useReadContractMultiAssets<Record<string, BigNumber | undefined>>(
     CONTRACT_ADDRESS,
     ContractMethods.GET_INTEREST_RATE,
-    initialValue,
-    {
-      xlm: [xdr.ScVal.scvSymbol('xlm')],
-      atk: [xdr.ScVal.scvSymbol('atk')],
-      btk: [xdr.ScVal.scvSymbol('btk')],
-    },
+    assetInitialValue,
+    assetsArguments,
   );
 
   const { data: borrows } = useReadContractMultiAssets<Record<string, BigNumber | undefined>>(
     CONTRACT_ADDRESS,
     ContractMethods.GET_USER_BORROW_AMOUNT_WITH_INTEREST,
-    { xlm: BigNumber(0), atk: BigNumber(0), btk: BigNumber(0) },
+    assetInitialValue,
     {
+      //TODO add dynamic assets
       xlm: [...args, xdr.ScVal.scvSymbol('xlm')],
-      atk: [...args, xdr.ScVal.scvSymbol('atk')],
-      btk: [...args, xdr.ScVal.scvSymbol('btk')],
+      usdc: [...args, xdr.ScVal.scvSymbol('usdc')],
+      eth: [...args, xdr.ScVal.scvSymbol('eth')],
     },
     Boolean(address),
   );
 
   const { data: availableLiquiduty } = useReadContractMultiAssets<
     Record<string, BigNumber | undefined>
-  >(CONTRACT_ADDRESS, ContractMethods.GET_AVAILABLE_LIQUIDITY_BY_TOKEN, initialValue, {
-    xlm: [xdr.ScVal.scvSymbol('xlm')],
-    atk: [xdr.ScVal.scvSymbol('atk')],
-    btk: [xdr.ScVal.scvSymbol('btk')],
-  });
+  >(
+    CONTRACT_ADDRESS,
+    ContractMethods.GET_AVAILABLE_LIQUIDITY_BY_TOKEN,
+    assetInitialValue,
+    assetsArguments,
+  );
 
   const { data: price } = useReadContractMultiAssets<Record<string, BigNumber | undefined>>(
     CONTRACT_ADDRESS,
     ContractMethods.GET_PRICE,
-    initialValue,
-    {
-      xlm: [xdr.ScVal.scvSymbol('xlm')],
-      atk: [xdr.ScVal.scvSymbol('atk')],
-      btk: [xdr.ScVal.scvSymbol('btk')],
-    },
+    assetInitialValue,
+    assetsArguments,
   );
 
   const liquidity = useMemo(() => {
