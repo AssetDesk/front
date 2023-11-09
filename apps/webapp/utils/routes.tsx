@@ -1,12 +1,18 @@
+export const routesLinks = {
+  Home: '/',
+  Markets: '/markets',
+};
+
 export const routes = [
   {
-    href: '/',
+    href: routesLinks.Home,
     title: 'Home',
   },
   {
-    href: '/asset',
+    href: routesLinks.Markets,
     title: 'Markets',
   },
+
   // {
   //   href: '/governance',
   //   title: 'Governance',

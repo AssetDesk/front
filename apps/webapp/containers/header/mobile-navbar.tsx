@@ -7,8 +7,7 @@ import { usePathname } from 'next/navigation';
 import { cn } from 'ui/lib/utils';
 
 export const MobileNavbar = () => {
-  const pathname = usePathname();
-  const currentLink = pathname?.match(/^\/([^\/]*)/)?.[0];
+  const r = usePathname();
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -17,7 +16,7 @@ export const MobileNavbar = () => {
       <DialogContent className='data-[state=open]:slide-in-from-top-3 data-[state=closed]:slide-out-to-top-3 data-[state=closed]:slide-out-to-right-3 data-[state=open]:slide-in-from-right-3 left-auto right-3 top-3 w-[296px] translate-x-0 translate-y-0'>
         <nav className='overflow-0 mt-7 flex flex-col gap-1 p-3'>
           {routes.map(i => (
-            <DialogTrigger asChild key={i?.href}>
+            <DialogTrigger asChild>
               <Link
                 key={i.href}
                 href={i.href}
@@ -30,7 +29,7 @@ export const MobileNavbar = () => {
                   size='md'
                   className={cn(
                     'justify-start px-2.5 py-3 focus-visible:ring-offset-[0]',
-                    currentLink === i.href && 'rounded-none border-l-2  border-[#0344E9]',
+                    r === i.href && 'rounded-none border-l-2  border-[#0344E9]',
                   )}
                 >
                   {i.title}

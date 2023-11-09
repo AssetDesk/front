@@ -9,7 +9,7 @@ import { Button, Switch, Table, TableBody, TableCell, TableHead, TableHeader, Ta
 import { useReadContractMultiAssets } from '../../hooks/read-contract-multi-assets';
 import { useWriteContract } from '../../hooks/write-contract';
 import { ContractMethods } from '../../types/contract';
-import { assetInitialValue, assets, assetsArguments } from '../../utils';
+import { assetInitialValue, assets, assetsArguments, routesLinks } from '../../utils';
 import { displayAmount, fromBaseUnitAmount, toBaseUnitAmount } from '../../utils/amount';
 import {
   CONTRACT_ADDRESS,
@@ -26,7 +26,8 @@ export const DepostMarketTable = () => {
     return [new Address(address).toScVal()];
   }, [address]);
 
-  const navigateToAsset = (asset: string) => () => router.push(`/asset/${asset.toLowerCase()}`);
+  const navigateToAsset = (asset: string) => () =>
+    router.push(`${routesLinks.Markets}/${asset.toLowerCase()}`);
 
   const { data: liquidityRates } = useReadContractMultiAssets<
     Record<string, BigNumber | undefined>

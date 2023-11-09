@@ -3,12 +3,13 @@ import { FadeTransition } from '../../../components';
 import { AssetName, AssetTabs, BackButton } from '../../../containers';
 import { useAssetBySlug } from '../../../hooks/asset-by-slug';
 import { redirect } from 'next/navigation';
+import { routesLinks } from '../../../utils';
 
 export default function Page() {
   const asset = useAssetBySlug();
 
   if (!asset) {
-    return redirect('/asset');
+    return redirect(routesLinks.Markets);
   }
 
   return (
