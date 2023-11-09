@@ -10,7 +10,6 @@ import { MobileNavbar } from './mobile-navbar';
 export const Header = () => {
   const pathname = usePathname();
   const router = useRouter();
-
   return (
     <header className='bg-background sticky top-0 z-40 w-full'>
       <div className='flex h-14 items-center justify-between py-[1.25rem] md:h-[5.625rem]'>
