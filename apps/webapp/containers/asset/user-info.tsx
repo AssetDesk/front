@@ -76,20 +76,15 @@ export const UserInfo = ({
 
   console.log(error);
 
-  const { walletBalance, walletBalanceUsdc } = useMemo(() => {
-    const walletBalance = fromBaseUnitAmount(walletBalanceData, asset!.exponents).minus(
-      BigNumber(
-        asset?.symbol === 'xlm'
-          ? fromBaseUnitAmount(walletBalanceData, asset!.exponents).toNumber() > 5
-            ? 5
-            : fromBaseUnitAmount(walletBalanceData, asset!.exponents)
-          : 0,
-      ),
-    );
+  const { walletBalance, availableDeposit, availableDepositUsdc } = useMemo(() => {
+    const walletBalance = fromBaseUnitAmount(walletBalanceData, asset!.exponents);
+    const availableDeposit =
+      asset?.symbol === 'xlm' ? walletBalance.toNumber() - 5 : walletBalance.toNumber();
 
     return {
       walletBalance: walletBalance.toNumber(),
-      walletBalanceUsdc: walletBalance.multipliedBy(assetPrice).toNumber(),
+      availableDeposit,
+      availableDepositUsdc: availableDeposit * assetPrice.toNumber(),
     };
   }, [assetPrice, walletBalanceData, asset]);
 
@@ -142,12 +137,12 @@ export const UserInfo = ({
                   <p className='subtitle2 text-[#E3E3E3]'>Available to deposit</p>
                 </div>
                 <p className='number mt-1'>
-                  {displayAmount(walletBalance)} {asset!.symbol}
+                  {displayAmount(availableDeposit)} {asset!.symbol}
                 </p>
-                <p className='number2'>${displayUsd(walletBalanceUsdc)}</p>
+                <p className='number2'>${displayUsd(availableDepositUsdc)}</p>
               </div>
               <DepositModal
-                balance={walletBalance}
+                balance={availableDeposit}
                 asset={asset!}
                 refetch={refectData}
                 apy={apy.depositAPY}
