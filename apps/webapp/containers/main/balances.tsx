@@ -55,7 +55,7 @@ export const Balances = () => {
   const { borrowUscd, collateralUsdc, percent, depositUsdc } = useMemo(() => {
     const depositUsdc = fromBaseUnitAmount(data.deposit, USDC_EXPONENT).toNumber();
     const borrowUscd = fromBaseUnitAmount(data.borrow, USDC_EXPONENT);
-    const collateralUsdc = fromBaseUnitAmount(data.collateral, USDC_EXPONENT);
+    const collateralUsdc = fromBaseUnitAmount(data.collateral, USDC_EXPONENT).multipliedBy(BigNumber(0.75));
     const percent = calculatePercentage(borrowUscd, collateralUsdc).toNumber();
 
     return {
@@ -65,8 +65,6 @@ export const Balances = () => {
       depositUsdc,
     };
   }, [data]);
-
-  console.log(fromBaseUnitAmount(tvl, USDC_EXPONENT).toNumber());
 
   return (
     <div className='card-gradient flex flex-col rounded-lg px-[16px] pb-[48px] pt-[40px] md:px-[20px] md:pb-[16px] md:pt-[16px] '>
