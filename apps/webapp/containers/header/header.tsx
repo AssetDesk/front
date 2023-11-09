@@ -5,11 +5,11 @@ import { usePathname, useRouter } from 'next/navigation';
 import { Button } from 'ui';
 import { routes } from '../../utils';
 import { ConnectButton } from './connect-button';
+import { MobileNavbar } from './mobile-navbar';
 
 export const Header = () => {
   const pathname = usePathname();
   const router = useRouter();
-
   return (
     <header className='bg-background sticky top-0 z-40 w-full'>
       <div className='flex h-14 items-center justify-between py-[1.25rem] md:h-[5.625rem]'>
@@ -32,13 +32,16 @@ export const Header = () => {
             ))}
           </nav>
         </div>
-        {pathname === '/' ? (
-          <Button onClick={() => router.push('/asset')} className='w-[152px] md:w-[192px]'>
-            Launch App
-          </Button>
-        ) : (
-          <ConnectButton />
-        )}
+        <div className='flex items-center'>
+          {pathname === '/' ? (
+            <Button onClick={() => router.push('/asset')} className='w-[152px] md:w-[192px]'>
+              Launch App
+            </Button>
+          ) : (
+            <ConnectButton />
+          )}
+          <MobileNavbar />
+        </div>
       </div>
     </header>
   );
