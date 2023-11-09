@@ -7,10 +7,10 @@ import { Progress } from 'ui';
 import { useMultiCall } from '../../hooks/multi-call';
 import { useReadContract } from '../../hooks/read-contract';
 import { ContractMethods } from '../../types/contract';
-import { displayUsd } from '../../utils/amount';
+import { displayUsd, fromBaseUnitAmount } from '../../utils/amount';
 import { CONTRACT_ADDRESS, USDC_EXPONENT } from '../../utils/constants';
-import { fromBaseUnitAmount } from '../../utils/amount';
 import { calculatePercentage } from '../../utils/calculate-percentage';
+import { formattedNumber } from '../../utils';
 
 export const Balances = () => {
   const { address } = useSorobanReact();
@@ -71,7 +71,9 @@ export const Balances = () => {
       <div className='mb-7 flex flex-col md:mb-4 md:flex-row md:items-center md:justify-around'>
         <div className='order-1 mb-7 flex h-[186px] w-[186px] flex-col items-center justify-center gap-y-[0.25rem] self-center rounded-full border-4 border-[#0344E9] md:order-2 md:mb-4 md:gap-y-2'>
           <p className='h2'>TVL</p>
-          <p className='title'>${displayUsd(fromBaseUnitAmount(tvl, USDC_EXPONENT).toNumber())}</p>
+          <p className='title'>
+            ${formattedNumber(fromBaseUnitAmount(tvl, USDC_EXPONENT).toNumber())}
+          </p>
         </div>
         <div className='order-2 flex flex-row items-center justify-between md:order-1 md:flex-col md:gap-4'>
           <p className='h2 md:text-[#0344E9]'>Deposit Balance</p>

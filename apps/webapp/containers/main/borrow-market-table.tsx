@@ -8,10 +8,9 @@ import { Address, xdr } from 'soroban-client';
 import { Button, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from 'ui';
 import { useReadContractMultiAssets } from '../../hooks/read-contract-multi-assets';
 import { ContractMethods } from '../../types/contract';
-import { assets } from '../../utils';
-import { displayAmount, displayUsd } from '../../utils/amount';
+import { assets, formattedNumber } from '../../utils';
+import { displayAmount, fromBaseUnitAmount } from '../../utils/amount';
 import { CONTRACT_ADDRESS, EIGHTEEN_EXPONENT, USDC_EXPONENT } from '../../utils/constants';
-import { fromBaseUnitAmount } from '../../utils/amount';
 
 const initialValue = { xlm: BigNumber(0), atk: BigNumber(0), btk: BigNumber(0) };
 
@@ -128,7 +127,7 @@ export const BorrowMarketTable = () => {
                 <p className='subtitle2 text-[#E3E3E3]'>Liquidity</p>
                 <p className='subtitle3 text-[#E3E3E3]'>
                   $
-                  {displayAmount(
+                  {formattedNumber(
                     fromBaseUnitAmount(
                       availableLiquiduty[asset.symbol] ?? BigNumber(0),
                       asset.exponents,
@@ -186,7 +185,7 @@ export const BorrowMarketTable = () => {
                   {asset.symbol}
                 </TableCell>
                 <TableCell className='text-center'>
-                  ${displayUsd(liquidity[asset.symbol] ?? 0)}
+                  ${formattedNumber(liquidity[asset.symbol] ?? 0)}
                 </TableCell>
               </TableRow>
             ))}

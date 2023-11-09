@@ -75,7 +75,7 @@ export const DepositModal = ({
           </DialogHeader>
           <div className='mt-2 grid gap-6 md:gap-10'>
             <BalanceInput
-              balanceTitle='Wallet Balance'
+              balanceTitle='Available to deposit'
               asset={asset}
               balance={balance}
               value={value}
