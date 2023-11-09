@@ -141,12 +141,7 @@ export const UserInfo = ({
                 </p>
                 <p className='number2'>${displayUsd(availableDepositUsdc)}</p>
               </div>
-              <DepositModal
-                balance={availableDeposit}
-                asset={asset!}
-                refetch={refectData}
-                apy={apy.depositAPY}
-              />
+              <DepositModal balance={availableDeposit} asset={asset!} refetch={refectData} />
             </div>
             <div className='flex flex-col gap-6 md:flex-row md:items-center md:justify-between'>
               <div className='flex flex-col gap-1 border-l-[1px] border-[#0344E9] pl-4'>
@@ -192,12 +187,7 @@ export const UserInfo = ({
                 </p>
                 <p className='number2'>${displayUsd(availableRepayUsdc)}</p>
               </div>
-              <RepayModal
-                balance={availableRepay}
-                asset={asset!}
-                refetch={refectData}
-                apy={apy.borrowAPY}
-              />
+              <RepayModal balance={availableRepay} asset={asset!} refetch={refectData} />
             </div>
           </div>
         </div>

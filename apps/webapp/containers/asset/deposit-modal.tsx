@@ -1,7 +1,5 @@
 'use client';
 import { useSorobanReact } from '@soroban-react/core';
-import BigNumber from 'bignumber.js';
-import Image from 'next/image';
 import { useState } from 'react';
 import { Address, ScInt, xdr } from 'soroban-client';
 import {
@@ -18,19 +16,17 @@ import { useValidationResult } from '../../hooks/validation-result';
 import { useWriteContract } from '../../hooks/write-contract';
 import { Asset } from '../../types/asset';
 import { ContractMethods } from '../../types/contract';
-import { displayAmount, fromBaseUnitAmount, toBaseUnitAmount } from '../../utils/amount';
-import { CONTRACT_ADDRESS, EIGHTEEN_EXPONENT } from '../../utils/constants';
+import { toBaseUnitAmount } from '../../utils/amount';
+import { CONTRACT_ADDRESS } from '../../utils/constants';
 import { validateAmount, validateDigitsAfterComma } from '../../utils/validation';
 
 export const DepositModal = ({
   balance,
   asset,
-  apy,
   refetch,
 }: {
   balance: number;
   asset: Asset;
-  apy: BigNumber;
   refetch: () => Promise<void>;
 }) => {
   const { address } = useSorobanReact();
@@ -90,20 +86,6 @@ export const DepositModal = ({
                 setValue(e.target.value);
               }}
             />
-            <div className='flex flex-col gap-2 md:gap-4'>
-              <p className='subtitle2'>Deposit Rates</p>
-              <div className='flex flex-col'>
-                <div className='flex justify-between border-b-[1px] border-[#0344E9] p-[10px]'>
-                  <div className='flex gap-2'>
-                    <Image src={asset.icon} alt='' width={20} height={20} />
-                    <p className='subtitle3'>Deposit APY</p>
-                  </div>
-                  <p className='number2'>
-                    {displayAmount(fromBaseUnitAmount(apy, EIGHTEEN_EXPONENT).toNumber())}%
-                  </p>
-                </div>
-              </div>
-            </div>
           </div>
           <DialogFooter className='mt-4'>
             <Button
