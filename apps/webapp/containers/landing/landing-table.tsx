@@ -3,11 +3,10 @@
 import BigNumber from 'bignumber.js';
 import Image from 'next/image';
 import Link from 'next/link';
-import { xdr } from 'soroban-client';
 import { Button, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from 'ui';
 import { useReadContractMultiAssets } from '../../hooks/read-contract-multi-assets';
 import { ContractMethods } from '../../types/contract';
-import { assets, formattedNumber } from '../../utils';
+import { assetInitialValue, assets, assetsArguments, formattedNumber } from '../../utils';
 import { displayAmount, fromBaseUnitAmount } from '../../utils/amount';
 import { CONTRACT_ADDRESS, EIGHTEEN_EXPONENT, USDC_EXPONENT } from '../../utils/constants';
 
@@ -17,48 +16,30 @@ const calculateMarketSize = (totalReserves: BigNumber, exponent: number, price: 
   return formattedTotalReserves.multipliedBy(formattedPrice);
 };
 
-const initialValue = { xlm: BigNumber(0), atk: BigNumber(0), btk: BigNumber(0) };
-
 export const LandingTable = () => {
   const { data: liquidityRates } = useReadContractMultiAssets<
     Record<string, BigNumber | undefined>
-  >(CONTRACT_ADDRESS, ContractMethods.GET_LIQUIDITY_RATE, initialValue, {
-    xlm: [xdr.ScVal.scvSymbol('xlm')],
-    atk: [xdr.ScVal.scvSymbol('atk')],
-    btk: [xdr.ScVal.scvSymbol('btk')],
-  });
+  >(CONTRACT_ADDRESS, ContractMethods.GET_LIQUIDITY_RATE, assetInitialValue, assetsArguments);
 
   const { data: interestRates } = useReadContractMultiAssets<Record<string, BigNumber | undefined>>(
     CONTRACT_ADDRESS,
     ContractMethods.GET_INTEREST_RATE,
-    initialValue,
-    {
-      xlm: [xdr.ScVal.scvSymbol('xlm')],
-      atk: [xdr.ScVal.scvSymbol('atk')],
-      btk: [xdr.ScVal.scvSymbol('btk')],
-    },
+    assetInitialValue,
+    assetsArguments,
   );
 
   const { data: price } = useReadContractMultiAssets<Record<string, BigNumber | undefined>>(
     CONTRACT_ADDRESS,
     ContractMethods.GET_PRICE,
-    initialValue,
-    {
-      xlm: [xdr.ScVal.scvSymbol('xlm')],
-      atk: [xdr.ScVal.scvSymbol('atk')],
-      btk: [xdr.ScVal.scvSymbol('btk')],
-    },
+    assetInitialValue,
+    assetsArguments,
   );
 
   const { data: totalReserves } = useReadContractMultiAssets<Record<string, BigNumber | undefined>>(
     CONTRACT_ADDRESS,
     ContractMethods.GET_TOTAL_RESERVES_BY_TOKEN,
-    initialValue,
-    {
-      xlm: [xdr.ScVal.scvSymbol('xlm')],
-      atk: [xdr.ScVal.scvSymbol('atk')],
-      btk: [xdr.ScVal.scvSymbol('btk')],
-    },
+    assetInitialValue,
+    assetsArguments,
   );
 
   return (

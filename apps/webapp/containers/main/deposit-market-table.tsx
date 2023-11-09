@@ -4,16 +4,19 @@ import BigNumber from 'bignumber.js';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useMemo } from 'react';
-import { Address, xdr } from 'soroban-client';
+import { Address, ScInt, xdr } from 'soroban-client';
 import { Button, Switch, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from 'ui';
 import { useReadContractMultiAssets } from '../../hooks/read-contract-multi-assets';
 import { useWriteContract } from '../../hooks/write-contract';
 import { ContractMethods } from '../../types/contract';
-import { assets } from '../../utils';
-import { displayAmount, fromBaseUnitAmount } from '../../utils/amount';
-import { CONTRACT_ADDRESS, EIGHTEEN_EXPONENT } from '../../utils/constants';
+import { assetInitialValue, assets, assetsArguments } from '../../utils';
+import { displayAmount, fromBaseUnitAmount, toBaseUnitAmount } from '../../utils/amount';
+import {
+  CONTRACT_ADDRESS,
+  EIGHTEEN_EXPONENT,
+  FAUCET_CONTRACT_ADDRESS,
+} from '../../utils/constants';
 
-const initialValue = { xlm: BigNumber(0), atk: BigNumber(0), btk: BigNumber(0) };
 export const DepostMarketTable = () => {
   const router = useRouter();
   const { address } = useSorobanReact();
@@ -27,20 +30,17 @@ export const DepostMarketTable = () => {
 
   const { data: liquidityRates } = useReadContractMultiAssets<
     Record<string, BigNumber | undefined>
-  >(CONTRACT_ADDRESS, ContractMethods.GET_LIQUIDITY_RATE, initialValue, {
-    xlm: [xdr.ScVal.scvSymbol('xlm')],
-    atk: [xdr.ScVal.scvSymbol('atk')],
-    btk: [xdr.ScVal.scvSymbol('btk')],
-  });
+  >(CONTRACT_ADDRESS, ContractMethods.GET_LIQUIDITY_RATE, assetInitialValue, assetsArguments);
 
   const { data: deposits } = useReadContractMultiAssets<Record<string, BigNumber | undefined>>(
     CONTRACT_ADDRESS,
     ContractMethods.GET_DEPOSIT,
-    { xlm: BigNumber(0), atk: BigNumber(0), btk: BigNumber(0) },
+    assetInitialValue,
     {
+      //TODO add dynamic assets
       xlm: [...args, xdr.ScVal.scvSymbol('xlm')],
-      atk: [...args, xdr.ScVal.scvSymbol('atk')],
-      btk: [...args, xdr.ScVal.scvSymbol('btk')],
+      usdc: [...args, xdr.ScVal.scvSymbol('usdc')],
+      eth: [...args, xdr.ScVal.scvSymbol('eth')],
     },
     Boolean(address),
   );
@@ -50,11 +50,12 @@ export const DepostMarketTable = () => {
   >(
     CONTRACT_ADDRESS,
     ContractMethods.USER_DEPOSIT_AS_COLLATERAL,
-    { xlm: false, atk: false, btk: false },
+    { xlm: false, usdc: false, eth: false },
     {
+      //TODO add dynamic assets
       xlm: [...args, xdr.ScVal.scvSymbol('xlm')],
-      atk: [...args, xdr.ScVal.scvSymbol('atk')],
-      btk: [...args, xdr.ScVal.scvSymbol('btk')],
+      usdc: [...args, xdr.ScVal.scvSymbol('usdc')],
+      eth: [...args, xdr.ScVal.scvSymbol('eth')],
     },
     Boolean(address),
   );
@@ -69,6 +70,15 @@ export const DepostMarketTable = () => {
     ]);
 
     await refetchCollateral();
+  };
+
+  const faucet = (assetAddress: string, tokenAmount: number, exponent: number) => async () => {
+    if (!address) return;
+    await write(FAUCET_CONTRACT_ADDRESS, ContractMethods.REQUEST_TOKEN, [
+      ...args,
+      new Address(assetAddress).toScVal(),
+      new ScInt(toBaseUnitAmount(String(tokenAmount), exponent).toString()).toI128(),
+    ]);
   };
 
   return (
@@ -138,6 +148,7 @@ export const DepostMarketTable = () => {
               <TableHead className='text-right'>APY</TableHead>
               <TableHead className='text-center'>Deposit</TableHead>
               <TableHead className='text-center'>Collateral</TableHead>
+              <TableHead className='text-center'>Faucet</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -180,6 +191,19 @@ export const DepostMarketTable = () => {
                     checked={Boolean(collateral[asset.symbol])}
                     disabled={!asset.collateral}
                   />
+                </TableCell>
+                <TableCell className='text-center'>
+                  {asset.faucet && asset.maxFaucet && (
+                    <Button
+                      size='md'
+                      onClick={e => {
+                        e.stopPropagation();
+                        void faucet(asset.address, asset.maxFaucet!, asset.exponents)();
+                      }}
+                    >
+                      Faucet
+                    </Button>
+                  )}
                 </TableCell>
               </TableRow>
             ))}

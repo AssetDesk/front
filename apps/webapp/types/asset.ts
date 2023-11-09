@@ -5,4 +5,6 @@ export interface Asset {
   address: string;
   exponents: number;
   collateral: boolean;
+  faucet: boolean;
+  maxFaucet?: number;
 }

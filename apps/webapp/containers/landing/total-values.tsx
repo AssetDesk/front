@@ -2,37 +2,26 @@
 
 import BigNumber from 'bignumber.js';
 import { useMemo } from 'react';
-import { xdr } from 'soroban-client';
 import { useReadContract } from '../../hooks/read-contract';
 import { useReadContractMultiAssets } from '../../hooks/read-contract-multi-assets';
 import { ContractMethods } from '../../types/contract';
-import { assets, formattedNumber } from '../../utils';
+import { assetInitialValue, assets, assetsArguments, formattedNumber } from '../../utils';
 import { fromBaseUnitAmount } from '../../utils/amount';
 import { CONTRACT_ADDRESS, USDC_EXPONENT } from '../../utils/constants';
-
-const initialValue = { xlm: BigNumber(0), atk: BigNumber(0), btk: BigNumber(0) };
 
 export const TotalValues = () => {
   const { data: totalReserves } = useReadContractMultiAssets<Record<string, BigNumber | undefined>>(
     CONTRACT_ADDRESS,
     ContractMethods.GET_TOTAL_RESERVES_BY_TOKEN,
-    initialValue,
-    {
-      xlm: [xdr.ScVal.scvSymbol('xlm')],
-      atk: [xdr.ScVal.scvSymbol('atk')],
-      btk: [xdr.ScVal.scvSymbol('btk')],
-    },
+    assetInitialValue,
+    assetsArguments,
   );
 
   const { data: price } = useReadContractMultiAssets<Record<string, BigNumber | undefined>>(
     CONTRACT_ADDRESS,
     ContractMethods.GET_PRICE,
-    initialValue,
-    {
-      xlm: [xdr.ScVal.scvSymbol('xlm')],
-      atk: [xdr.ScVal.scvSymbol('atk')],
-      btk: [xdr.ScVal.scvSymbol('btk')],
-    },
+    assetInitialValue,
+    assetsArguments,
   );
 
   const { data: tvl } = useReadContract<BigNumber>(
