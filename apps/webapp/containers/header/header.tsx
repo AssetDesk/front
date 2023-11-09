@@ -8,7 +8,6 @@ import { ConnectButton } from './connect-button';
 import { cn } from 'ui/lib/utils';
 import { MobileNavbar } from './mobile-navbar';
 
-
 export const Header = () => {
   const pathname = usePathname();
   const router = useRouter();
