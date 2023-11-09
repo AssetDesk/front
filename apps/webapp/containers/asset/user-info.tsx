@@ -47,7 +47,7 @@ export const UserInfo = ({
 
   const assetPrice = useAssetPrice(asset!.symbol);
 
-  const { data, refetch, error } = useMultiCall<{
+  const { data, refetch } = useMultiCall<{
     borrowAvailable: BigNumber;
     redeemAvailable: BigNumber;
     repayAvailable: BigNumber;
