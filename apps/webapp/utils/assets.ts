@@ -20,7 +20,7 @@ export const assets: Asset[] = [
     symbol: 'usdc',
     collateral: false,
     faucet: true,
-    maxFaucet: 1000
+    maxFaucet: 1000,
   },
   {
     icon: '/weth.svg',
@@ -30,7 +30,7 @@ export const assets: Asset[] = [
     symbol: 'eth',
     collateral: false,
     faucet: true,
-    maxFaucet: 1
+    maxFaucet: 1,
   },
 ];
 
