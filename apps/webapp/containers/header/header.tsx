@@ -6,6 +6,8 @@ import { Button } from 'ui';
 import { routes, routesLinks } from '../../utils';
 import { ConnectButton } from './connect-button';
 import { cn } from 'ui/lib/utils';
+import { MobileNavbar } from './mobile-navbar';
+
 
 export const Header = () => {
   const pathname = usePathname();
@@ -45,13 +47,16 @@ export const Header = () => {
             ))}
           </nav>
         </div>
-        {pathname === '/' ? (
-          <Button onClick={() => router.push('/asset')} className='w-[152px] md:w-[192px]'>
-            Launch App
-          </Button>
-        ) : (
-          <ConnectButton />
-        )}
+        <div className='flex items-center'>
+          {pathname === '/' ? (
+            <Button onClick={() => router.push('/asset')} className='w-[152px] md:w-[192px]'>
+              Launch App
+            </Button>
+          ) : (
+            <ConnectButton />
+          )}
+          <MobileNavbar />
+        </div>
       </div>
     </header>
   );
