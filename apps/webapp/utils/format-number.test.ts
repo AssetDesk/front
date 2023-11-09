@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { formattedNumber } from './formatNumber';
+import { formattedNumber } from './format-number';
 
 describe('formattedNumber', () => {
   it('returns the correctly formatted number with a variable number of decimal places', () => {
