@@ -3,9 +3,22 @@ import { useSorobanReact } from '@soroban-react/core';
 import BigNumber from 'bignumber.js';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { Address, ScInt, xdr } from 'soroban-client';
-import { Button, Switch, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from 'ui';
+import {
+  Button,
+  Switch,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from 'ui';
 import { useReadContractMultiAssets } from '../../hooks/read-contract-multi-assets';
 import { useWriteContract } from '../../hooks/write-contract';
 import { ContractMethods } from '../../types/contract';
@@ -125,13 +138,25 @@ export const DepostMarketTable = () => {
               </div>
               <div className='flex justify-between'>
                 <p className='subtitle2 text-[#E3E3E3]'>Collateral</p>
-                <Switch
-                  onClick={e => {
-                    e.stopPropagation();
-                    void toggleColateral(asset.symbol)();
-                  }}
-                  checked={Boolean(collateral[asset.symbol])}
-                />
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <Switch
+                        onClick={e => {
+                          e.stopPropagation();
+                          void toggleColateral(asset.symbol)();
+                        }}
+                        checked={Boolean(collateral[asset.symbol])}
+                        disabled={!asset.collateral}
+                      />
+                    </TooltipTrigger>
+                    {!asset.collateral && (
+                      <TooltipContent>
+                        <p>In development</p>
+                      </TooltipContent>
+                    )}
+                  </Tooltip>
+                </TooltipProvider>
               </div>
               <Button className='mt-6 w-full' onClick={navigateToAsset(asset.symbol)}>
                 More
@@ -180,18 +205,29 @@ export const DepostMarketTable = () => {
                       deposits[asset.symbol] ?? BigNumber(0),
                       asset.exponents,
                     ).toNumber(),
-                  )}{' '}
+                  )}
                   {asset.symbol}
                 </TableCell>
                 <TableCell className='text-center'>
-                  <Switch
-                    onClick={e => {
-                      e.stopPropagation();
-                      void toggleColateral(asset.symbol)();
-                    }}
-                    checked={Boolean(collateral[asset.symbol])}
-                    disabled={!asset.collateral}
-                  />
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <Switch
+                          onClick={e => {
+                            e.stopPropagation();
+                            void toggleColateral(asset.symbol)();
+                          }}
+                          checked={Boolean(collateral[asset.symbol])}
+                          disabled={!asset.collateral}
+                        />
+                      </TooltipTrigger>
+                      {!asset.collateral && (
+                        <TooltipContent>
+                          <p>In development</p>
+                        </TooltipContent>
+                      )}
+                    </Tooltip>
+                  </TooltipProvider>
                 </TableCell>
                 <TableCell className='text-center'>
                   {asset.faucet && asset.maxFaucet && (
