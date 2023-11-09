@@ -199,6 +199,7 @@ export const UserInfo = ({
                 asset={asset!}
                 refetch={refectData}
                 apy={apy.borrowAPY}
+                walletBalance={walletBalance}
               />
             </div>
           </div>

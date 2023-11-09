@@ -26,11 +26,13 @@ export const RepayModal = ({
   balance,
   asset,
   apy,
+  walletBalance,
   refetch,
 }: {
   balance: number;
   asset: Asset;
   apy: BigNumber;
+  walletBalance: number;
   refetch: () => Promise<void>;
 }) => {
   const { address } = useSorobanReact();
@@ -42,7 +44,12 @@ export const RepayModal = ({
     [
       {
         type: 'error',
-        issue: 'insufficient funds',
+        issue: 'insufficient funds to repay',
+        checkFn: (amount: string) => validateAmount(amount, walletBalance),
+      },
+      {
+        type: 'error',
+        issue: 'more than your borrow',
         checkFn: (amount: string) => validateAmount(amount, balance),
       },
     ],
