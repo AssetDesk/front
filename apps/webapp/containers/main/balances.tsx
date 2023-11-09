@@ -55,7 +55,9 @@ export const Balances = () => {
   const { borrowUscd, collateralUsdc, percent, depositUsdc } = useMemo(() => {
     const depositUsdc = fromBaseUnitAmount(data.deposit, USDC_EXPONENT).toNumber();
     const borrowUscd = fromBaseUnitAmount(data.borrow, USDC_EXPONENT);
-    const collateralUsdc = fromBaseUnitAmount(data.collateral, USDC_EXPONENT).multipliedBy(BigNumber(0.75));
+    const collateralUsdc = fromBaseUnitAmount(data.collateral, USDC_EXPONENT).multipliedBy(
+      BigNumber(0.75),
+    );
     const percent = calculatePercentage(borrowUscd, collateralUsdc).toNumber();
 
     return {
