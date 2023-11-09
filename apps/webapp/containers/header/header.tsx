@@ -10,7 +10,7 @@ import { cn } from 'ui/lib/utils';
 export const Header = () => {
   const pathname = usePathname();
   const router = useRouter();
-  const currentLink = pathname?.match(/^\/([^\/]*)/)?.[0];
+  const currentLink = pathname.match(/^\/([^/]*)/)?.[0];
 
   return (
     <header className='bg-background sticky top-0 z-40 w-full'>
