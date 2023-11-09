@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { TabsContent, TabsList, TabsTrigger, Tabs } from 'ui';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from 'ui';
 import { AssetDashboard, AssetInfo } from './asset-dashboard';
 import { ReserveConfiguration } from './reserve-configuration';
 import { UserInfo } from './user-info';
@@ -13,6 +13,7 @@ import { xdr } from 'soroban-client';
 
 export const AssetTabs = () => {
   const asset = useAssetBySlug();
+
   const { data, refetch } = useMultiCall<AssetInfo>(
     CONTRACT_ADDRESS,
     [
@@ -37,6 +38,10 @@ export const AssetTabs = () => {
         key: 'interestRate',
         method: ContractMethods.GET_INTEREST_RATE,
       },
+      {
+        key: 'totalBorrowed',
+        method: ContractMethods.GET_TOTAL_BORROWED_BY_TOKEN,
+      },
     ],
     {
       totalReserves: BigNumber(0),
@@ -45,6 +50,7 @@ export const AssetTabs = () => {
       utilizationRate: BigNumber(0),
       liquidityRate: BigNumber(0),
       interestRate: BigNumber(0),
+      totalBorrowed: BigNumber(0),
     },
     [xdr.ScVal.scvSymbol(asset!.symbol)],
     undefined,

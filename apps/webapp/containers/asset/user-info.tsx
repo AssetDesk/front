@@ -11,7 +11,7 @@ import { useAssetPrice } from '../../hooks/asset-price';
 import { useMultiCall } from '../../hooks/multi-call';
 import { useReadContract } from '../../hooks/read-contract';
 import { ContractMethods } from '../../types/contract';
-import { displayAmount, displayUsd, fromBaseUnitAmount } from '../../utils/amount';
+import { calculateToUsd, displayAmount, displayUsd, fromBaseUnitAmount } from '../../utils/amount';
 import { CONTRACT_ADDRESS } from '../../utils/constants';
 import { AssetInfo } from './asset-dashboard';
 import { BorrowModal } from './borrow-modal';
@@ -104,11 +104,11 @@ export const UserInfo = ({
 
     return {
       availableBorrow: availableBorrow.toNumber(),
-      availableBorrowUsdc: availableBorrow.multipliedBy(assetPrice).toNumber(),
+      availableBorrowUsdc: calculateToUsd(availableBorrow, asset!.exponents, assetPrice).toNumber(),
       availableRedeem: availableRedeem.toNumber(),
-      availableRedeemUsdc: availableRedeem.multipliedBy(assetPrice).toNumber(),
+      availableRedeemUsdc: calculateToUsd(availableRedeem, asset!.exponents, assetPrice).toNumber(),
       availableRepay: availableRepay.toNumber(),
-      availableRepayUsdc: availableRepay.multipliedBy(assetPrice).toNumber(),
+      availableRepayUsdc: calculateToUsd(availableRepay, asset!.exponents, assetPrice).toNumber(),
     };
   }, [assetPrice, data, asset]);
 
