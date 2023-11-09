@@ -48,7 +48,10 @@ export const Header = () => {
         </div>
         <div className='flex items-center'>
           {pathname === '/' ? (
-            <Button onClick={() => router.push('/asset')} className='w-[152px] md:w-[192px]'>
+            <Button
+              onClick={() => router.push(routesLinks.Markets)}
+              className='w-[152px] md:w-[192px]'
+            >
               Launch App
             </Button>
           ) : (

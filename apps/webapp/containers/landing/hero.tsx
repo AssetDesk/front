@@ -2,6 +2,7 @@
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import { Button, Social } from 'ui';
+import { routesLinks } from '../../utils';
 
 export const Hero = () => {
   const router = useRouter();
@@ -13,7 +14,7 @@ export const Hero = () => {
       </p>
       <Social />
       <div className='mt-2 flex gap-4 md:mt-4 md:gap-6'>
-        <Button onClick={() => router.push('/asset')} className='w-[50%]'>
+        <Button onClick={() => router.push(routesLinks.Markets)} className='w-[50%]'>
           Launch App
         </Button>
         <Button variant='outline' className='w-[50%]'>
