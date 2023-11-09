@@ -76,7 +76,9 @@ export const BorrowModal = ({
 
   const { collateralUsdc, percent } = useMemo(() => {
     const borrowUscd = fromBaseUnitAmount(data.borrow, USDC_EXPONENT);
-    const collateralUsdc = fromBaseUnitAmount(data.collateral, USDC_EXPONENT).multipliedBy(BigNumber(0.75));
+    const collateralUsdc = fromBaseUnitAmount(data.collateral, USDC_EXPONENT).multipliedBy(
+      BigNumber(0.75),
+    );
     const percent = calculatePercentage(borrowUscd, collateralUsdc).toNumber();
 
     return {
