@@ -10,6 +10,7 @@ export const assets: Asset[] = [
     address: 'CB64D3G7SM2RTH6JSGG34DDTFTQ5CFDKVDZJZSODMCX4NJ2HV2KN7OHT',
     exponents: 7,
     collateral: true,
+    faucet: false,
   },
   {
     icon: '/usdc.svg',
@@ -18,6 +19,8 @@ export const assets: Asset[] = [
     name: 'USDC',
     symbol: 'usdc',
     collateral: false,
+    faucet: true,
+    maxFaucet: 1000
   },
   {
     icon: '/weth.svg',
@@ -26,6 +29,8 @@ export const assets: Asset[] = [
     name: 'ETH',
     symbol: 'eth',
     collateral: false,
+    faucet: true,
+    maxFaucet: 1
   },
 ];
 

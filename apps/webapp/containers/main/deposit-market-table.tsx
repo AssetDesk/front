@@ -4,14 +4,18 @@ import BigNumber from 'bignumber.js';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useMemo } from 'react';
-import { Address, xdr } from 'soroban-client';
+import { Address, ScInt, xdr } from 'soroban-client';
 import { Button, Switch, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from 'ui';
 import { useReadContractMultiAssets } from '../../hooks/read-contract-multi-assets';
 import { useWriteContract } from '../../hooks/write-contract';
 import { ContractMethods } from '../../types/contract';
 import { assetInitialValue, assets, assetsArguments } from '../../utils';
-import { displayAmount, fromBaseUnitAmount } from '../../utils/amount';
-import { CONTRACT_ADDRESS, EIGHTEEN_EXPONENT } from '../../utils/constants';
+import { displayAmount, fromBaseUnitAmount, toBaseUnitAmount } from '../../utils/amount';
+import {
+  CONTRACT_ADDRESS,
+  EIGHTEEN_EXPONENT,
+  FAUCET_CONTRACT_ADDRESS,
+} from '../../utils/constants';
 
 export const DepostMarketTable = () => {
   const router = useRouter();
@@ -66,6 +70,15 @@ export const DepostMarketTable = () => {
     ]);
 
     await refetchCollateral();
+  };
+
+  const faucet = (assetAddress: string, tokenAmount: number, exponent: number) => async () => {
+    if (!address) return;
+    await write(FAUCET_CONTRACT_ADDRESS, ContractMethods.REQUEST_TOKEN, [
+      ...args,
+      new Address(assetAddress).toScVal(),
+      new ScInt(toBaseUnitAmount(String(tokenAmount), exponent).toString()).toI128(),
+    ]);
   };
 
   return (
@@ -178,6 +191,19 @@ export const DepostMarketTable = () => {
                     checked={Boolean(collateral[asset.symbol])}
                     disabled={!asset.collateral}
                   />
+                </TableCell>
+                <TableCell className='text-center'>
+                  {asset.faucet && asset.maxFaucet && (
+                    <Button
+                      size='md'
+                      onClick={e => {
+                        e.stopPropagation();
+                        void faucet(asset.address, asset.maxFaucet!, asset.exponents)();
+                      }}
+                    >
+                      Faucet
+                    </Button>
+                  )}
                 </TableCell>
               </TableRow>
             ))}

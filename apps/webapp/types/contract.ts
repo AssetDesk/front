@@ -20,4 +20,5 @@ export enum ContractMethods {
   GET_AVAILABLE_LIQUIDITY_BY_TOKEN = 'GetAvailableLiquidityByToken',
   GET_UTILIZATION_RATE_BY_TOKEN = 'GetUtilizationRateByToken',
   REPAY = 'Repay',
+  REQUEST_TOKEN = 'request_token',
 }
