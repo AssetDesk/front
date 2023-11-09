@@ -141,7 +141,7 @@ export const DepostMarketTable = () => {
                     </TooltipTrigger>
                     {!asset.collateral && (
                       <TooltipContent>
-                        <p>In progress</p>
+                        <p>In development</p>
                       </TooltipContent>
                     )}
                   </Tooltip>
@@ -211,7 +211,7 @@ export const DepostMarketTable = () => {
                       </TooltipTrigger>
                       {!asset.collateral && (
                         <TooltipContent>
-                          <p>In progress</p>
+                          <p>In development</p>
                         </TooltipContent>
                       )}
                     </Tooltip>
