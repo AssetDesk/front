@@ -4,7 +4,7 @@ import BigNumber from 'bignumber.js';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React, { useMemo } from 'react';
-import { Address, xdr } from 'soroban-client';
+import { Address, ScInt, xdr } from 'soroban-client';
 import {
   Button,
   Switch,
