@@ -1,4 +1,5 @@
 import BigNumber from 'bignumber.js';
+import { USDC_EXPONENT } from './constants';
 
 export const fromBaseUnitAmount = (value: BigNumber, exponent: number): BigNumber => {
   const exponentValue = exponent ? BigNumber(10).exponentiatedBy(exponent) : BigNumber(1);
@@ -47,4 +48,10 @@ export const displayUsd = (number: number): string => {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   }).format(number);
+};
+
+export const calculateToUSD = (totalReserves: BigNumber, exponent: number, price: BigNumber) => {
+  const formattedTotalReserves = fromBaseUnitAmount(totalReserves, exponent);
+  const formattedPrice = fromBaseUnitAmount(price, USDC_EXPONENT);
+  return formattedTotalReserves.multipliedBy(formattedPrice);
 };

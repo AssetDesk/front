@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 import { useMemo } from 'react';
 import { useAssetBySlug } from '../../hooks/asset-by-slug';
-import { displayAmount, displayUsd, fromBaseUnitAmount } from '../../utils/amount';
+import { calculateToUSD, displayAmount, displayUsd, fromBaseUnitAmount } from '../../utils/amount';
 import { EIGHTEEN_EXPONENT, USDC_EXPONENT } from '../../utils/constants';
 import { formattedNumber } from '../../utils';
 
@@ -12,6 +12,7 @@ export interface AssetInfo {
   utilizationRate: BigNumber;
   liquidityRate: BigNumber;
   interestRate: BigNumber;
+  totalBorrowed: BigNumber;
 }
 
 export const AssetDashboard = ({ data }: { data: AssetInfo }) => {
@@ -28,6 +29,11 @@ export const AssetDashboard = ({ data }: { data: AssetInfo }) => {
     const utilizationRate = fromBaseUnitAmount(data.utilizationRate, 5).toNumber();
     const depositAPY = fromBaseUnitAmount(data.liquidityRate, EIGHTEEN_EXPONENT).toNumber();
     const borrowAPY = fromBaseUnitAmount(data.interestRate, EIGHTEEN_EXPONENT).toNumber();
+    const totalBorrowed = calculateToUSD(
+      data.totalBorrowed,
+      asset!.exponents,
+      data.price ?? BigNumber(0),
+    ).toNumber();
 
     return {
       reservesSize: totalReserves * price,
@@ -36,6 +42,7 @@ export const AssetDashboard = ({ data }: { data: AssetInfo }) => {
       price,
       depositAPY,
       borrowAPY,
+      totalBorrowed,
     };
   }, [data, asset]);
 
@@ -63,7 +70,7 @@ export const AssetDashboard = ({ data }: { data: AssetInfo }) => {
       </div>
       <div className='grid-row-2 grid gap-1 md:text-center'>
         <p className='subtitle2 text-[#E3E3E3]'>Total Borrowed</p>
-        <p className='number'>${formattedNumber(1931.49)}</p>
+        <p className='number'>${formattedNumber(formattedValue.totalBorrowed)}</p>
       </div>
       <div className='grid-row-2 grid gap-1 md:text-center'>
         <p className='subtitle2 text-[#E3E3E3]'>Borrow APY</p>

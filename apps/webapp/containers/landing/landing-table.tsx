@@ -13,14 +13,8 @@ import {
   formattedNumber,
   routesLinks,
 } from '../../utils';
-import { displayAmount, fromBaseUnitAmount } from '../../utils/amount';
-import { CONTRACT_ADDRESS, EIGHTEEN_EXPONENT, USDC_EXPONENT } from '../../utils/constants';
-
-const calculateMarketSize = (totalReserves: BigNumber, exponent: number, price: BigNumber) => {
-  const formattedTotalReserves = fromBaseUnitAmount(totalReserves, exponent);
-  const formattedPrice = fromBaseUnitAmount(price, USDC_EXPONENT);
-  return formattedTotalReserves.multipliedBy(formattedPrice);
-};
+import { calculateToUSD, displayAmount, fromBaseUnitAmount } from '../../utils/amount';
+import { CONTRACT_ADDRESS, EIGHTEEN_EXPONENT } from '../../utils/constants';
 
 export const LandingTable = () => {
   const { data: liquidityRates } = useReadContractMultiAssets<
@@ -48,6 +42,13 @@ export const LandingTable = () => {
     assetsArguments,
   );
 
+  const { data: totalBorrowed } = useReadContractMultiAssets<Record<string, BigNumber | undefined>>(
+    CONTRACT_ADDRESS,
+    ContractMethods.GET_TOTAL_BORROWED_BY_TOKEN,
+    assetInitialValue,
+    assetsArguments,
+  );
+
   return (
     <>
       <div className='flex flex-col gap-6 md:hidden'>
@@ -69,7 +70,7 @@ export const LandingTable = () => {
                 <p className='subtitle3 text-[#E3E3E3]'>
                   $
                   {formattedNumber(
-                    calculateMarketSize(
+                    calculateToUSD(
                       totalReserves[asset.symbol] ?? BigNumber(0),
                       asset.exponents,
                       price[asset.symbol] ?? BigNumber(0),
@@ -91,7 +92,15 @@ export const LandingTable = () => {
               </div>
               <div className='flex justify-between'>
                 <p className='subtitle2 text-[#E3E3E3]'>Total Borrowed</p>
-                <p className='subtitle3 text-[#E3E3E3]'>$ {formattedNumber(121600000)}</p>
+                <p className='subtitle3 text-[#E3E3E3]'>
+                  {formattedNumber(
+                    calculateToUSD(
+                      totalBorrowed[asset.symbol] ?? BigNumber(0),
+                      asset.exponents,
+                      price[asset.symbol] ?? BigNumber(0),
+                    ).toNumber(),
+                  )}
+                </p>
               </div>
               <div className='flex justify-between'>
                 <p className='subtitle2 text-[#E3E3E3]'>Borrow APY</p>
@@ -138,7 +147,7 @@ export const LandingTable = () => {
                 <TableCell className='text-center'>
                   $
                   {formattedNumber(
-                    calculateMarketSize(
+                    calculateToUSD(
                       totalReserves[asset.symbol] ?? BigNumber(0),
                       asset.exponents,
                       price[asset.symbol] ?? BigNumber(0),
@@ -154,7 +163,15 @@ export const LandingTable = () => {
                   )}
                   %
                 </TableCell>
-                <TableCell className='text-center'>$ {formattedNumber(121600000)}</TableCell>
+                <TableCell className='text-center'>
+                  {formattedNumber(
+                    calculateToUSD(
+                      totalBorrowed[asset.symbol] ?? BigNumber(0),
+                      asset.exponents,
+                      price[asset.symbol] ?? BigNumber(0),
+                    ).toNumber(),
+                  )}
+                </TableCell>
                 <TableCell className='text-center'>
                   {displayAmount(
                     fromBaseUnitAmount(

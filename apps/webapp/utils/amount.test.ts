@@ -1,5 +1,11 @@
 import { describe, expect, it, test } from 'vitest';
-import { displayAmount, displayUsd, fromBaseUnitAmount, toBaseUnitAmount } from './amount';
+import {
+  calculateToUSD,
+  displayAmount,
+  displayUsd,
+  fromBaseUnitAmount,
+  toBaseUnitAmount,
+} from './amount';
 import BigNumber from 'bignumber.js';
 
 describe('Formatting', () => {
@@ -111,5 +117,16 @@ describe('format', () => {
       const floatValue = '100.234';
       expect(toBaseUnitAmount(floatValue, 1)).toStrictEqual(BigNumber(1002.34));
     });
+  });
+});
+
+describe('calculateToUSD', () => {
+  it('should calculate to USDC correctly', () => {
+    const totalReserves = new BigNumber(1100001214142797);
+    const exponent = 18;
+    const price = new BigNumber(191741000000);
+    const expected = new BigNumber(2.1091533280095405);
+
+    expect(calculateToUSD(totalReserves, exponent, price).toNumber()).toBe(expected.toNumber());
   });
 });

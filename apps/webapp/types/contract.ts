@@ -21,4 +21,5 @@ export enum ContractMethods {
   GET_UTILIZATION_RATE_BY_TOKEN = 'GetUtilizationRateByToken',
   REPAY = 'Repay',
   REQUEST_TOKEN = 'request_token',
+  GET_TOTAL_BORROWED_BY_TOKEN = 'GetTotalBorrowedByToken',
 }
