@@ -9,11 +9,10 @@ import { Button, Switch, Table, TableBody, TableCell, TableHead, TableHeader, Ta
 import { useReadContractMultiAssets } from '../../hooks/read-contract-multi-assets';
 import { useWriteContract } from '../../hooks/write-contract';
 import { ContractMethods } from '../../types/contract';
-import { assets } from '../../utils';
+import { assetInitialValue, assets, assetsArguments } from '../../utils';
 import { displayAmount, fromBaseUnitAmount } from '../../utils/amount';
 import { CONTRACT_ADDRESS, EIGHTEEN_EXPONENT } from '../../utils/constants';
 
-const initialValue = { xlm: BigNumber(0), atk: BigNumber(0), btk: BigNumber(0) };
 export const DepostMarketTable = () => {
   const router = useRouter();
   const { address } = useSorobanReact();
@@ -27,20 +26,17 @@ export const DepostMarketTable = () => {
 
   const { data: liquidityRates } = useReadContractMultiAssets<
     Record<string, BigNumber | undefined>
-  >(CONTRACT_ADDRESS, ContractMethods.GET_LIQUIDITY_RATE, initialValue, {
-    xlm: [xdr.ScVal.scvSymbol('xlm')],
-    atk: [xdr.ScVal.scvSymbol('atk')],
-    btk: [xdr.ScVal.scvSymbol('btk')],
-  });
+  >(CONTRACT_ADDRESS, ContractMethods.GET_LIQUIDITY_RATE, assetInitialValue, assetsArguments);
 
   const { data: deposits } = useReadContractMultiAssets<Record<string, BigNumber | undefined>>(
     CONTRACT_ADDRESS,
     ContractMethods.GET_DEPOSIT,
-    { xlm: BigNumber(0), atk: BigNumber(0), btk: BigNumber(0) },
+    assetInitialValue,
     {
+      //TODO add dynamic assets
       xlm: [...args, xdr.ScVal.scvSymbol('xlm')],
-      atk: [...args, xdr.ScVal.scvSymbol('atk')],
-      btk: [...args, xdr.ScVal.scvSymbol('btk')],
+      usdc: [...args, xdr.ScVal.scvSymbol('usdc')],
+      eth: [...args, xdr.ScVal.scvSymbol('eth')],
     },
     Boolean(address),
   );
@@ -50,11 +46,12 @@ export const DepostMarketTable = () => {
   >(
     CONTRACT_ADDRESS,
     ContractMethods.USER_DEPOSIT_AS_COLLATERAL,
-    { xlm: false, atk: false, btk: false },
+    { xlm: false, usdc: false, eth: false },
     {
+      //TODO add dynamic assets
       xlm: [...args, xdr.ScVal.scvSymbol('xlm')],
-      atk: [...args, xdr.ScVal.scvSymbol('atk')],
-      btk: [...args, xdr.ScVal.scvSymbol('btk')],
+      usdc: [...args, xdr.ScVal.scvSymbol('usdc')],
+      eth: [...args, xdr.ScVal.scvSymbol('eth')],
     },
     Boolean(address),
   );
