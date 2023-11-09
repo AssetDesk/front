@@ -13,7 +13,7 @@ import {
   formattedNumber,
   routesLinks,
 } from '../../utils';
-import { calculateToUSD, displayAmount, fromBaseUnitAmount } from '../../utils/amount';
+import { calculateToUsd, displayAmount, fromBaseUnitAmount } from '../../utils/amount';
 import { CONTRACT_ADDRESS, EIGHTEEN_EXPONENT } from '../../utils/constants';
 
 export const LandingTable = () => {
@@ -70,7 +70,7 @@ export const LandingTable = () => {
                 <p className='subtitle3 text-[#E3E3E3]'>
                   $
                   {formattedNumber(
-                    calculateToUSD(
+                    calculateToUsd(
                       totalReserves[asset.symbol] ?? BigNumber(0),
                       asset.exponents,
                       price[asset.symbol] ?? BigNumber(0),
@@ -94,7 +94,7 @@ export const LandingTable = () => {
                 <p className='subtitle2 text-[#E3E3E3]'>Total Borrowed</p>
                 <p className='subtitle3 text-[#E3E3E3]'>
                   {formattedNumber(
-                    calculateToUSD(
+                    calculateToUsd(
                       totalBorrowed[asset.symbol] ?? BigNumber(0),
                       asset.exponents,
                       price[asset.symbol] ?? BigNumber(0),
@@ -147,7 +147,7 @@ export const LandingTable = () => {
                 <TableCell className='text-center'>
                   $
                   {formattedNumber(
-                    calculateToUSD(
+                    calculateToUsd(
                       totalReserves[asset.symbol] ?? BigNumber(0),
                       asset.exponents,
                       price[asset.symbol] ?? BigNumber(0),
@@ -165,7 +165,7 @@ export const LandingTable = () => {
                 </TableCell>
                 <TableCell className='text-center'>
                   {formattedNumber(
-                    calculateToUSD(
+                    calculateToUsd(
                       totalBorrowed[asset.symbol] ?? BigNumber(0),
                       asset.exponents,
                       price[asset.symbol] ?? BigNumber(0),

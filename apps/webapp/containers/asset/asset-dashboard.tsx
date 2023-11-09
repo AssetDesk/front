@@ -1,9 +1,9 @@
 import BigNumber from 'bignumber.js';
 import { useMemo } from 'react';
 import { useAssetBySlug } from '../../hooks/asset-by-slug';
-import { calculateToUSD, displayAmount, displayUsd, fromBaseUnitAmount } from '../../utils/amount';
-import { EIGHTEEN_EXPONENT, USDC_EXPONENT } from '../../utils/constants';
 import { formattedNumber } from '../../utils';
+import { calculateToUsd, displayAmount, displayUsd, fromBaseUnitAmount } from '../../utils/amount';
+import { EIGHTEEN_EXPONENT, USDC_EXPONENT } from '../../utils/constants';
 
 export interface AssetInfo {
   totalReserves: BigNumber;
@@ -20,24 +20,34 @@ export const AssetDashboard = ({ data }: { data: AssetInfo }) => {
 
   const formattedValue = useMemo(() => {
     const price = fromBaseUnitAmount(data.price, USDC_EXPONENT).toNumber();
-    const totalReserves = fromBaseUnitAmount(data.totalReserves, asset!.exponents).toNumber();
-    const availableLiquidity = fromBaseUnitAmount(
+
+    const reservesSize = calculateToUsd(
+      data.totalReserves,
+      asset!.exponents,
+      data.price,
+    ).toNumber();
+
+    const availableLiquidity = calculateToUsd(
       data.availableLiquidity,
       asset!.exponents,
+      data.price,
     ).toNumber();
 
     const utilizationRate = fromBaseUnitAmount(data.utilizationRate, 5).toNumber();
+
     const depositAPY = fromBaseUnitAmount(data.liquidityRate, EIGHTEEN_EXPONENT).toNumber();
+
     const borrowAPY = fromBaseUnitAmount(data.interestRate, EIGHTEEN_EXPONENT).toNumber();
-    const totalBorrowed = calculateToUSD(
+
+    const totalBorrowed = calculateToUsd(
       data.totalBorrowed,
       asset!.exponents,
-      data.price ?? BigNumber(0),
+      data.price,
     ).toNumber();
 
     return {
-      reservesSize: totalReserves * price,
-      availableLiquidity: availableLiquidity * price,
+      reservesSize,
+      availableLiquidity,
       utilizationRate,
       price,
       depositAPY,

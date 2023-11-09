@@ -50,7 +50,7 @@ export const displayUsd = (number: number): string => {
   }).format(number);
 };
 
-export const calculateToUSD = (totalReserves: BigNumber, exponent: number, price: BigNumber) => {
+export const calculateToUsd = (totalReserves: BigNumber, exponent: number, price: BigNumber) => {
   const formattedTotalReserves = fromBaseUnitAmount(totalReserves, exponent);
   const formattedPrice = fromBaseUnitAmount(price, USDC_EXPONENT);
   return formattedTotalReserves.multipliedBy(formattedPrice);

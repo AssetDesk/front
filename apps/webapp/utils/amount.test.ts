@@ -1,12 +1,12 @@
+import BigNumber from 'bignumber.js';
 import { describe, expect, it, test } from 'vitest';
 import {
-  calculateToUSD,
+  calculateToUsd,
   displayAmount,
   displayUsd,
   fromBaseUnitAmount,
   toBaseUnitAmount,
 } from './amount';
-import BigNumber from 'bignumber.js';
 
 describe('Formatting', () => {
   describe('displayAmount()', () => {
@@ -127,6 +127,6 @@ describe('calculateToUSD', () => {
     const price = new BigNumber(191741000000);
     const expected = new BigNumber(2.1091533280095405);
 
-    expect(calculateToUSD(totalReserves, exponent, price).toNumber()).toBe(expected.toNumber());
+    expect(calculateToUsd(totalReserves, exponent, price).toNumber()).toBe(expected.toNumber());
   });
 });
