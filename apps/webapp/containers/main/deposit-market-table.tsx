@@ -228,6 +228,19 @@ export const DepostMarketTable = () => {
                     </Tooltip>
                   </TooltipProvider>
                 </TableCell>
+                <TableCell className='text-center'>
+                  {asset.faucet && asset.maxFaucet && (
+                    <Button
+                      size='md'
+                      onClick={e => {
+                        e.stopPropagation();
+                        void faucet(asset.address, asset.maxFaucet!, asset.exponents)();
+                      }}
+                    >
+                      Faucet
+                    </Button>
+                  )}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
