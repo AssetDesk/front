@@ -7,7 +7,7 @@ import { xdr } from 'soroban-client';
 import { Button, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from 'ui';
 import { useReadContractMultiAssets } from '../../hooks/read-contract-multi-assets';
 import { ContractMethods } from '../../types/contract';
-import { assets, formattedNumber } from '../../utils';
+import { assets, formattedNumber, routesLinks } from '../../utils';
 import { displayAmount, fromBaseUnitAmount } from '../../utils/amount';
 import { CONTRACT_ADDRESS, EIGHTEEN_EXPONENT, USDC_EXPONENT } from '../../utils/constants';
 
@@ -118,7 +118,7 @@ export const LandingTable = () => {
                   %
                 </p>
               </div>
-              <Link href={`/asset/${asset.symbol}`}>
+              <Link href={`${routesLinks.Markets}/${asset.symbol}`}>
                 <Button className='mt-6 w-full'>More</Button>
               </Link>
             </div>
@@ -140,7 +140,10 @@ export const LandingTable = () => {
             {assets.map(asset => (
               <TableRow key={asset.symbol}>
                 <TableCell className='flex items-center justify-center'>
-                  <Link href={`/asset/${asset.symbol}`} className='flex items-center gap-2'>
+                  <Link
+                    href={`${routesLinks.Markets}/${asset.symbol}`}
+                    className='flex items-center gap-2'
+                  >
                     <Image src={asset.icon} alt='' width={20} height={20} />
                     <p>{asset.symbol}</p>
                   </Link>

@@ -8,7 +8,7 @@ import { Address, xdr } from 'soroban-client';
 import { Button, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from 'ui';
 import { useReadContractMultiAssets } from '../../hooks/read-contract-multi-assets';
 import { ContractMethods } from '../../types/contract';
-import { assets, formattedNumber } from '../../utils';
+import { assets, formattedNumber, routesLinks } from '../../utils';
 import { displayAmount, fromBaseUnitAmount } from '../../utils/amount';
 import { CONTRACT_ADDRESS, EIGHTEEN_EXPONENT, USDC_EXPONENT } from '../../utils/constants';
 
@@ -80,7 +80,8 @@ export const BorrowMarketTable = () => {
     return obj;
   }, [availableLiquiduty, price]);
 
-  const navigateToAsset = (asset: string) => () => router.push(`/asset/${asset.toLowerCase()}`);
+  const navigateToAsset = (asset: string) => () =>
+    router.push(`${routesLinks.Markets}/${asset.toLowerCase()}`);
 
   return (
     <>
