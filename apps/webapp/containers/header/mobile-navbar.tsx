@@ -16,15 +16,13 @@ export const MobileNavbar = () => {
       <DialogContent className='data-[state=open]:slide-in-from-top-3 data-[state=closed]:slide-out-to-top-3 data-[state=closed]:slide-out-to-right-3 data-[state=open]:slide-in-from-right-3 left-auto right-3 top-3 w-[296px] translate-x-0 translate-y-0'>
         <nav className='overflow-0 mt-7 flex flex-col gap-1 p-3'>
           {routes.map(i => (
-            <DialogTrigger asChild>
+            <DialogTrigger asChild key={i.href}>
               <Link
-                key={i.href}
                 href={i.href}
                 target={i.isLink ? '_blank' : undefined}
                 rel={i.isLink ? 'noreferrer noopener' : undefined}
               >
                 <Button
-                  key={i.href}
                   variant='ghost'
                   size='md'
                   className={cn(
