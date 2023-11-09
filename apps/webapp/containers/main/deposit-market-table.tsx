@@ -135,6 +135,7 @@ export const DepostMarketTable = () => {
               <TableHead className='text-right'>APY</TableHead>
               <TableHead className='text-center'>Deposit</TableHead>
               <TableHead className='text-center'>Collateral</TableHead>
+              <TableHead className='text-center'>Faucet</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
