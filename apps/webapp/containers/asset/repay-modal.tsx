@@ -49,7 +49,7 @@ export const RepayModal = ({
       },
       {
         type: 'error',
-        issue: 'more than a your borrow',
+        issue: 'more than your borrow',
         checkFn: (amount: string) => validateAmount(amount, balance),
       },
     ],
