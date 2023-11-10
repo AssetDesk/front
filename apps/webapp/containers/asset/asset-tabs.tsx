@@ -10,9 +10,12 @@ import BigNumber from 'bignumber.js';
 import { CONTRACT_ADDRESS } from '../../utils/constants';
 import { ContractMethods } from '../../types/contract';
 import { xdr } from 'soroban-client';
+import { useSorobanReact } from '@soroban-react/core';
+import { UserNotConnected } from './user-not-connected';
 
 export const AssetTabs = () => {
   const asset = useAssetBySlug();
+  const { address } = useSorobanReact();
 
   const { data, refetch } = useMultiCall<AssetInfo>(
     CONTRACT_ADDRESS,
@@ -74,10 +77,14 @@ export const AssetTabs = () => {
         <ReserveConfiguration />
       </TabsContent>
       <TabsContent value='Your info'>
-        <UserInfo
-          refetchAssetInfo={refetch}
-          apy={{ depositAPY: data.liquidityRate, borrowAPY: data.interestRate }}
-        />
+        {address ? (
+          <UserInfo
+            refetchAssetInfo={refetch}
+            apy={{ depositAPY: data.liquidityRate, borrowAPY: data.interestRate }}
+          />
+        ) : (
+          <UserNotConnected />
+        )}
       </TabsContent>
     </Tabs>
   );
