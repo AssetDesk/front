@@ -11,7 +11,7 @@ import { useAssetPrice } from '../../hooks/asset-price';
 import { useMultiCall } from '../../hooks/multi-call';
 import { useReadContract } from '../../hooks/read-contract';
 import { ContractMethods } from '../../types/contract';
-import { calculateToUsd, displayAmount, displayUsd, fromBaseUnitAmount } from '../../utils/amount';
+import { displayAmount, displayUsd, fromBaseUnitAmount } from '../../utils/amount';
 import { CONTRACT_ADDRESS } from '../../utils/constants';
 import { AssetInfo } from './asset-dashboard';
 import { BorrowModal } from './borrow-modal';
