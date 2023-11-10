@@ -115,7 +115,7 @@ export const BorrowModal = ({
       {(isSuccess || isError) && (
         <StatusModal
           status={isError ? 'error' : 'success'}
-          type='deposit'
+          type='borrow'
           handleBtn={handleRemoveStatus}
         />
       )}

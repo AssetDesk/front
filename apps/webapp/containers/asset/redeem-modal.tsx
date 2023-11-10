@@ -62,12 +62,12 @@ export const RedeemModal = ({
   return (
     <Dialog onOpenChange={open => !open && handleRemoveStatus()}>
       <DialogTrigger asChild>
-        <Button className='w-full md:w-48'>Withdraw</Button>
+        <Button className='w-full md:w-48'>Redeem</Button>
       </DialogTrigger>
       {(isSuccess || isError) && (
         <StatusModal
           status={isError ? 'error' : 'success'}
-          type='deposit'
+          type='redeem'
           handleBtn={handleRemoveStatus}
         />
       )}
@@ -90,7 +90,7 @@ export const RedeemModal = ({
           >
             <DialogHeader>
               <DialogTitle>
-                Withdraw <span className='uppercase'>{asset.symbol}</span>
+                Redeem <span className='uppercase'>{asset.symbol}</span>
               </DialogTitle>
             </DialogHeader>
             <div className='grid gap-6 md:gap-10'>

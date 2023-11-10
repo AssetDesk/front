@@ -2,15 +2,15 @@ import { Button, DialogContent, DialogFooter, DialogTrigger } from 'ui';
 
 import Image from 'next/image';
 
-type ModalType = 'deposit' | 'withdraw' | 'borrow' | 'repay';
+type ModalType = 'deposit' | 'redeem' | 'borrow' | 'repay';
 
-interface ISuccessStateModalProps {
+interface StatusModalProps {
   type: ModalType;
   status: 'success' | 'error';
   handleBtn: () => void;
 }
 
-export const StatusModal = ({ type, status, handleBtn }: ISuccessStateModalProps) => {
+export const StatusModal = ({ type, status, handleBtn }: StatusModalProps) => {
   return (
     <DialogContent className='w-[300px] md:w-[400px]'>
       <div className='pt-12 text-center'>
@@ -23,7 +23,7 @@ export const StatusModal = ({ type, status, handleBtn }: ISuccessStateModalProps
         />
         <p className='subtitle1 mb-2'>{status === 'success' ? 'Success!' : 'Oh no!'}</p>
         <p className='subtitle2 text-center text-[#E3E3E3] '>
-          {type.charAt(0).toUpperCase() + type.slice(1)}{' '}
+          <span className='capitalize'>{type}</span>{' '}
           {status === 'success' ? 'success' : 'was failed'}
         </p>
         <DialogFooter className='mt-10'>

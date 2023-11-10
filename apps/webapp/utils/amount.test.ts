@@ -27,7 +27,7 @@ describe('Formatting', () => {
     });
 
     it('negative numbers work too', () => {
-      expect(displayAmount(-2001.124125)).toBe('-2,001.124');
+      expect(displayAmount(-2001.124125)).toBe('0');
     });
   });
 

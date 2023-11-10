@@ -20,6 +20,7 @@ export const toBaseUnitAmount = (value: string, exponent: number): BigNumber => 
 //    2001.124125 -> 2,001.124
 //    0.000012    -> 0.000012
 export const displayAmount = (num: number): string => {
+  if (num <= 9.99999999999e-7) return '0';
   const split = num.toString().split('.');
   const integer = parseInt(split[0]!);
   let decimal = split[1];

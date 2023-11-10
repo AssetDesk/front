@@ -74,7 +74,7 @@ export const RepayModal = ({
       {(isSuccess || isError) && (
         <StatusModal
           status={isError ? 'error' : 'success'}
-          type='deposit'
+          type='repay'
           handleBtn={handleRemoveStatus}
         />
       )}
