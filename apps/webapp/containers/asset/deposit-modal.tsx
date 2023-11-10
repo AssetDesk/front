@@ -50,13 +50,17 @@ export const DepositModal = ({
     value,
   );
 
-  const handleSuccess = () => {
-    setSuccess(false);
-    setValue('');
+  const handleRemoveStatus = () => {
+    if (isSuccess) {
+      setSuccess(false);
+      setValue('');
+    } else {
+      setIsError(false);
+    }
   };
 
   return (
-    <Dialog>
+    <Dialog onOpenChange={open => !open && handleRemoveStatus()}>
       <DialogTrigger asChild>
         <Button className='w-full md:w-48'>Deposit</Button>
       </DialogTrigger>
@@ -64,7 +68,7 @@ export const DepositModal = ({
         <StatusModal
           status={isError ? 'error' : 'success'}
           type='deposit'
-          handleBtn={isError ? () => setIsError(false) : handleSuccess}
+          handleBtn={handleRemoveStatus}
         />
       )}
       {!isSuccess && !isError && (
@@ -77,7 +81,9 @@ export const DepositModal = ({
                 const args = [
                   new Address(address).toScVal(),
                   xdr.ScVal.scvSymbol(asset.symbol),
-                  new ScInt(toBaseUnitAmount(value, asset.exponents).toFixed()).toU128(),
+                  new ScInt(
+                    toBaseUnitAmount('9090192313123123', asset.exponents).toFixed(),
+                  ).toU128(),
                 ];
                 await write(CONTRACT_ADDRESS, ContractMethods.DEPOSIT, args);
                 await refetch();

@@ -2,10 +2,10 @@ import { Button, DialogContent, DialogFooter, DialogTrigger } from 'ui';
 
 import Image from 'next/image';
 
-type TType = 'deposit' | 'withdraw' | 'borrow' | 'repay';
+type ModalType = 'deposit' | 'withdraw' | 'borrow' | 'repay';
 
 interface ISuccessStateModalProps {
-  type: TType;
+  type: ModalType;
   status: 'success' | 'error';
   handleBtn: () => void;
 }
@@ -16,7 +16,7 @@ export const StatusModal = ({ type, status, handleBtn }: ISuccessStateModalProps
       <div className='pt-12 text-center'>
         <Image
           className='mx-auto mb-6'
-          src='/success.svg'
+          src={`/${status}.svg`}
           alt='success img'
           width={109}
           height={119}
@@ -30,7 +30,7 @@ export const StatusModal = ({ type, status, handleBtn }: ISuccessStateModalProps
           {status === 'success' ? (
             <DialogTrigger asChild>
               <Button onClick={handleBtn} className='w-full md:w-full'>
-                Confirm
+                Ok
               </Button>
             </DialogTrigger>
           ) : (

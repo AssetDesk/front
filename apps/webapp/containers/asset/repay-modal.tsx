@@ -57,13 +57,17 @@ export const RepayModal = ({
     value,
   );
 
-  const handleSuccess = () => {
-    setSuccess(false);
-    setValue('');
+  const handleRemoveStatus = () => {
+    if (isSuccess) {
+      setSuccess(false);
+      setValue('');
+    } else {
+      setIsError(false);
+    }
   };
 
   return (
-    <Dialog>
+    <Dialog onOpenChange={open => !open && handleRemoveStatus()}>
       <DialogTrigger asChild>
         <Button className='w-full md:w-48'>Repay</Button>
       </DialogTrigger>
@@ -71,7 +75,7 @@ export const RepayModal = ({
         <StatusModal
           status={isError ? 'error' : 'success'}
           type='deposit'
-          handleBtn={isError ? () => setIsError(false) : handleSuccess}
+          handleBtn={handleRemoveStatus}
         />
       )}
       {!isSuccess && !isError && (
