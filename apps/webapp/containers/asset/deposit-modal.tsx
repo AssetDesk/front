@@ -81,9 +81,7 @@ export const DepositModal = ({
                 const args = [
                   new Address(address).toScVal(),
                   xdr.ScVal.scvSymbol(asset.symbol),
-                  new ScInt(
-                    toBaseUnitAmount(value, asset.exponents).toFixed(),
-                  ).toU128(),
+                  new ScInt(toBaseUnitAmount(value, asset.exponents).toFixed()).toU128(),
                 ];
                 await write(CONTRACT_ADDRESS, ContractMethods.DEPOSIT, args);
                 await refetch();
