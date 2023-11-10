@@ -104,13 +104,15 @@ export const UserInfo = ({
 
     return {
       availableBorrow: availableBorrow.toNumber(),
-      availableBorrowUsdc: calculateToUsd(availableBorrow, asset!.exponents, assetPrice).toNumber(),
+      availableBorrowUsdc: availableBorrow.multipliedBy(assetPrice).toNumber(),
       availableRedeem: availableRedeem.toNumber(),
-      availableRedeemUsdc: calculateToUsd(availableRedeem, asset!.exponents, assetPrice).toNumber(),
+      availableRedeemUsdc: availableRedeem.multipliedBy(assetPrice).toNumber(),
       availableRepay: availableRepay.toNumber(),
-      availableRepayUsdc: calculateToUsd(availableRepay, asset!.exponents, assetPrice).toNumber(),
+      availableRepayUsdc: availableRepay.multipliedBy(assetPrice).toNumber(),
     };
   }, [assetPrice, data, asset]);
+
+  console.log(availableBorrowUsdc);
 
   const refectData = async () => {
     await refetchWalletBalance();
