@@ -145,6 +145,8 @@ export const useWriteContract = () => {
     isLoading,
     isSuccess,
     error,
+    setSuccess,
+    setIsError,
     write,
   };
 };
