@@ -232,7 +232,9 @@ export const DepostMarketTable = () => {
                 <TableCell className='text-center'>
                   {asset.faucet && asset.maxFaucet && (
                     <Button
-                      size='md'
+                      size='lg'
+                      className='text-[12px]'
+                      disabled={!address}
                       onClick={e => {
                         e.stopPropagation();
                         void faucet(asset.address, asset.maxFaucet!, asset.exponents)();

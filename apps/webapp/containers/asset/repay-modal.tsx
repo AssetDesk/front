@@ -85,10 +85,20 @@ export const RepayModal = ({
               e.preventDefault();
               if (!address || !value) return;
               void (async () => {
+                const isMaxValue = Number(value) === balance;
+
+                const maxValue = Number(value) + 10;
+
                 const args = [
                   new Address(address).toScVal(),
                   xdr.ScVal.scvSymbol(asset.symbol),
-                  new ScInt(toBaseUnitAmount(value, asset.exponents).toFixed()).toU128(),
+                  new ScInt(
+                    toBaseUnitAmount(
+                      //TODO need to change (if max send 0)
+                      isMaxValue ? String(maxValue) : value,
+                      asset.exponents,
+                    ).toFixed(),
+                  ).toU128(),
                 ];
                 await write(CONTRACT_ADDRESS, ContractMethods.REPAY, args);
                 await refetch();
