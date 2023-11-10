@@ -1,6 +1,8 @@
 'use client';
 import Image from 'next/image';
 import { useAssetBySlug } from '../../hooks/asset-by-slug';
+import { CopyToClipboard } from 'ui';
+import React from 'react';
 
 export const AssetName = () => {
   const asset = useAssetBySlug();
@@ -9,8 +11,11 @@ export const AssetName = () => {
     <div className='flex items-center  gap-4'>
       <Image src={asset?.icon ?? ''} alt='' width={40} height={40} />
       <div className='ml-2 flex flex-col justify-between'>
-        <p className='subtitle2 uppercase'>{asset?.symbol}</p>
-        <p className='subtitle1'>{asset?.name}</p>
+        <p className='subtitle1 uppercase'>{asset?.symbol}</p>
+        <p className='subtitle2 font-medium uppercase text-[#E3E3E3]'>
+          {asset!.address.slice(0, 8)}...{asset!.address.slice(-8)}{' '}
+          <CopyToClipboard text={asset!.address} className='ml-2' />
+        </p>
       </div>
       {/* <div className='flex items-start gap-2 self-end'>
         <svg
