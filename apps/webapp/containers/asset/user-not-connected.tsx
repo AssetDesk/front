@@ -15,8 +15,8 @@ export const UserNotConnected = () => {
           height={167}
           priority
         />
-        <p className='subtitle1 mb-2 mt-4'>Please, connect your wallet</p>
-        <p className='subtitle2 mb-6 text-[#B0A8A8]'>
+        <p className='subtitle1 mb-2 mt-4 text-center'>Please, connect your wallet</p>
+        <p className='subtitle2 mb-6 text-center text-[#B0A8A8]'>
           Please connect your wallet to see your depositing and borrowings.
         </p>
         <ConnectorsModal />
