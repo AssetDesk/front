@@ -80,7 +80,7 @@ export const useWriteContract = () => {
   const { activeChain, address } = useSorobanReact();
   const [isError, setIsError] = useState(false);
   const [isLoading, setLoading] = useState(false);
-  const [isSuccess, setSuccess] = useState(false);
+  const [isSuccess, setSuccess] = useState<boolean>(false);
   const [error, setError] = useState<null | string>(null);
 
   const write = async (contractAddress: string, method: ContractMethods, args: xdr.ScVal[]) => {
@@ -145,6 +145,8 @@ export const useWriteContract = () => {
     isLoading,
     isSuccess,
     error,
+    setSuccess,
+    setIsError,
     write,
   };
 };
