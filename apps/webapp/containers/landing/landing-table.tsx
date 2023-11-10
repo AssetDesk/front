@@ -62,7 +62,7 @@ export const LandingTable = () => {
                 <p className='subtitle2 text-[#E3E3E3]'>Asset</p>
                 <div className='flex gap-2'>
                   <Image src={asset.icon} alt='' width={20} height={20} />
-                  <p className='subtitle3 text-[#E3E3E3]'>{asset.symbol}</p>
+                  <p className='subtitle3 uppercase text-[#E3E3E3]'>{asset.symbol}</p>
                 </div>
               </div>
               <div className='flex justify-between'>
@@ -141,7 +141,7 @@ export const LandingTable = () => {
                     className='flex items-center gap-2'
                   >
                     <Image src={asset.icon} alt='' width={20} height={20} />
-                    <p>{asset.symbol}</p>
+                    <p className='uppercase'>{asset.symbol}</p>
                   </Link>
                 </TableCell>
                 <TableCell className='text-center'>

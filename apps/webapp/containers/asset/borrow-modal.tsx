@@ -138,7 +138,9 @@ export const BorrowModal = ({
             }}
           >
             <DialogHeader>
-              <DialogTitle>Borrow {asset.symbol}</DialogTitle>
+              <DialogTitle>
+                Borrow <span className='uppercase'>{asset.symbol}</span>
+              </DialogTitle>
             </DialogHeader>
             <div className='grid gap-6 md:gap-10'>
               <BalanceInput

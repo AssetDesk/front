@@ -89,7 +89,9 @@ export const RedeemModal = ({
             }}
           >
             <DialogHeader>
-              <DialogTitle>Withdraw {asset.symbol}</DialogTitle>
+              <DialogTitle>
+                Withdraw <span className='uppercase'>{asset.symbol}</span>
+              </DialogTitle>
             </DialogHeader>
             <div className='grid gap-6 md:gap-10'>
               <BalanceInput

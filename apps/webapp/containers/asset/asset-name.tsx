@@ -9,7 +9,7 @@ export const AssetName = () => {
     <div className='flex items-center  gap-4'>
       <Image src={asset?.icon ?? ''} alt='' width={40} height={40} />
       <div className='ml-2 flex flex-col justify-between'>
-        <p className='subtitle2'>{asset?.symbol}</p>
+        <p className='subtitle2 uppercase'>{asset?.symbol}</p>
         <p className='subtitle1'>{asset?.name}</p>
       </div>
       {/* <div className='flex items-start gap-2 self-end'>

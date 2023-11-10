@@ -127,7 +127,7 @@ export const UserInfo = ({
             <WalletIcon className='h-30 h-30 text-[#E3E3E3] md:h-10 md:w-10' />
             <div className='flex flex-col gap-2'>
               <p className='subtitle1'>Wallet balance</p>
-              <p className='number2'>
+              <p className='number2 uppercase'>
                 {displayAmount(walletBalance)} {asset!.symbol}
               </p>
             </div>
@@ -138,7 +138,7 @@ export const UserInfo = ({
                 <div className='flex items-center gap-2'>
                   <p className='subtitle2 text-[#E3E3E3]'>Available to deposit</p>
                 </div>
-                <p className='number mt-1'>
+                <p className='number mt-1 uppercase'>
                   {displayAmount(availableDeposit)} {asset!.symbol}
                 </p>
                 <p className='number2'>${displayUsd(availableDepositUsdc)}</p>
@@ -155,7 +155,7 @@ export const UserInfo = ({
                 <div className='flex items-center gap-2'>
                   <p className='subtitle2 text-[#E3E3E3]'>Available to borrow</p>
                 </div>
-                <p className='number mt-1'>
+                <p className='number mt-1 uppercase'>
                   {displayAmount(availableBorrow)} {asset!.symbol}
                 </p>
                 <p className='number2'>${displayAmount(availableBorrowUsdc)}</p>
@@ -172,7 +172,7 @@ export const UserInfo = ({
                 <div className='flex items-center gap-2'>
                   <p className='subtitle2 text-[#E3E3E3]'>Available to redeem</p>
                 </div>
-                <p className='number mt-1'>
+                <p className='number mt-1 uppercase'>
                   {displayAmount(availableRedeem)} {asset!.symbol}
                 </p>
                 <p className='number2'>${displayUsd(availableRedeemUsdc)}</p>
@@ -189,7 +189,7 @@ export const UserInfo = ({
                 <div className='flex items-center gap-2'>
                   <p className='subtitle2 text-[#E3E3E3]'>Available to repay</p>
                 </div>
-                <p className='number mt-1'>
+                <p className='number mt-1 uppercase'>
                   {displayAmount(availableRepay)} {asset!.symbol}
                 </p>
                 <p className='number2'>${displayUsd(availableRepayUsdc)}</p>

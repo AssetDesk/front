@@ -96,7 +96,9 @@ export const RepayModal = ({
             }}
           >
             <DialogHeader>
-              <DialogTitle>Repay {asset.symbol}</DialogTitle>
+              <DialogTitle>
+                Repay <span className='uppercase'>{asset.symbol}</span>
+              </DialogTitle>
             </DialogHeader>
             <div className='grid gap-6 md:gap-10'>
               <BalanceInput

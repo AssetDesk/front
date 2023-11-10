@@ -91,7 +91,9 @@ export const DepositModal = ({
             }}
           >
             <DialogHeader>
-              <DialogTitle>Deposit {asset.symbol}</DialogTitle>
+              <DialogTitle>
+                Deposit <span className='uppercase'>{asset.symbol}</span>
+              </DialogTitle>
             </DialogHeader>
             <div className='mt-2 grid gap-6 md:gap-10'>
               <BalanceInput

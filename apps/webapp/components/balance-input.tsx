@@ -42,7 +42,7 @@ export const BalanceInput = ({
       </div>
       <div className='flex justify-between'>
         <p className='subtitle3'>{balanceTitle}</p>
-        <p className='number2'>
+        <p className='number2 uppercase'>
           {displayAmount(balance)} {asset.symbol}
         </p>
       </div>

@@ -107,7 +107,7 @@ export const DepostMarketTable = () => {
             >
               <div className='flex justify-between'>
                 <p className='subtitle2 text-[#E3E3E3]'>Assets</p>
-                <div className='flex gap-2'>
+                <div className='flex gap-2 uppercase'>
                   <Image src={asset.icon} alt='' width={20} height={20} />
                   <p className='subtitle3 text-[#E3E3E3]'>{asset.symbol}</p>
                 </div>
@@ -126,7 +126,7 @@ export const DepostMarketTable = () => {
               </div>
               <div className='flex justify-between'>
                 <p className='subtitle2 text-[#E3E3E3]'>Deposit</p>
-                <p className='subtitle3 text-[#E3E3E3]'>
+                <p className='subtitle3 uppercase text-[#E3E3E3]'>
                   {displayAmount(
                     fromBaseUnitAmount(
                       deposits[asset.symbol] ?? BigNumber(0),
@@ -187,7 +187,7 @@ export const DepostMarketTable = () => {
                 <TableCell>
                   <div className='flex items-center gap-2'>
                     <Image src={asset.icon} alt='' width={20} height={20} />
-                    <p>{asset.symbol}</p>
+                    <p className='uppercase'>{asset.symbol}</p>
                   </div>
                 </TableCell>
                 <TableCell className='text-right'>
@@ -199,13 +199,13 @@ export const DepostMarketTable = () => {
                   )}
                   %
                 </TableCell>
-                <TableCell className='text-center'>
+                <TableCell className='text-center uppercase'>
                   {displayAmount(
                     fromBaseUnitAmount(
                       deposits[asset.symbol] ?? BigNumber(0),
                       asset.exponents,
                     ).toNumber(),
-                  )}
+                  )}{' '}
                   {asset.symbol}
                 </TableCell>
                 <TableCell className='text-center'>
