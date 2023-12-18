@@ -27,7 +27,7 @@ export const useReadContractMultiAssets = <T>(
 
   const query = useQuery<T>({
     queryKey: [`multi-${method}`],
-    enabled: enabled ?? true,
+    enabled: enabled ?? Boolean(activeChain?.networkPassphrase),
     initialData,
     queryFn: async () => {
       const res = await Promise.all(
@@ -42,7 +42,7 @@ export const useReadContractMultiAssets = <T>(
           try {
             const res = await fetchContractValue({
               server,
-              networkPassphrase: activeChain?.networkPassphrase ?? '',
+              networkPassphrase: activeChain!.networkPassphrase,
               contractAddress,
               method,
               args: arg[1],
@@ -58,7 +58,7 @@ export const useReadContractMultiAssets = <T>(
 
             return { [arg[0]]: nativeRes } as T;
           } catch (error) {
-            console.log(method, error);
+            console.error(method, error);
             return { [arg[0]]: undefined } as T;
           }
         }),

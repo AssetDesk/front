@@ -130,7 +130,7 @@ export const useWriteContract = () => {
       setSuccess(true);
       setLoading(false);
     } catch (error) {
-      console.log(error);
+      console.error(error);
 
       const err = error as Error;
       setError(JSON.stringify(err.message));

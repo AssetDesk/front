@@ -60,7 +60,7 @@ export const useMultiCall = <T>(
 
             return { [key]: nativeRes } as T;
           } catch (error) {
-            console.log(method, error);
+            console.error(method, error);
             return { [key]: BigNumber(0) } as T;
           }
         }),

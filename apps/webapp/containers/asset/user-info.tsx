@@ -112,8 +112,6 @@ export const UserInfo = ({
     };
   }, [assetPrice, data, asset]);
 
-  console.log(availableBorrowUsdc);
-
   const refectData = async () => {
     await refetchWalletBalance();
     await refetch();
