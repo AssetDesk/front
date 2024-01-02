@@ -66,7 +66,8 @@ export async function fetchContractValue({
     fee: BASE_FEE,
   });
 
-  const simulated: SorobanRpc.Api.SimulateTransactionResponse = await server.simulateTransaction(txn);
+  const simulated: SorobanRpc.Api.SimulateTransactionResponse =
+    await server.simulateTransaction(txn);
 
   if (SorobanRpc.Api.isSimulationError(simulated)) {
     throw new Error(simulated.error);

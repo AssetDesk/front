@@ -45,7 +45,11 @@ const getTxBuildResult = (
 
 // Build and submits a transaction to the Soroban RPC
 // Polls for non-pending state, returns result after status is updated
-export const submitTx = async (signedXDR: string, networkPassphrase: string, server: SorobanRpc.Server) => {
+export const submitTx = async (
+  signedXDR: string,
+  networkPassphrase: string,
+  server: SorobanRpc.Server,
+) => {
   const tx = TransactionBuilder.fromXDR(signedXDR, networkPassphrase);
 
   const sendResponse = await server.sendTransaction(tx);
