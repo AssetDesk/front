@@ -1,4 +1,4 @@
-import { Account, BASE_FEE, Server, scValToNative, xdr } from 'soroban-client';
+import { Account, BASE_FEE, SorobanRpc, scValToNative, xdr } from 'stellar-sdk';
 import { useQuery } from '@tanstack/react-query';
 import { fetchContractValue } from '../utils/fetch-contract-value';
 import { useSorobanReact } from '@soroban-react/core';
@@ -20,7 +20,7 @@ export const useReadContractMultiAssets = <T>(
 
   const server = useMemo(() => {
     const chainName = activeChain?.name ?? ChainName.FUTURENET;
-    return new Server(sorobanRPC[chainName as ChainName], {
+    return new SorobanRpc.Server(sorobanRPC[chainName as ChainName], {
       allowHttp: true,
     });
   }, [activeChain]);

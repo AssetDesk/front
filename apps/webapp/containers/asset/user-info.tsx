@@ -4,7 +4,7 @@ import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
 import { WalletIcon } from 'lucide-react';
 import { useMemo } from 'react';
-import { Address, xdr } from 'soroban-client';
+import { Address, xdr } from 'stellar-sdk';
 import { FadeTransition } from '../../components';
 import { useAssetBySlug } from '../../hooks/asset-by-slug';
 import { useAssetPrice } from '../../hooks/asset-price';

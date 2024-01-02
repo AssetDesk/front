@@ -1,6 +1,6 @@
-import { xdr } from 'soroban-client';
 import { Asset } from '../types/asset';
 import BigNumber from 'bignumber.js';
+import { nativeToScVal } from 'stellar-sdk';
 
 export const assets: Asset[] = [
   {
@@ -35,9 +35,9 @@ export const assets: Asset[] = [
 ];
 
 export const assetsArguments = {
-  xlm: [xdr.ScVal.scvSymbol('xlm')],
-  usdc: [xdr.ScVal.scvSymbol('usdc')],
-  eth: [xdr.ScVal.scvSymbol('eth')],
+  xlm: [nativeToScVal('xlm', { type: 'symbol' })],
+  usdc: [nativeToScVal('usdc', { type: 'symbol' })],
+  eth: [nativeToScVal('eth', { type: 'symbol' })],
 };
 
 export const assetInitialValue = { xlm: BigNumber(0), usdc: BigNumber(0), eth: BigNumber(0) };

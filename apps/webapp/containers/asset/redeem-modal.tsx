@@ -3,7 +3,7 @@ import { useSorobanReact } from '@soroban-react/core';
 import BigNumber from 'bignumber.js';
 import Image from 'next/image';
 import { useState } from 'react';
-import { Address, ScInt, xdr } from 'soroban-client';
+import { Address, ScInt, xdr } from 'stellar-sdk';
 import {
   Button,
   Dialog,

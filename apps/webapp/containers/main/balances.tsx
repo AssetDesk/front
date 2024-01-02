@@ -2,7 +2,7 @@
 import { useSorobanReact } from '@soroban-react/core';
 import BigNumber from 'bignumber.js';
 import { useMemo } from 'react';
-import { Address } from 'soroban-client';
+import { Address } from 'stellar-sdk';
 import { Progress } from 'ui';
 import { useMultiCall } from '../../hooks/multi-call';
 import { useReadContract } from '../../hooks/read-contract';

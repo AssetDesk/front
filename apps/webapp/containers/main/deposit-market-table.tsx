@@ -4,7 +4,7 @@ import BigNumber from 'bignumber.js';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React, { useMemo } from 'react';
-import { Address, ScInt, xdr } from 'soroban-client';
+import { Address, ScInt, xdr } from 'stellar-sdk';
 import {
   Button,
   Switch,
@@ -29,6 +29,7 @@ import {
   EIGHTEEN_EXPONENT,
   FAUCET_CONTRACT_ADDRESS,
 } from '../../utils/constants';
+import { nativeToScVal } from 'stellar-sdk';
 
 export const DepostMarketTable = () => {
   const router = useRouter();
@@ -36,7 +37,8 @@ export const DepostMarketTable = () => {
 
   const args = useMemo(() => {
     if (!address) return [];
-    return [new Address(address).toScVal()];
+    // return [new Address(address).toScVal()];
+    return [nativeToScVal(address, { type: 'address' })];
   }, [address]);
 
   const navigateToAsset = (asset: string) => () =>
@@ -51,10 +53,9 @@ export const DepostMarketTable = () => {
     ContractMethods.GET_DEPOSIT,
     assetInitialValue,
     {
-      //TODO add dynamic assets
-      xlm: [...args, xdr.ScVal.scvSymbol('xlm')],
-      usdc: [...args, xdr.ScVal.scvSymbol('usdc')],
-      eth: [...args, xdr.ScVal.scvSymbol('eth')],
+      xlm: [...args, nativeToScVal('xlm', { type: 'symbol' })],
+      usdc: [...args, nativeToScVal('usdc', { type: 'symbol' })],
+      eth: [...args, nativeToScVal('eth', { type: 'symbol' })],
     },
     Boolean(address),
   );

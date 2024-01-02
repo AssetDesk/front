@@ -9,7 +9,7 @@ import { useMultiCall } from '../../hooks/multi-call';
 import BigNumber from 'bignumber.js';
 import { CONTRACT_ADDRESS } from '../../utils/constants';
 import { ContractMethods } from '../../types/contract';
-import { xdr } from 'soroban-client';
+import { xdr } from 'stellar-sdk';
 import { useSorobanReact } from '@soroban-react/core';
 import { UserNotConnected } from './user-not-connected';
 

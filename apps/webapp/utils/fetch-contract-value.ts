@@ -2,13 +2,12 @@ import {
   Account,
   BASE_FEE,
   Contract,
-  Server,
   SorobanRpc,
   TimeoutInfinite,
   Transaction,
   TransactionBuilder,
   xdr,
-} from 'soroban-client';
+} from 'stellar-sdk';
 
 interface ContractTransaction {
   networkPassphrase: string;
@@ -56,8 +55,8 @@ export async function fetchContractValue({
   args,
   source,
 }: ContractTransaction & {
-  server: Server;
-}): Promise<SorobanRpc.SimulateTransactionSuccessResponse> {
+  server: SorobanRpc.Server;
+}): Promise<SorobanRpc.Api.SimulateTransactionSuccessResponse> {
   const txn = contractTransaction({
     source,
     networkPassphrase,
@@ -67,9 +66,9 @@ export async function fetchContractValue({
     fee: BASE_FEE,
   });
 
-  const simulated: SorobanRpc.SimulateTransactionResponse = await server.simulateTransaction(txn);
+  const simulated: SorobanRpc.Api.SimulateTransactionResponse = await server.simulateTransaction(txn);
 
-  if (SorobanRpc.isSimulationError(simulated)) {
+  if (SorobanRpc.Api.isSimulationError(simulated)) {
     throw new Error(simulated.error);
   } else if (!simulated.result) {
     throw new Error(`invalid simulation: no result in ${JSON.stringify(simulated)}`);

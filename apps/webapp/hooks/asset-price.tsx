@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
 import { useMemo } from 'react';
-import { xdr } from 'soroban-client';
+import { xdr } from 'stellar-sdk';
 import { ContractMethods } from '../types/contract';
 import { CONTRACT_ADDRESS, USDC_EXPONENT } from '../utils/constants';
 import { fromBaseUnitAmount } from '../utils/amount';

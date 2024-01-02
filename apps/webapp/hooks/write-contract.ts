@@ -2,12 +2,11 @@ import {
   Account,
   BASE_FEE,
   Contract,
-  Server,
   SorobanRpc,
   TimeoutInfinite,
   TransactionBuilder,
   xdr,
-} from 'soroban-client';
+} from 'stellar-sdk';
 import { ChainName } from '../types/chain';
 import { sorobanRPC } from '../utils/rpc';
 import { useSorobanReact } from '@soroban-react/core';
@@ -46,7 +45,7 @@ const getTxBuildResult = (
 
 // Build and submits a transaction to the Soroban RPC
 // Polls for non-pending state, returns result after status is updated
-export const submitTx = async (signedXDR: string, networkPassphrase: string, server: Server) => {
+export const submitTx = async (signedXDR: string, networkPassphrase: string, server: SorobanRpc.Server) => {
   const tx = TransactionBuilder.fromXDR(signedXDR, networkPassphrase);
 
   const sendResponse = await server.sendTransaction(tx);
@@ -58,7 +57,7 @@ export const submitTx = async (signedXDR: string, networkPassphrase: string, ser
     let txResponse = await server.getTransaction(sendResponse.hash);
 
     // Poll this until the status is not "NOT_FOUND"
-    while (txResponse.status === SorobanRpc.GetTransactionStatus.NOT_FOUND) {
+    while (txResponse.status === SorobanRpc.Api.GetTransactionStatus.NOT_FOUND) {
       // See if the transaction is complete
       // eslint-disable-next-line no-await-in-loop
       txResponse = await server.getTransaction(sendResponse.hash);
@@ -67,7 +66,7 @@ export const submitTx = async (signedXDR: string, networkPassphrase: string, ser
       await new Promise(resolve => setTimeout(resolve, 1000));
     }
 
-    if (txResponse.status === SorobanRpc.GetTransactionStatus.SUCCESS) {
+    if (txResponse.status === SorobanRpc.Api.GetTransactionStatus.SUCCESS) {
       return txResponse.resultXdr.toXDR('base64');
     }
 
@@ -91,7 +90,7 @@ export const useWriteContract = () => {
     try {
       if (!activeChain || !address) return;
 
-      const server = new Server(sorobanRPC[activeChain.name as ChainName], {
+      const server = new SorobanRpc.Server(sorobanRPC[activeChain.name as ChainName], {
         allowHttp: true,
       });
 

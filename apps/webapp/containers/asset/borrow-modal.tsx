@@ -2,7 +2,7 @@
 import { useSorobanReact } from '@soroban-react/core';
 import Image from 'next/image';
 import { useMemo, useState } from 'react';
-import { Address, ScInt, xdr } from 'soroban-client';
+import { Address, ScInt, xdr } from 'stellar-sdk';
 import {
   Button,
   Dialog,
