@@ -27,7 +27,7 @@ export const useMultiCall = <T>(
 
   const query = useQuery<T>({
     queryKey: [queryKey ?? methods.map(i => i.key).join('-')],
-    enabled: enabled ?? true,
+    enabled: enabled ?? Boolean(activeChain?.networkPassphrase),
     initialData,
 
     queryFn: async () => {
@@ -42,6 +42,7 @@ export const useMultiCall = <T>(
             } else {
               source = new Account('GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWHF', '0');
             }
+
             const res = await fetchContractValue({
               server,
               networkPassphrase: activeChain?.networkPassphrase ?? '',
