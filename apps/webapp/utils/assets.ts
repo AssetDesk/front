@@ -14,7 +14,7 @@ export const assets: Asset[] = [
   },
   {
     icon: '/usdc.svg',
-    address: 'CCMQP7ZTAK3R6X2WWSIDIG4Q7V5DS5K2MO6RRU64UFHKZV72TNU4PY4E',
+    address: 'CDM2UMJY734BHRSYZZQ23AFL2QK6JS3LKW5IKM6JB4IVQN456MH4WMKA',
     exponents: 6,
     name: 'USDC',
     symbol: 'usdc',
@@ -24,7 +24,7 @@ export const assets: Asset[] = [
   },
   {
     icon: '/weth.svg',
-    address: 'CD2ACTSKG43E67P6BL5BXFHOHKDD7KI4DCMLCFUL5J3QONWI3DPCGKQ4',
+    address: 'CDFCU2FCPS4KV6DTBPU7EPEPNQ5FKWP5PTPGPE6IOC5QSWNSLMM3CEIJ',
     exponents: 18,
     name: 'ETH',
     symbol: 'eth',
