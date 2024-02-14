@@ -27,7 +27,7 @@ export const useReadContractMultiAssets = <T>(
 
   const query = useQuery<T>({
     queryKey: [`multi-${method}`],
-    enabled: enabled ?? Boolean(activeChain?.networkPassphrase),
+    enabled: enabled ?? true,
     initialData,
     queryFn: async () => {
       const res = await Promise.all(
@@ -42,7 +42,8 @@ export const useReadContractMultiAssets = <T>(
           try {
             const res = await fetchContractValue({
               server,
-              networkPassphrase: activeChain!.networkPassphrase,
+              networkPassphrase:
+                activeChain?.networkPassphrase ?? 'Test SDF Future Network ; October 2022',
               contractAddress,
               method,
               args: arg[1],

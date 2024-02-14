@@ -41,7 +41,8 @@ export const useReadContract = <T>(
       }
       const res = await fetchContractValue({
         server,
-        networkPassphrase: activeChain?.networkPassphrase ?? '',
+        networkPassphrase:
+          activeChain?.networkPassphrase ?? 'Test SDF Future Network ; October 2022',
         contractAddress,
         method,
         args,

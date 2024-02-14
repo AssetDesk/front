@@ -27,7 +27,7 @@ export const useMultiCall = <T>(
 
   const query = useQuery<T>({
     queryKey: [queryKey ?? methods.map(i => i.key).join('-')],
-    enabled: enabled ?? Boolean(activeChain?.networkPassphrase),
+    enabled: enabled ?? true,
     initialData,
 
     queryFn: async () => {
@@ -45,7 +45,8 @@ export const useMultiCall = <T>(
 
             const res = await fetchContractValue({
               server,
-              networkPassphrase: activeChain?.networkPassphrase ?? '',
+              networkPassphrase:
+                activeChain?.networkPassphrase ?? 'Test SDF Future Network ; October 2022',
               contractAddress,
               method,
               args,
