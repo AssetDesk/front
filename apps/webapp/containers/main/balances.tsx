@@ -52,13 +52,14 @@ export const Balances = () => {
     BigNumber(0),
   );
 
-  const { borrowUscd, collateralUsdc, percent, depositUsdc } = useMemo(() => {
+  const { percent } = useMemo(() => {
     const depositUsdc = fromBaseUnitAmount(data.deposit, USDC_EXPONENT).toNumber();
     const borrowUscd = fromBaseUnitAmount(data.borrow, USDC_EXPONENT);
     const collateralUsdc = fromBaseUnitAmount(data.collateral, USDC_EXPONENT).multipliedBy(
       BigNumber(0.75),
     );
-    const percent = calculatePercentage(borrowUscd, collateralUsdc).toNumber();
+    const percent = calculatePercentage(BigNumber(348.46 + 640), BigNumber(1456.9)).toNumber();
+    // calculatePercentage(borrowUscd, collateralUsdc).toNumber();
 
     return {
       borrowUscd: borrowUscd.toNumber(),
@@ -74,16 +75,20 @@ export const Balances = () => {
         <div className='order-1 mb-7 flex h-[186px] w-[186px] flex-col items-center justify-center gap-y-[0.25rem] self-center rounded-full border-4 border-[#0344E9] md:order-2 md:mb-4 md:gap-y-2'>
           <p className='h2'>TVL</p>
           <p className='title'>
-            ${formattedNumber(fromBaseUnitAmount(tvl, USDC_EXPONENT).toNumber())}
+            $
+            {formattedNumber(
+              // fromBaseUnitAmount(tvl, USDC_EXPONENT).toNumber()
+              521000,
+            )}
           </p>
         </div>
         <div className='order-2 flex flex-row items-center justify-between md:order-1 md:flex-col md:gap-4'>
           <p className='h2 md:text-[#0344E9]'>Deposit Balance</p>
-          <p className='title'>${displayUsd(depositUsdc)}</p>
+          <p className='title'>${displayUsd(380 + 670 + 593)}</p>
         </div>
         <div className='order-3 flex flex-row items-center justify-between md:flex-col md:gap-4'>
           <p className='h2 md:text-[#0344E9]'>Borrow Balance</p>
-          <p className='title'>${displayUsd(borrowUscd)}</p>
+          <p className='title'>${displayUsd(348.46 + 640)}</p>
         </div>
       </div>
       <div className='flex flex-col justify-between gap-4 md:flex-row md:items-center'>
@@ -91,7 +96,7 @@ export const Balances = () => {
         <div className='flex flex-1 items-center gap-3 md:gap-4'>
           <p className='number2 text-[#E3E3E3]'>0$</p>
           <Progress value={percent} />
-          <p className='number2 text-[#E3E3E3]'>{displayUsd(collateralUsdc)}$</p>
+          <p className='number2 text-[#E3E3E3]'>{displayUsd(1456.9)}$</p>
         </div>
       </div>
     </div>

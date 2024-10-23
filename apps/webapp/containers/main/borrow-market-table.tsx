@@ -1,82 +1,92 @@
 'use client';
-import { useSorobanReact } from '@soroban-react/core';
+
 import BigNumber from 'bignumber.js';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useMemo } from 'react';
-import { Address, xdr } from 'stellar-sdk';
 import { Button, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from 'ui';
-import { useReadContractMultiAssets } from '../../hooks/read-contract-multi-assets';
-import { ContractMethods } from '../../types/contract';
-import {
-  assetInitialValue,
-  assets,
-  assetsArguments,
-  formattedNumber,
-  routesLinks,
-} from '../../utils';
+import { assets, formattedNumber, routesLinks } from '../../utils';
 import { displayAmount, fromBaseUnitAmount } from '../../utils/amount';
-import { CONTRACT_ADDRESS, EIGHTEEN_EXPONENT, USDC_EXPONENT } from '../../utils/constants';
+import { EIGHTEEN_EXPONENT } from '../../utils/constants';
 
 export const BorrowMarketTable = () => {
   const router = useRouter();
-  const { address } = useSorobanReact();
+  // const { address } = useSorobanReact();
 
-  const args = useMemo(() => {
-    if (!address) return [];
-    return [new Address(address).toScVal()];
-  }, [address]);
+  // const args = useMemo(() => {
+  //   if (!address) return [];
+  //   return [new Address(address).toScVal()];
+  // }, [address]);
 
-  const { data: interestRates } = useReadContractMultiAssets<Record<string, BigNumber | undefined>>(
-    CONTRACT_ADDRESS,
-    ContractMethods.GET_INTEREST_RATE,
-    assetInitialValue,
-    assetsArguments,
-  );
+  // const { data: interestRates } = useReadContractMultiAssets<Record<string, BigNumber | undefined>>(
+  //   CONTRACT_ADDRESS,
+  //   ContractMethods.GET_INTEREST_RATE,
+  //   assetInitialValue,
+  //   assetsArguments,
+  // );
 
-  const { data: borrows } = useReadContractMultiAssets<Record<string, BigNumber | undefined>>(
-    CONTRACT_ADDRESS,
-    ContractMethods.GET_USER_BORROW_AMOUNT_WITH_INTEREST,
-    assetInitialValue,
-    {
-      //TODO add dynamic assets
-      xlm: [...args, xdr.ScVal.scvSymbol('xlm')],
-      usdc: [...args, xdr.ScVal.scvSymbol('usdc')],
-      eth: [...args, xdr.ScVal.scvSymbol('eth')],
-    },
-    Boolean(address),
-  );
+  const interestRates: Record<string, BigNumber> = {
+    xlm: BigNumber(5500000000000000000),
+    usdc: BigNumber(7800000000000000000),
+    eth: BigNumber(4200000000000000000),
+  };
 
-  const { data: availableLiquiduty } = useReadContractMultiAssets<
-    Record<string, BigNumber | undefined>
-  >(
-    CONTRACT_ADDRESS,
-    ContractMethods.GET_AVAILABLE_LIQUIDITY_BY_TOKEN,
-    assetInitialValue,
-    assetsArguments,
-  );
+  // const { data: borrows } = useReadContractMultiAssets<Record<string, BigNumber | undefined>>(
+  //   CONTRACT_ADDRESS,
+  //   ContractMethods.GET_USER_BORROW_AMOUNT_WITH_INTEREST,
+  //   assetInitialValue,
+  //   {
+  //     //TODO add dynamic assets
+  //     xlm: [...args, xdr.ScVal.scvSymbol('xlm')],
+  //     usdc: [...args, xdr.ScVal.scvSymbol('usdc')],
+  //     eth: [...args, xdr.ScVal.scvSymbol('eth')],
+  //   },
+  //   Boolean(address),
+  // );
 
-  const { data: price } = useReadContractMultiAssets<Record<string, BigNumber | undefined>>(
-    CONTRACT_ADDRESS,
-    ContractMethods.GET_PRICE,
-    assetInitialValue,
-    assetsArguments,
-  );
+  const borrows: Record<string, BigNumber> = {
+    xlm: BigNumber(36900000000),
+    usdc: BigNumber(640000000),
+    eth: BigNumber(0),
+  };
 
-  const liquidity = useMemo(() => {
-    const obj: Record<string, number> = {};
-    assets.forEach(asset => {
-      const formattedLiquidity = fromBaseUnitAmount(
-        availableLiquiduty[asset.symbol] ?? BigNumber(0),
-        asset.exponents,
-      );
-      const formattedPrice = fromBaseUnitAmount(price[asset.symbol] ?? BigNumber(0), USDC_EXPONENT);
+  // const { data: availableLiquiduty } = useReadContractMultiAssets<
+  //   Record<string, BigNumber | undefined>
+  // >(
+  //   CONTRACT_ADDRESS,
+  //   ContractMethods.GET_AVAILABLE_LIQUIDITY_BY_TOKEN,
+  //   assetInitialValue,
+  //   assetsArguments,
+  // );
 
-      obj[asset.symbol] = formattedLiquidity.multipliedBy(formattedPrice).toNumber();
-    });
+  // const { data: price } = useReadContractMultiAssets<Record<string, BigNumber | undefined>>(
+  //   CONTRACT_ADDRESS,
+  //   ContractMethods.GET_PRICE,
+  //   assetInitialValue,
+  //   assetsArguments,
+  // );
 
-    return obj;
-  }, [availableLiquiduty, price]);
+  // const liquidity = useMemo(() => {
+  //   const obj: Record<string, number> = {};
+  //   assets.forEach(asset => {
+  //     const formattedLiquidity = fromBaseUnitAmount(
+  //       availableLiquiduty[asset.symbol] ?? BigNumber(0),
+  //       asset.exponents,
+  //     );
+  //     const formattedPrice = fromBaseUnitAmount(price[asset.symbol] ?? BigNumber(0), USDC_EXPONENT);
+
+  //     obj[asset.symbol] = formattedLiquidity.multipliedBy(formattedPrice).toNumber();
+  //   });
+
+  //   return obj;
+  // }, [availableLiquiduty, price]);
+
+  //325K
+
+  const liquidity: Record<string, number> = {
+    xlm: 325000 / 2,
+    usdc: 120000,
+    eth: 42000,
+  };
 
   const navigateToAsset = (asset: string) => () =>
     router.push(`${routesLinks.Markets}/${asset.toLowerCase()}`);
@@ -125,13 +135,7 @@ export const BorrowMarketTable = () => {
               <div className='flex justify-between'>
                 <p className='subtitle2 text-[#E3E3E3]'>Liquidity</p>
                 <p className='subtitle3 text-[#E3E3E3]'>
-                  $
-                  {formattedNumber(
-                    fromBaseUnitAmount(
-                      availableLiquiduty[asset.symbol] ?? BigNumber(0),
-                      asset.exponents,
-                    ).toNumber(),
-                  )}
+                  ${formattedNumber(liquidity[asset.symbol] ?? 0)}
                 </p>
               </div>
               <Button className='mt-6 w-full' onClick={navigateToAsset(asset.symbol)}>

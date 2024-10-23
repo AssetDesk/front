@@ -8,7 +8,7 @@ export const Hero = () => {
   const router = useRouter();
   return (
     <div className='flex w-full flex-col gap-2 md:w-[50%]'>
-      <p className='h1'>AssetDesk is </p>
+      <p className='h1'>AssetDesk</p>
       <p className='subtitle1 border-gradient border-l-[4px] px-4 py-[10px] md:px-6'>
         Earn interest, borrow assets, and build applications.
       </p>

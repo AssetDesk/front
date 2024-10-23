@@ -1,53 +1,70 @@
-'use client';
-
 import BigNumber from 'bignumber.js';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from 'ui';
-import { useReadContractMultiAssets } from '../../hooks/read-contract-multi-assets';
-import { ContractMethods } from '../../types/contract';
-import {
-  assetInitialValue,
-  assets,
-  assetsArguments,
-  formattedNumber,
-  routesLinks,
-} from '../../utils';
-import { calculateToUsd, displayAmount, fromBaseUnitAmount } from '../../utils/amount';
-import { CONTRACT_ADDRESS, EIGHTEEN_EXPONENT } from '../../utils/constants';
+import { assets, formattedNumber, routesLinks } from '../../utils';
+import { displayAmount, fromBaseUnitAmount } from '../../utils/amount';
+import { EIGHTEEN_EXPONENT } from '../../utils/constants';
 
 export const LandingTable = () => {
-  const { data: liquidityRates } = useReadContractMultiAssets<
-    Record<string, BigNumber | undefined>
-  >(CONTRACT_ADDRESS, ContractMethods.GET_LIQUIDITY_RATE, assetInitialValue, assetsArguments);
+  // const { data: liquidityRates } = useReadContractMultiAssets<
+  //   Record<string, BigNumber | undefined>
+  // >(CONTRACT_ADDRESS, ContractMethods.GET_LIQUIDITY_RATE, assetInitialValue, assetsArguments);
 
-  const { data: interestRates } = useReadContractMultiAssets<Record<string, BigNumber | undefined>>(
-    CONTRACT_ADDRESS,
-    ContractMethods.GET_INTEREST_RATE,
-    assetInitialValue,
-    assetsArguments,
-  );
+  // const { data: interestRates } = useReadContractMultiAssets<Record<string, BigNumber | undefined>>(
+  //   CONTRACT_ADDRESS,
+  //   ContractMethods.GET_INTEREST_RATE,
+  //   assetInitialValue,
+  //   assetsArguments,
+  // );
 
-  const { data: price } = useReadContractMultiAssets<Record<string, BigNumber | undefined>>(
-    CONTRACT_ADDRESS,
-    ContractMethods.GET_PRICE,
-    assetInitialValue,
-    assetsArguments,
-  );
+  // const { data: price } = useReadContractMultiAssets<Record<string, BigNumber | undefined>>(
+  //   CONTRACT_ADDRESS,
+  //   ContractMethods.GET_PRICE,
+  //   assetInitialValue,
+  //   assetsArguments,
+  // );
 
-  const { data: totalReserves } = useReadContractMultiAssets<Record<string, BigNumber | undefined>>(
-    CONTRACT_ADDRESS,
-    ContractMethods.GET_TOTAL_RESERVES_BY_TOKEN,
-    assetInitialValue,
-    assetsArguments,
-  );
+  // const { data: totalReserves } = useReadContractMultiAssets<Record<string, BigNumber | undefined>>(
+  //   CONTRACT_ADDRESS,
+  //   ContractMethods.GET_TOTAL_RESERVES_BY_TOKEN,
+  //   assetInitialValue,
+  //   assetsArguments,
+  // );
 
-  const { data: totalBorrowed } = useReadContractMultiAssets<Record<string, BigNumber | undefined>>(
-    CONTRACT_ADDRESS,
-    ContractMethods.GET_TOTAL_BORROWED_BY_TOKEN,
-    assetInitialValue,
-    assetsArguments,
-  );
+  // const { data: totalBorrowed } = useReadContractMultiAssets<Record<string, BigNumber | undefined>>(
+  //   CONTRACT_ADDRESS,
+  //   ContractMethods.GET_TOTAL_BORROWED_BY_TOKEN,
+  //   assetInitialValue,
+  //   assetsArguments,
+  // );
+
+  const sumAssetsTotalReserves = BigNumber(525619.23);
+  const formattedTVL = BigNumber(324971.78);
+
+  const interestRates: Record<string, BigNumber> = {
+    xlm: BigNumber(5500000000000000000),
+    usdc: BigNumber(7800000000000000000),
+    eth: BigNumber(4200000000000000000),
+  };
+
+  const liquidityRates: Record<string, BigNumber> = {
+    xlm: BigNumber(4000000000000000000),
+    usdc: BigNumber(6700000000000000000),
+    eth: BigNumber(2300000000000000000),
+  };
+
+  const totalReserves: Record<string, BigNumber> = {
+    xlm: sumAssetsTotalReserves.div(BigNumber(2)),
+    usdc: BigNumber(198232),
+    eth: BigNumber(65000),
+  };
+
+  const totalBorrowed: Record<string, BigNumber> = {
+    xlm: sumAssetsTotalReserves.minus(formattedTVL).div(BigNumber(2)),
+    usdc: BigNumber(73235),
+    eth: BigNumber(28900),
+  };
 
   return (
     <>
@@ -70,11 +87,12 @@ export const LandingTable = () => {
                 <p className='subtitle3 text-[#E3E3E3]'>
                   $
                   {formattedNumber(
-                    calculateToUsd(
-                      totalReserves[asset.symbol] ?? BigNumber(0),
-                      asset.exponents,
-                      price[asset.symbol] ?? BigNumber(0),
-                    ).toNumber(),
+                    // calculateToUsd(
+                    //   totalReserves[asset.symbol] ?? BigNumber(0),
+                    //   asset.exponents,
+                    //   price[asset.symbol] ?? BigNumber(0),
+                    // ).toNumber(),
+                    (totalReserves[asset.symbol] ?? BigNumber(0)).toNumber(),
                   )}
                 </p>
               </div>
@@ -94,11 +112,12 @@ export const LandingTable = () => {
                 <p className='subtitle2 text-[#E3E3E3]'>Total Borrowed</p>
                 <p className='subtitle3 text-[#E3E3E3]'>
                   {formattedNumber(
-                    calculateToUsd(
-                      totalBorrowed[asset.symbol] ?? BigNumber(0),
-                      asset.exponents,
-                      price[asset.symbol] ?? BigNumber(0),
-                    ).toNumber(),
+                    // calculateToUsd(
+                    //   totalBorrowed[asset.symbol] ?? BigNumber(0),
+                    //   asset.exponents,
+                    //   price[asset.symbol] ?? BigNumber(0),
+                    // ).toNumber(),
+                    (totalBorrowed[asset.symbol] ?? BigNumber(0)).toNumber(),
                   )}
                 </p>
               </div>
@@ -147,11 +166,12 @@ export const LandingTable = () => {
                 <TableCell className='text-center'>
                   $
                   {formattedNumber(
-                    calculateToUsd(
-                      totalReserves[asset.symbol] ?? BigNumber(0),
-                      asset.exponents,
-                      price[asset.symbol] ?? BigNumber(0),
-                    ).toNumber(),
+                    // calculateToUsd(
+                    //   totalReserves[asset.symbol] ?? BigNumber(0),
+                    //   asset.exponents,
+                    //   price[asset.symbol] ?? BigNumber(0),
+                    // ).toNumber(),
+                    (totalReserves[asset.symbol] ?? BigNumber(0)).toNumber(),
                   )}
                 </TableCell>
                 <TableCell className='text-center'>
@@ -165,11 +185,12 @@ export const LandingTable = () => {
                 </TableCell>
                 <TableCell className='text-center'>
                   {formattedNumber(
-                    calculateToUsd(
-                      totalBorrowed[asset.symbol] ?? BigNumber(0),
-                      asset.exponents,
-                      price[asset.symbol] ?? BigNumber(0),
-                    ).toNumber(),
+                    // calculateToUsd(
+                    //   totalBorrowed[asset.symbol] ?? BigNumber(0),
+                    //   asset.exponents,
+                    //   price[asset.symbol] ?? BigNumber(0),
+                    // ).toNumber(),
+                    (totalBorrowed[asset.symbol] ?? BigNumber(0)).toNumber(),
                   )}
                 </TableCell>
                 <TableCell className='text-center'>

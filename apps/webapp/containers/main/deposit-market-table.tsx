@@ -19,10 +19,9 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from 'ui';
-import { useReadContractMultiAssets } from '../../hooks/read-contract-multi-assets';
 import { useWriteContract } from '../../hooks/write-contract';
 import { ContractMethods } from '../../types/contract';
-import { assetInitialValue, assets, assetsArguments, routesLinks } from '../../utils';
+import { assets, routesLinks } from '../../utils';
 import { displayAmount, fromBaseUnitAmount, toBaseUnitAmount } from '../../utils/amount';
 import {
   CONTRACT_ADDRESS,
@@ -44,36 +43,36 @@ export const DepostMarketTable = () => {
   const navigateToAsset = (asset: string) => () =>
     router.push(`${routesLinks.Markets}/${asset.toLowerCase()}`);
 
-  const { data: liquidityRates } = useReadContractMultiAssets<
-    Record<string, BigNumber | undefined>
-  >(CONTRACT_ADDRESS, ContractMethods.GET_LIQUIDITY_RATE, assetInitialValue, assetsArguments);
+  // const { data: liquidityRates } = useReadContractMultiAssets<
+  //   Record<string, BigNumber | undefined>
+  // >(CONTRACT_ADDRESS, ContractMethods.GET_LIQUIDITY_RATE, assetInitialValue, assetsArguments);
 
-  const { data: deposits } = useReadContractMultiAssets<Record<string, BigNumber | undefined>>(
-    CONTRACT_ADDRESS,
-    ContractMethods.GET_DEPOSIT,
-    assetInitialValue,
-    {
-      xlm: [...args, nativeToScVal('xlm', { type: 'symbol' })],
-      usdc: [...args, nativeToScVal('usdc', { type: 'symbol' })],
-      eth: [...args, nativeToScVal('eth', { type: 'symbol' })],
-    },
-    Boolean(address),
-  );
+  // const { data: deposits } = useReadContractMultiAssets<Record<string, BigNumber | undefined>>(
+  //   CONTRACT_ADDRESS,
+  //   ContractMethods.GET_DEPOSIT,
+  //   assetInitialValue,
+  //   {
+  //     xlm: [...args, nativeToScVal('xlm', { type: 'symbol' })],
+  //     usdc: [...args, nativeToScVal('usdc', { type: 'symbol' })],
+  //     eth: [...args, nativeToScVal('eth', { type: 'symbol' })],
+  //   },
+  //   Boolean(address),
+  // );
 
-  const { data: collateral, refetch: refetchCollateral } = useReadContractMultiAssets<
-    Record<string, boolean | undefined>
-  >(
-    CONTRACT_ADDRESS,
-    ContractMethods.USER_DEPOSIT_AS_COLLATERAL,
-    { xlm: false, usdc: false, eth: false },
-    {
-      //TODO add dynamic assets
-      xlm: [...args, xdr.ScVal.scvSymbol('xlm')],
-      usdc: [...args, xdr.ScVal.scvSymbol('usdc')],
-      eth: [...args, xdr.ScVal.scvSymbol('eth')],
-    },
-    Boolean(address),
-  );
+  // const { data: collateral, refetch: refetchCollateral } = useReadContractMultiAssets<
+  //   Record<string, boolean | undefined>
+  // >(
+  //   CONTRACT_ADDRESS,
+  //   ContractMethods.USER_DEPOSIT_AS_COLLATERAL,
+  //   { xlm: false, usdc: false, eth: false },
+  //   {
+  //     //TODO add dynamic assets
+  //     xlm: [...args, xdr.ScVal.scvSymbol('xlm')],
+  //     usdc: [...args, xdr.ScVal.scvSymbol('usdc')],
+  //     eth: [...args, xdr.ScVal.scvSymbol('eth')],
+  //   },
+  //   Boolean(address),
+  // );
 
   const { write } = useWriteContract();
 
@@ -84,7 +83,7 @@ export const DepostMarketTable = () => {
       xdr.ScVal.scvSymbol(asset),
     ]);
 
-    await refetchCollateral();
+    // await refetchCollateral();
   };
 
   const faucet = (assetAddress: string, tokenAmount: number, exponent: number) => async () => {
@@ -94,6 +93,18 @@ export const DepostMarketTable = () => {
       new Address(assetAddress).toScVal(),
       new ScInt(toBaseUnitAmount(String(tokenAmount), exponent).toString()).toI128(),
     ]);
+  };
+
+  const deposits: Record<string, BigNumber> = {
+    xlm: BigNumber(40000000000),
+    usdc: BigNumber(670000000),
+    eth: BigNumber(230000000000000000),
+  };
+
+  const liquidityRates: Record<string, BigNumber> = {
+    xlm: BigNumber(4000000000000000000),
+    usdc: BigNumber(6700000000000000000),
+    eth: BigNumber(2300000000000000000),
   };
 
   return (
@@ -147,8 +158,9 @@ export const DepostMarketTable = () => {
                           e.stopPropagation();
                           void toggleColateral(asset.symbol)();
                         }}
-                        checked={Boolean(collateral[asset.symbol])}
-                        disabled={!asset.collateral}
+                        // checked={Boolean(collateral[asset.symbol])}
+                        checked={true}
+                        // disabled={!asset.collateral}
                       />
                     </TooltipTrigger>
                     {!asset.collateral && (
@@ -218,8 +230,9 @@ export const DepostMarketTable = () => {
                             e.stopPropagation();
                             void toggleColateral(asset.symbol)();
                           }}
-                          checked={Boolean(collateral[asset.symbol])}
-                          disabled={!asset.collateral}
+                          // checked={Boolean(collateral[asset.symbol])}
+                          checked={true}
+                          // disabled={!asset.collateral}
                         />
                       </TooltipTrigger>
                       {!asset.collateral && (
