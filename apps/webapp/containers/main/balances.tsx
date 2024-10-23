@@ -5,7 +5,6 @@ import { useMemo } from 'react';
 import { Address } from 'stellar-sdk';
 import { Progress } from 'ui';
 import { useMultiCall } from '../../hooks/multi-call';
-import { useReadContract } from '../../hooks/read-contract';
 import { ContractMethods } from '../../types/contract';
 import { displayUsd, fromBaseUnitAmount } from '../../utils/amount';
 import { CONTRACT_ADDRESS, USDC_EXPONENT } from '../../utils/constants';
@@ -46,11 +45,11 @@ export const Balances = () => {
     Boolean(address),
   );
 
-  const { data: tvl } = useReadContract<BigNumber>(
-    CONTRACT_ADDRESS,
-    ContractMethods.GET_TVL,
-    BigNumber(0),
-  );
+  // const { data: tvl } = useReadContract<BigNumber>(
+  //   CONTRACT_ADDRESS,
+  //   ContractMethods.GET_TVL,
+  //   BigNumber(0),
+  // );
 
   const { percent } = useMemo(() => {
     const depositUsdc = fromBaseUnitAmount(data.deposit, USDC_EXPONENT).toNumber();

@@ -10,11 +10,3 @@ services:
     restart: always
     ports:
       - 9017:3000
-    networks:
-      - network1
-
-# Define a network, which allows containers to communicate
-# with each other, by using their container name as a hostname
-networks:
-  network1:
-    external: true
